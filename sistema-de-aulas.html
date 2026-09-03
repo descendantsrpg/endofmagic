@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sistema de Aulas — Descendentes RPG</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+:root{--red:#a51d36;--red-dark:#7c1226;--white:#fff;--muted:rgba(255,255,255,.78);--card:rgba(12,5,22,.72);--line:rgba(255,255,255,.16)}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;min-height:100vh;background:#13051d;color:#fff;font-family:"Comfortaa",sans-serif}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(rgba(10,3,18,.42),rgba(10,3,18,.52)),url("./assets/site-background.jpg") center/cover no-repeat;pointer-events:none}
+body::after{content:"";position:fixed;inset:0;z-index:-1;background:rgba(20,4,30,.08);pointer-events:none}
+header{padding:20px 16px;text-align:center;background:rgba(10,3,18,.72);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+header img{width:min(330px,72vw);height:auto;display:block;margin:auto}
+.home-main-nav{position:sticky;top:0;z-index:1000;display:flex;justify-content:center;background:rgba(10,3,18,.84);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.home-nav-links{display:flex;gap:8px;align-items:center;justify-content:center;padding:10px 14px;flex-wrap:wrap}
+.home-nav-links a{color:#fff;text-decoration:none;padding:10px 13px;border-radius:10px;font-size:13px;transition:.2s}
+.home-nav-links a:hover,.home-nav-links a.active{background:var(--red);color:#fff}
+.mobile-menu-toggle,.mobile-menu-close{display:none}
+main{width:min(1120px,calc(100% - 28px));margin:auto;padding:54px 0 75px}
+.hero{text-align:center;max-width:900px;margin:0 auto 36px}.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:400;margin:0 0 14px}.hero p{color:var(--muted);line-height:1.8;margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.22);backdrop-filter:blur(10px)}
+.section{margin-top:22px}.section-title{font-size:1.35rem;font-weight:400;margin:0 0 16px}.intro-grid,.subject-grid,.info-grid,.club-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.periods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}.period-btn{border:1px solid rgba(255,255,255,.18);background:rgba(15,5,25,.78);color:#fff;border-radius:15px;padding:15px 10px;text-align:left;cursor:pointer;font:inherit;transition:.2s}.period-btn strong{display:block;font-size:15px;margin-bottom:5px}.period-btn small{color:rgba(255,255,255,.65)}.period-btn:hover,.period-btn.active{background:var(--red);border-color:var(--red)}
+.period-panel{display:none}.period-panel.active{display:block}.period-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.period-head h3{margin:0 0 7px;font-size:1.45rem;font-weight:400}.period-head p{margin:0;color:var(--muted);line-height:1.7}.age{white-space:nowrap;background:rgba(255,255,255,.1);border:1px solid var(--line);border-radius:999px;padding:9px 13px;font-size:12px}
+.subject-card h4,.info-card h4,.club-card h4{margin:0 0 8px;font-size:15px;font-weight:500}.subject-card p,.info-card p,.club-card p{margin:0;color:var(--muted);line-height:1.7;font-size:13px}.subject-card ul,.info-card ul,.club-card ul{margin:11px 0 0;padding-left:18px;color:var(--muted);line-height:1.65;font-size:12.5px}.tag{display:inline-block;margin-top:12px;padding:5px 8px;border-radius:999px;background:rgba(165,29,54,.32);font-size:11px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}.note{border-left:3px solid var(--red);padding-left:15px;color:var(--muted);line-height:1.8}
+.back{display:inline-flex;margin-top:26px;padding:11px 17px;background:var(--red);color:#fff;text-decoration:none;border:1px solid var(--red);border-radius:10px;font-size:13px}.back:hover{background:var(--red-dark);border-color:var(--red-dark)}
+footer{text-align:center;padding:24px;color:rgba(255,255,255,.65);font-size:12px;border-top:1px solid var(--line);background:rgba(10,3,18,.72)}
+@media(max-width:900px){.intro-grid,.subject-grid,.info-grid,.club-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.periods{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+ header{padding:16px 12px}.home-main-nav{justify-content:flex-end;padding:7px 10px}.mobile-menu-toggle{display:inline-flex;align-items:center;justify-content:center;background:var(--red);color:#fff;border:1px solid var(--red);border-radius:10px;width:45px;height:42px;font-size:21px;cursor:pointer;margin-left:auto}.home-nav-links{position:fixed;top:0;right:0;height:100dvh;width:min(82vw,330px);background:rgba(12,4,20,.98);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:72px 18px 24px;gap:7px;transform:translateX(105%);transition:transform .25s ease;box-shadow:-15px 0 40px rgba(0,0,0,.35);z-index:10002}.home-nav-links.open{transform:translateX(0)}.home-nav-links a{padding:14px 15px}.home-main-nav::after{content:"";position:fixed;inset:0;background:rgba(0,0,0,.56);z-index:10001;opacity:0;visibility:hidden;transition:.2s}.home-main-nav.menu-open::after{opacity:1;visibility:visible}.home-main-nav.menu-open .mobile-menu-toggle{position:relative;z-index:10003}.home-nav-links .mobile-menu-close{display:block;position:absolute;top:17px;right:17px;background:transparent;color:#fff;border:0;font-size:28px;cursor:pointer}
+ body.home-menu-locked{overflow:hidden!important;position:fixed!important;width:100%!important;left:0;right:0}
+ main{width:calc(100% - 20px);padding:40px 0 55px}.intro-grid,.subject-grid,.info-grid,.club-grid,.two-col{grid-template-columns:1fr}.periods{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.period-btn{padding:13px 10px}.period-btn strong{font-size:13px}.period-head{display:block}.age{display:inline-block;margin-top:12px}.card{padding:19px;border-radius:17px}
+}
+</style>
+</head>
+<body>
+<header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header>
+<nav class="home-main-nav" aria-label="Menu principal">
+<button class="mobile-menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+<div class="home-nav-links">
+<button class="mobile-menu-close" type="button" aria-label="Fechar menu">×</button>
+<a href="index.html">Início</a><a href="filiacoes.html">Filiações</a><a href="explore-auradon.html">Explore Auradon</a><a href="alunos.html">Alunos</a><a href="corpo-docente.html">Corpo Docente</a><a href="noticias.html">Notícias</a><a class="active" href="sistema-de-aulas.html">Sistema de Aulas</a><a href="admin.html">CPainel</a>
+</div></nav>
+<main>
+<section class="hero"><h1>🏫 Sistema de Aulas</h1><p>A formação escolar da Auradon Prep reúne matérias obrigatórias, atividades práticas, avaliações e especializações. Royals e Rebels estudam juntos, com a mesma grade básica. fileciteturn7file1</p></section>
+
+<section class="section card">
+<h2 class="section-title">🎓 Jornada Escolar</h2>
+<div class="intro-grid">
+<div class="card info-card"><h4>Idade de ingresso</h4><p>Os alunos iniciam sua trajetória escolar em Auradon aos <strong>14 anos</strong>.</p></div>
+<div class="card info-card"><h4>Oito períodos</h4><p>A estrutura abaixo organiza a jornada em <strong>8 períodos</strong>, dos 14 aos 22 anos.</p></div>
+<div class="card info-card"><h4>Formação progressiva</h4><p>Os três primeiros períodos formam a base; os cinco seguintes ampliam e aprofundam a formação.</p></div>
+</div>
+<p class="note" style="margin:20px 0 0">A divisão em 8 períodos e a correspondência das idades são uma estrutura de jogo criada para esta página a partir da faixa etária definida no pedido. O PDF fornece a grade, avaliações e progressões de matérias, mas não define uma divisão escolar por idade. fileciteturn7file5</p>
+</section>
+
+<section class="section card">
+<h2 class="section-title">📚 Períodos</h2>
+<div class="periods">
+<button class="period-btn active" data-period="1"><strong>1º Período</strong><small>14 → 15 anos</small></button>
+<button class="period-btn" data-period="2"><strong>2º Período</strong><small>15 → 16 anos</small></button>
+<button class="period-btn" data-period="3"><strong>3º Período</strong><small>16 → 17 anos</small></button>
+<button class="period-btn" data-period="4"><strong>4º Período</strong><small>17 → 18 anos</small></button>
+<button class="period-btn" data-period="5"><strong>5º Período</strong><small>18 → 19 anos</small></button>
+<button class="period-btn" data-period="6"><strong>6º Período</strong><small>19 → 20 anos</small></button>
+<button class="period-btn" data-period="7"><strong>7º Período</strong><small>20 → 21 anos</small></button>
+<button class="period-btn" data-period="8"><strong>8º Período</strong><small>21 → 22 anos</small></button>
+</div>
+<div id="periodPanels">
+<div class="period-panel active" data-panel="1"><div class="period-head"><div><h3>1º Período — Fundamentos</h3><p>Entrada na vida acadêmica de Auradon, com foco em conhecer as bases das seis matérias.</p></div><span class="age">14 → 15 anos</span></div></div>
+<div class="period-panel" data-panel="2"><div class="period-head"><div><h3>2º Período — Desenvolvimento</h3><p>Consolidação dos fundamentos e maior participação em exercícios e atividades práticas.</p></div><span class="age">15 → 16 anos</span></div></div>
+<div class="period-panel" data-panel="3"><div class="period-head"><div><h3>3º Período — Consolidação</h3><p>Fechamento da formação básica, com maior autonomia e preparação para conteúdos mais complexos.</p></div><span class="age">16 → 17 anos</span></div></div>
+<div class="period-panel" data-panel="4"><div class="period-head"><div><h3>4º Período — Aprofundamento</h3><p>Início da etapa de aprofundamento, ampliando a aplicação prática das matérias.</p></div><span class="age">17 → 18 anos</span></div></div>
+<div class="period-panel" data-panel="5"><div class="period-head"><div><h3>5º Período — Aperfeiçoamento</h3><p>Maior domínio técnico, debates, trabalhos e desafios que permitem desenvolver especializações.</p></div><span class="age">18 → 19 anos</span></div></div>
+<div class="period-panel" data-panel="6"><div class="period-head"><div><h3>6º Período — Especialização</h3><p>O estudante pode demonstrar maior domínio em áreas específicas como Magia, Esgrima ou Alquimia.</p></div><span class="age">19 → 20 anos</span></div></div>
+<div class="period-panel" data-panel="7"><div class="period-head"><div><h3>7º Período — Excelência</h3><p>Aplicação avançada do conhecimento, com desafios práticos e acadêmicos mais exigentes.</p></div><span class="age">20 → 21 anos</span></div></div>
+<div class="period-panel" data-panel="8"><div class="period-head"><div><h3>8º Período — Conclusão</h3><p>Último período da jornada, encerrando a formação aos 22 anos e consolidando a especialização do aluno.</p></div><span class="age">21 → 22 anos</span></div></div>
+</div>
+</section>
+
+<section class="section">
+<h2 class="section-title">🪄 Grade Básica</h2>
+<div class="subject-grid">
+<div class="card subject-card"><h4>🪄 Magia</h4><p>Fundamentos, controle e utilização de habilidades mágicas.</p><ul><li>Encantamentos e feitiços</li><li>Magia elemental</li><li>Barreiras e proteção</li><li>Artefatos mágicos</li></ul></div>
+<div class="card subject-card"><h4>⚔️ Esgrima</h4><p>Combate com espada, disciplina, reflexos e estratégia.</p><ul><li>Postura e equilíbrio</li><li>Ataque, defesa e esquiva</li><li>Combate individual e em equipe</li><li>Progressão até estilo próprio</li></ul></div>
+<div class="card subject-card"><h4>🧪 Alquimia e Poções</h4><p>Preparação, identificação e neutralização de poções.</p><ul><li>Ingredientes e preparo</li><li>Antídotos e venenos</li><li>Poções de cura e transformação</li><li>Identificação de efeitos e perigos</li></ul></div>
+<div class="card subject-card"><h4>👑 Etiqueta</h4><p>Convivência social, protocolo real e diplomacia.</p><ul><li>Eventos e cerimônias</li><li>Postura e vestimenta</li><li>Dança e refeições</li><li>Negociação e diplomacia</li></ul></div>
+<div class="card subject-card"><h4>📖 História da Magia</h4><p>Os acontecimentos históricos por trás dos contos e mundos mágicos.</p><ul><li>Reinos e guerras</li><li>Heróis, vilões e fadas</li><li>Maldições e artefatos</li><li>Formação de Auradon e Ilha dos Perdidos</li></ul></div>
+<div class="card subject-card"><h4>😈 Vilões e Vilania</h4><p>Estudo dos grandes vilões, seus poderes, objetivos, estratégias e legado.</p><ul><li>Grandes vilões</li><li>Organizações e exércitos</li><li>Psicologia dos vilões</li><li>Herança familiar</li></ul></div>
+</div>
+</section>
+
+<section class="section card"><h2 class="section-title">📝 Avaliação e Desenvolvimento</h2><div class="info-grid">
+<div class="card info-card"><h4>📚 Prova teórica</h4><p>Perguntas sobre o conteúdo estudado.</p></div><div class="card info-card"><h4>⚔️ Prova prática</h4><p>O aluno demonstra uma habilidade em uma situação prática.</p></div><div class="card info-card"><h4>🎭 Atividade</h4><p>Trabalhos, apresentações, debates ou desafios.</p></div><div class="card info-card"><h4>📊 Notas</h4><p>A+, A, B, C, D e F, de excepcional a reprovado.</p></div><div class="card info-card"><h4>⭐ Especialização</h4><p>Alunos podem desenvolver maior domínio em determinadas áreas.</p></div><div class="card info-card"><h4>🏫 Aulas mistas</h4><p>Royals e Rebels estudam juntos, sem turmas separadas por origem.</p></div>
+</div></section>
+
+<section class="section card"><h2 class="section-title">🎭 Atividades Extracurriculares</h2><p class="note">As atividades são opcionais e funcionam paralelamente às seis matérias básicas. Cada personagem pode escolher uma atividade principal e uma secundária. fileciteturn7file4</p>
+<div class="club-grid" style="margin-top:18px">
+<div class="card club-card"><h4>⚔️ Esgrima</h4><p>Treinos, duelos, torneios e competições.</p></div><div class="card club-card"><h4>🪄 Magia</h4><p>Feitiços, encantamentos, magia antiga e artefatos.</p></div><div class="card club-card"><h4>🧪 Alquimia</h4><p>Poções, antídotos, ingredientes e experimentos.</p></div><div class="card club-card"><h4>🐉 Criaturas Mágicas</h4><p>Cuidados, treinamento, pesquisa e resgate.</p></div><div class="card club-card"><h4>🎭 Teatro</h4><p>Atuação, roteiros, improvisação, cenários e peças.</p></div><div class="card club-card"><h4>🎵 Música</h4><p>Canto, instrumentos, composição, bandas e apresentações.</p></div><div class="card club-card"><h4>💃 Dança</h4><p>Dança clássica, moderna, coreografias e competições.</p></div><div class="card club-card"><h4>🎨 Artes</h4><p>Pintura, desenho, escultura, fotografia e arte mágica.</p></div><div class="card club-card"><h4>🔎 Investigação</h4><p>Pistas, dedução, mistérios, desaparecimentos e casos.</p></div><div class="card club-card"><h4>♟️ Estratégia</h4><p>Xadrez, jogos táticos, mapas e simulações.</p></div><div class="card club-card"><h4>🧭 Exploração</h4><p>Trilhas, acampamentos, navegação e sobrevivência.</p></div><div class="card club-card"><h4>🏺 Arqueologia Mágica</h4><p>Ruínas, artefatos, inscrições e escavações.</p></div><div class="card club-card"><h4>🌿 Herbologia</h4><p>Estudo de plantas mágicas e seus usos.</p></div><div class="card club-card"><h4>📰 Jornal</h4><p>Notícias, investigação, entrevistas e reportagens.</p></div><div class="card club-card"><h4>🤝 Diplomacia</h4><p>Negociações, tratados, debates e relações entre reinos.</p></div><div class="card club-card"><h4>👑 Clube da Coroa</h4><p>Liderança, política, diplomacia e formação de futuros líderes.</p></div>
+</div></section>
+<a class="back" href="index.html">← Voltar ao início</a>
+</main>
+<footer>Descendentes RPG — Auradon Prep</footer>
+<script>
+const buttons=[...document.querySelectorAll('.period-btn')];const panels=[...document.querySelectorAll('.period-panel')];
+buttons.forEach(btn=>btn.addEventListener('click',()=>{const id=btn.dataset.period;buttons.forEach(b=>b.classList.toggle('active',b===btn));panels.forEach(p=>p.classList.toggle('active',p.dataset.panel===id));}));
+const nav=document.querySelector('.home-main-nav'), links=document.querySelector('.home-nav-links'), openBtn=document.querySelector('.mobile-menu-toggle'), closeBtn=document.querySelector('.mobile-menu-close');
+let scrollY=0;function openMenu(){scrollY=window.scrollY;links.classList.add('open');nav.classList.add('menu-open');openBtn.setAttribute('aria-expanded','true');document.body.classList.add('home-menu-locked');document.body.style.top=`-${scrollY}px`;}function closeMenu(){links.classList.remove('open');nav.classList.remove('menu-open');openBtn.setAttribute('aria-expanded','false');document.body.classList.remove('home-menu-locked');document.body.style.top='';window.scrollTo(0,scrollY);}openBtn.addEventListener('click',openMenu);closeBtn.addEventListener('click',closeMenu);nav.addEventListener('click',e=>{if(e.target===nav)closeMenu();});links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(window.innerWidth<=650)closeMenu();}));
+</script>
+</body></html>

@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Explore Auradon — Descendentes RPG</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+:root{--red:#a51d36;--dark:#2b171b;--muted:#6f555a;--line:rgba(165,29,54,.16)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--dark);font-family:"Comfortaa",sans-serif;font-size:14px}
+header{padding:22px 18px;border-bottom:1px solid var(--line);text-align:center;background:#fff}
+header img{width:min(330px,72vw);height:auto}
+main{width:min(1100px,calc(100% - 32px));margin:auto;padding:52px 0 70px}
+.hero{text-align:center;margin-bottom:45px}
+.hero h1{margin:0 0 12px;color:var(--red);font-size:20px;font-weight:400}
+.hero p{margin:0 auto;color:var(--muted);line-height:1.8;max-width:720px}
+.floor{margin-bottom:44px}
+.floor-heading{display:flex;align-items:center;gap:14px;margin:0 0 20px}
+.floor-heading::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(165,29,54,.25),transparent)}
+.floor-heading h2{margin:0;color:var(--red);font-size:20px;font-weight:400}
+.floor-heading span{font-size:12px;color:var(--muted);white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:23px;box-shadow:0 8px 24px rgba(124,18,38,.055);transition:.2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 13px 30px rgba(124,18,38,.09);border-color:rgba(165,29,54,.28)}
+.card h3{margin:0 0 10px;color:var(--dark);font-size:16px;font-weight:500}
+.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.75}
+.back{display:block;width:max-content;margin:12px auto 0;padding:11px 17px;border:1px solid var(--red);border-radius:999px;color:var(--red);text-decoration:none;transition:.2s}
+.back:hover{background:var(--red);color:#fff}
+footer{text-align:center;padding:24px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+@media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){main{width:calc(100% - 24px);padding:40px 0 55px}.cards{grid-template-columns:1fr;gap:12px}.floor{margin-bottom:36px}.floor-heading{gap:10px}.floor-heading h2{font-size:18px}.floor-heading span{font-size:11px}.card{padding:20px}.card h3{font-size:15px}.card p{font-size:14px}}
+
+.city-title{
+  text-align:center;
+  max-width:800px;
+  margin:70px auto 42px;
+  padding-top:55px;
+  border-top:1px solid rgba(165,29,54,.16);
+}
+.city-title h1{
+  margin:0 0 12px;
+  color:var(--red);
+  font-size:20px;
+  font-weight:400;
+}
+.city-title p{
+  margin:0 auto;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+  max-width:700px;
+}
+
+.school-title{
+  text-align:center;
+  max-width:800px;
+  margin:8px auto 42px;
+  padding:28px 0 8px;
+  border-top:1px solid rgba(165,29,54,.16);
+}
+.school-title h1{
+  margin:0 0 12px;
+  color:var(--red);
+  font-size:20px;
+  font-weight:400;
+}
+.school-title p{
+  margin:0 auto;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+  max-width:700px;
+}
+
+/* ===== FUNDO GLOBAL AURADON ===== */
+html,body{
+  min-height:100%;
+}
+body{
+  background:#13051d!important;
+  color:#f8eefb!important;
+  position:relative;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(rgba(12,4,22,.42),rgba(12,4,22,.42)),
+    url("./assets/auradon-bg.jpg") center center / cover no-repeat;
+  opacity:.58;
+  pointer-events:none;
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:rgba(255,255,255,.10);
+  pointer-events:none;
+}
+header{
+  background:rgba(12,4,22,.72)!important;
+  backdrop-filter:blur(12px);
+  border-color:rgba(226,171,255,.20)!important;
+}
+footer{
+  background:rgba(12,4,22,.70)!important;
+  color:#eadcf0!important;
+  border-color:rgba(226,171,255,.18)!important;
+}
+h1,h2,h3,h4,h5,h6,.title,.section-title,.brand{
+  color:#fff!important;
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+p,.subtitle,.meta,.description,.excerpt,.content,.empty,.empty-news,
+label,.subject,.role,.date,.category{
+  color:#f0e5f4!important;
+}
+.card,.group,.aff,.post,.student,.person{
+  background:rgba(18,7,29,.68)!important;
+  border-color:rgba(226,171,255,.24)!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(7px);
+}
+.menu a{
+  background:rgba(18,7,29,.60)!important;
+  color:#fff!important;
+  border-color:rgba(226,171,255,.30)!important;
+}
+.menu a:hover{
+  background:rgba(151,34,117,.72)!important;
+  color:#fff!important;
+  border-color:#e5b7ff!important;
+}
+a{color:#f2cfff}
+.back{
+  color:#fff!important;
+  border-color:#e5b7ff!important;
+  background:rgba(18,7,29,.48);
+}
+.back:hover{
+  background:#8c2b79!important;
+  color:#fff!important;
+}
+.section-divider{
+  background:linear-gradient(90deg,transparent,rgba(226,171,255,.48),transparent)!important;
+}
+.empty-news,.empty{
+  background:rgba(18,7,29,.48)!important;
+  border-color:rgba(226,171,255,.30)!important;
+}
+input,select,textarea{
+  background:rgba(255,255,255,.94)!important;
+  color:#241329!important;
+}
+
+.explore-note{color:#f0e5f4!important}
+.school-title,.city-title{border-color:rgba(226,171,255,.20)!important}
+.floor-heading::after{background:linear-gradient(90deg,rgba(226,171,255,.35),transparent)!important}
+.floor-heading h2,.city-title h1,.school-title h1{color:#fff!important}
+
+/* ===== IDENTIDADE TIPOGRÁFICA GLOBAL ===== */
+:root{
+  --site-text:#f3eaf6;
+  --site-muted:#d9c9df;
+  --site-title:#ffffff;
+  --site-accent:#e4b8f4;
+}
+html,body{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+}
+body{
+  color:var(--site-text)!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:20px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  color:var(--site-title)!important;
+}
+p,li,td,th,small,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,
+label,button,a,.menu a,.back{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  line-height:1.7!important;
+}
+.card h3,.person .name,.student .name,
+.post h2,.group h3{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:20px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  color:var(--site-title)!important;
+}
+/* Contraste para o fundo roxo/azul */
+p,li,td,th,.subtitle,.description,.excerpt,.content,.meta,.date,
+.subject,.role,.empty,.empty-news,label{
+  color:var(--site-muted)!important;
+}
+a,.back,.menu a{
+  color:var(--site-title)!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#fff!important;
+}
+/* Campos administrativos permanecem claros para facilitar a edição */
+input,select,textarea{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  line-height:1.5!important;
+}
+input,select,textarea{
+  color:#241329!important;
+}
+button{
+  font-family:"Comfortaa",sans-serif!important;
+}
+@media(max-width:650px){
+  html,body{font-size:14px!important}
+  h1,h2,h3,h4,h5,h6,.title,.section-title,
+  .school-title h1,.city-title h1,.floor-heading h2,.hero h1,
+  .card h3,.person .name,.student .name,.post h2,.group h3{
+    font-size:20px!important;
+  }
+  p,li,td,th,small,.subtitle,.description,.excerpt,.content,
+  .meta,.date,.category,.subject,.role,.empty,.empty-news,
+  label,button,a,.menu a,.back{
+    font-size:14px!important;
+  }
+}
+
+/* ===== TEXTO GLOBAL CLARO ===== */
+body,body *{
+  color:#f4edf7!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1,
+.card h3,.person .name,.student .name,.post h2,.group h3{
+  color:#ffffff!important;
+}
+p,li,td,th,small,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,
+.data,.info,.details,.label{
+  color:#f4edf7!important;
+}
+a,.back,.menu a{
+  color:#ffffff!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#ffffff!important;
+}
+/* Campos de edição continuam com contraste apropriado */
+input,select,textarea{
+  color:#241329!important;
+  background:#fff!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#6f5a72!important;
+}
+/* Ícones e elementos decorativos não recebem cores escuras */
+svg{color:#fff!important}
+
+/* ===== TEMA UNIFORME: FUNDO DO SITE + TEXTO BRANCO ===== */
+html,body{
+  background:#12051d!important;
+  color:#f4edf7!important;
+}
+body{
+  background-image:url("./assets/auradon-bg.jpg")!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-attachment:fixed!important;
+  background-repeat:no-repeat!important;
+}
+body::before,body::after{display:none!important}
+
+/* Remove superfícies brancas dos blocos de conteúdo */
+main,section,article,header,footer,nav,aside,
+.container,.content,.wrapper,.page,.group,.list,.grid,
+.panel,.dashboard,.topbar,.navbar,.sidebar{
+  background:transparent!important;
+  background-image:none!important;
+}
+
+/* Cards mantêm transparência, mas nunca ficam brancos */
+.card,.aff,.post,.student,.person,.item,.box,.panel-card,.stat,
+.form-card,.list-card,.table-card,.news-card,.group-card{
+  background:rgba(13,5,23,.68)!important;
+  color:#f4edf7!important;
+  border-color:rgba(226,190,245,.20)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+}
+
+/* Tipografia branca em todas as páginas públicas e admin */
+body *{
+  font-family:"Comfortaa",sans-serif!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1,.card h3,
+.student .name,.person .name,.post h2,.group h3,
+.admin-welcome,.admin-welcome span{
+  color:#fff!important;
+}
+p,li,td,th,span,label,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,.details,.data,.info{
+  color:#f4edf7!important;
+}
+a,.back,.menu a{
+  color:#fff!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#fff!important;
+}
+
+/* Filiações: remove o vermelho antigo dos textos e contadores.
+   O contador cheio continua podendo usar vermelho como indicador de lotação. */
+.count{
+  color:#fff!important;
+}
+.count.full{
+  color:#ff8fa4!important;
+}
+
+/* Notícias */
+.news-section,.news-list,.post{
+  color:#f4edf7!important;
+}
+.news-section h1,.news-section h2,.news-section h3,
+.news-list h1,.news-list h2,.news-list h3{
+  color:#fff!important;
+}
+
+/* Explore Auradon */
+.floor-heading h2,.school-title h1,.city-title h1{
+  color:#fff!important;
+}
+
+/* Admin: tudo branco/transparente; só campos de edição ficam claros */
+.admin-top-welcome,header,.admin-header,.topbar{
+  background:rgba(13,5,23,.68)!important;
+  color:#fff!important;
+  border-color:rgba(226,190,245,.20)!important;
+}
+input,select,textarea{
+  background:#fff!important;
+  color:#241329!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#6f5a72!important;
+}
+table,thead,tbody,tr{
+  background:transparent!important;
+}
+button,.btn{
+  color:#fff!important;
+}
+
+/* ===== RPG — ESQUEMA DE CORES DE TEXTO ===== */
+:root{
+  --rpg-red:#a51d36;
+  --rpg-white:#ffffff;
+}
+
+/* Superfícies brancas/claras */
+body,
+.card,
+.card *,
+section.card,
+.panel,
+.panel *,
+.form-card,
+.form-card *,
+table,
+thead,
+tbody,
+tr,
+td,
+th,
+input,
+select,
+textarea,
+label,
+.modal,
+.modal *,
+.admin-card,
+.admin-card *,
+.notice-card,
+.notice-card *{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Fundo roxo/escuro */
+.hero,
+.hero *,
+header.dark,
+.dark-section,
+.purple-section,
+.purple-bg,
+.site-purple,
+footer,
+footer *{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Navegação sobre fundo roxo */
+header,
+header nav,
+header nav *,
+.main-nav,
+.main-nav *,
+.home-main-nav,
+.home-main-nav *{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Links em áreas brancas */
+.card a,
+.panel a,
+section.card a,
+main a{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Placeholders permanecem legíveis */
+input::placeholder,
+textarea::placeholder{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+  opacity:.65;
+}
+
+/* Botões: texto vermelho no botão claro */
+button,
+.btn{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Botões que já usam fundo roxo/escuro */
+.btn-primary,
+.btn-dark,
+button.primary,
+button.dark,
+button[class*="purple"]{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Exceções para estados de hover que usam fundo vermelho/roxo */
+button:hover,
+.btn:hover{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+</style>
+<style>
+header img{
+  filter:none!important;
+  image-rendering:auto!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
+}
+</style><style>
+header img{
+  height:auto!important;
+  max-width:100%!important;
+  filter:none!important;
+  image-rendering:auto!important;
+  mix-blend-mode:normal!important;
+  opacity:1!important;
+}
+</style>
+<style id="rpg-background-override">
+/* ===== FUNDO OFICIAL DO RPG + TIPOGRAFIA BRANCA ===== */
+html{
+  min-height:100%;
+  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
+}
+body{
+  min-height:100vh!important;
+  background:transparent!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Todo texto do site */
+body *,
+body h1,body h2,body h3,body h4,body h5,body h6,
+body p,body span,body strong,body b,body small,body label,
+body a,body a:visited,body li,body td,body th,
+body .title,body .subtitle,body .label,body .meta,
+body .brand,body .section-kicker,body .type,body .status{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Cabeçalho e navegação deixam o fundo aparecer */
+header,.top,.home-main-nav,.admin-main-nav,footer{
+  background:rgba(5,3,10,.34)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+
+/* Cards, painéis e áreas de conteúdo: translúcidos para manter o fundo uniforme */
+.card,.panel,.side,.form-card,.admin-card,.notice-card,
+.modal,.item,.stat,.login,
+.admin-auth-info-card,.admin-exclusive-card{
+  background:rgba(8,5,14,.62)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.20)!important;
+}
+
+/* Campos */
+input,select,textarea{
+  background:rgba(0,0,0,.38)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+input::placeholder,textarea::placeholder{
+  color:rgba(255,255,255,.72)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
+}
+
+/* Botões */
+button,.btn{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+button:hover,.btn:hover,
+button.active,.btn.active,
+button.primary,.btn.primary{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Links */
+a,a:visited,a:hover{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Menu mobile/lateral */
+.mobile-menu,.mobile-menu-links,.home-nav-links,
+.admin-sidebar,.admin-sidebar-nav{
+  background:rgba(7,4,14,.94)!important;
+}
+.mobile-menu button,.mobile-menu a,
+.home-nav-links button,.home-nav-links a,
+.admin-sidebar button,.admin-sidebar a{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Remove regras antigas que tentavam pintar texto de vermelho/dourado. */
+:root{
+  --rpg-red:#fff!important;
+  --rpg-white:#fff!important;
+  --wine:#fff!important;
+  --wine-dark:#fff!important;
+  --gold:#fff!important;
+  --cream:#fff!important;
+  --text:#fff!important;
+  --muted:rgba(255,255,255,.78)!important;
+  --line:rgba(255,255,255,.20)!important;
+}
+
+/* Loading continua legível sobre o novo fundo */
+</style>
+
+<style id="maintenance-style">
+#siteMaintenanceOverlay{
+  position:fixed;inset:0;z-index:2147483647;
+  display:flex;align-items:center;justify-content:center;
+  background:#05030a;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+#siteMaintenanceOverlay.is-active{
+  opacity:1;visibility:visible;pointer-events:auto;
+}
+#siteMaintenanceOverlay img{
+  width:100vw;height:100vh;object-fit:cover;display:block;
+}
+html.maintenance-mode,
+html.maintenance-mode body{
+  overflow:hidden!important;
+}
+html.maintenance-mode body > *:not(#siteMaintenanceOverlay){
+  visibility:hidden!important;
+}
+@media(max-width:700px){
+  #siteMaintenanceOverlay{padding:0;background:#05030a!important;}
+  #siteMaintenanceOverlay img{
+    width:100vw!important;
+    height:auto!important;
+    max-width:100vw!important;
+    max-height:100vh!important;
+    object-fit:contain!important;
+    object-position:center!important;
+    display:block!important;
+  }
+}
+</style>
+
+<style id="global-button-standard">
+
+/* ===== PADRÃO GLOBAL DE BOTÕES: VERMELHO + TEXTO BRANCO ===== */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.button,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-success,
+.btn-warning,
+.btn-outline,
+[role="button"] {
+  background: #b30000 !important;
+  background-color: #b30000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #b30000 !important;
+  box-shadow: none;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+.btn:hover,
+.button:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover,
+.btn-success:hover,
+.btn-warning:hover,
+.btn-outline:hover,
+[role="button"]:hover {
+  background: #8f0000 !important;
+  background-color: #8f0000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #8f0000 !important;
+}
+
+button:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible,
+.btn:focus-visible,
+.button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #fff !important;
+  outline-offset: 2px;
+}
+
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled,
+.btn:disabled,
+.button:disabled {
+  background: #b30000 !important;
+  background-color: #b30000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  opacity: .55;
+}
+</style>
+</head>
+<body>
+<header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header>
+
+<main>
+<section class="hero">
+<h1>Explore Auradon</h1>
+<p>Conheça os principais espaços da Auradon Prep, organizados por área e andar. Cada local pode servir como cenário para aulas, encontros, atividades e cenas do RPG.</p>
+</section>
+
+<section class="school-title">
+<h1>Auradon Preparatoria</h1>
+<p>Explore os espaços da Auradon Preparatoria, organizados por área e andar.</p>
+</section>
+
+<section class="floor">
+<div class="floor-heading"><h2>Área Externa</h2><span>Espaços ao redor da escola</span></div>
+<div class="cards">
+<article class="card"><h3>Entrada da Escola</h3><p>O principal acesso à Auradon Prep. É por onde alunos, professores e visitantes chegam à escola, sendo também um ponto natural para encontros e recepções.</p></article>
+<article class="card"><h3>Jardins</h3><p>Áreas verdes da escola destinadas a passeios, descanso e atividades ao ar livre. Também podem receber encontros de clubes e pequenas cenas entre estudantes.</p></article>
+<article class="card"><h3>Piscina</h3><p>Espaço destinado à natação, lazer e atividades aquáticas. Um local para treinamentos, competições e momentos de descontração.</p></article>
+<article class="card"><h3>Ginásio Olímpico (Sala de Esgrima)</h3><p>Grande espaço esportivo da escola, com uma área dedicada à esgrima. É utilizado para treinos, duelos e competições entre estudantes.</p></article>
+<article class="card"><h3>Campo de Futebol</h3><p>Campo esportivo utilizado para partidas, treinamentos e competições. Pode reunir estudantes em eventos esportivos e atividades extracurriculares.</p></article>
+</div>
+</section>
+
+<section class="floor">
+<div class="floor-heading"><h2>Masmorras</h2><span>Áreas subterrâneas</span></div>
+<div class="cards">
+<article class="card"><h3>Sala de Alquimia e Poções</h3><p>Espaço dedicado às experiências de Alquimia e Poções. É onde os estudantes podem trabalhar com ingredientes, fórmulas e experimentos sob orientação dos professores.</p></article>
+</div>
+</section>
+
+<section class="floor">
+<div class="floor-heading"><h2>Térreo</h2><span>Centro da escola</span></div>
+<div class="cards">
+<article class="card"><h3>Grande Salão</h3><p>Um dos principais espaços de convivência e eventos da escola. Pode receber refeições coletivas, cerimônias, festas e acontecimentos importantes.</p></article>
+<article class="card"><h3>Cozinha</h3><p>Área responsável pela preparação das refeições da escola. É um espaço de apoio ao Grande Salão e ao funcionamento cotidiano da Auradon Prep.</p></article>
+<article class="card"><h3>Enfermaria</h3><p>Local destinado ao atendimento dos estudantes em casos de acidentes, mal-estar ou necessidade de cuidados durante o período escolar.</p></article>
+<article class="card"><h3>Corredor dos Armários dos Alunos</h3><p>Área movimentada onde os estudantes guardam seus materiais. Um cenário natural para encontros rápidos, conversas, mensagens e acontecimentos inesperados.</p></article>
+<article class="card"><h3>Biblioteca</h3><p>Espaço dedicado aos estudos e à pesquisa. Reúne livros e materiais utilizados pelos alunos em suas atividades acadêmicas.</p></article>
+</div>
+</section>
+
+<section class="floor">
+<div class="floor-heading"><h2>Primeiro Andar</h2><span>Administração e salas</span></div>
+<div class="cards">
+<article class="card"><h3>Ala Administrativa</h3><p>Área destinada às funções administrativas da Auradon Prep. É um espaço relacionado à direção, organização e decisões sobre a vida escolar.</p></article>
+<article class="card"><h3>Salas de Aula</h3><p>Ambientes onde acontecem as aulas regulares. Royals e Rebels estudam juntos nas turmas, conforme o sistema escolar do RPG.</p></article>
+<article class="card"><h3>Banheiros</h3><p>Espaços de uso cotidiano dos estudantes e funcionários, distribuídos para atender a rotina da escola.</p></article>
+</div>
+</section>
+
+<section class="floor">
+<div class="floor-heading"><h2>Segundo Andar</h2><span>Estudos, clubes e lazer</span></div>
+<div class="cards">
+<article class="card"><h3>Salas de Eletivas</h3><p>Salas destinadas às atividades e disciplinas eletivas, permitindo que os estudantes explorem interesses além da rotina acadêmica principal.</p></article>
+<article class="card"><h3>Centro Acadêmico</h3><p>Espaço voltado para atividades acadêmicas, organização estudantil, estudos e projetos dos alunos.</p></article>
+<article class="card"><h3>Espaço de Lazer</h3><p>Área para descanso e convivência dos estudantes, podendo incluir academia, cinema, sala de videogame e outros ambientes recreativos.</p></article>
+</div>
+</section>
+
+<section class="floor">
+<div class="floor-heading"><h2>Terceiro Andar</h2><span>Área residencial</span></div>
+<div class="cards">
+<article class="card"><h3>Dormitórios</h3><p>Área onde os estudantes ficam hospedados durante o período escolar. Os dormitórios são espaços importantes para convivência, amizades, rivalidades e desenvolvimento das histórias dos personagens.</p></article>
+</div>
+</section>
+
+
+<section class="city-title">
+  <h1>Vila de Auradon</h1>
+  <p>Explore os espaços da cidade de Auradon e descubra lugares para encontros, compras, lazer e aventuras.</p>
+</section>
+
+<section class="floor">
+<div class="floor-heading"><h2>Centro de Auradon</h2><span>Comércio e lazer</span></div>
+<div class="cards">
+<article class="card"><h3>Praça Central</h3><p>O coração da Vila de Auradon, um ponto de encontro onde moradores e visitantes podem circular, conversar e acompanhar os acontecimentos da cidade.</p></article>
+<article class="card"><h3>Chá do Chapeleiro</h3><p>Uma charmosa casa de chá pertencente ao Chapeleiro Maluco, perfeita para encontros, conversas e momentos diferentes durante uma visita ao centro.</p></article>
+<article class="card"><h3>Loja de Sapatos da Cinderela</h3><p>A loja da Cinderela, conhecida pelos seus famosos Sapatinhos de Cristal e dedicada a calçados e acessórios encantados.</p></article>
+<article class="card"><h3>Maçã Encantada</h3><p>Uma loja temática de Auradon onde produtos e itens encantados podem fazer parte do cotidiano dos moradores.</p></article>
+<article class="card"><h3>El Shaday</h3><p>Loja de tapetes do Gênio da Lâmpada, reunindo peças especiais para os moradores da cidade.</p></article>
+<article class="card"><h3>Cinema</h3><p>O espaço de entretenimento da cidade para assistir a filmes, encontrar amigos e aproveitar uma noite fora da escola.</p></article>
+<article class="card"><h3>Reino dos Sorvetes</h3><p>Sorveteria de Auradon com opções doces para os moradores e estudantes que procuram um lugar para relaxar.</p></article>
+<article class="card"><h3>Livraria da Bela</h3><p>Livraria da Bela, de A Bela e a Fera, onde leitores podem encontrar livros e passar um tempo entre histórias.</p></article>
+<article class="card"><h3>Fada Açucarada</h3><p>Loja de doces cheia de opções açucaradas para quem procura uma sobremesa ou um presente especial.</p></article>
+</div>
+</section>
+
+<section class="floor">
+<div class="floor-heading"><h2>Floresta</h2><span>Entre a cidade e a natureza</span></div>
+<div class="cards">
+<article class="card"><h3>Bar Cabeça de Polvo</h3><p>Uma taverna pirata da família Hook, localizada na região da floresta. O local é proibido para alunos, mas nada impede que um estudante visite a taverna por sua própria conta e risco — só é melhor tomar cuidado para que inspetores e professores da Auradon Preparatoria não descubram.</p></article>
+</div>
+</section>
+
+<section class="floor">
+<div class="floor-heading"><h2>Cidade Baixa</h2><span>Região costeira e diversão</span></div>
+<div class="cards">
+<article class="card"><h3>Praia</h3><p>Uma área à beira-mar onde moradores e estudantes podem aproveitar o litoral, descansar e passar momentos de lazer.</p></article>
+<article class="card"><h3>Cais</h3><p>Área portuária de Auradon, com movimento de embarcações e acesso à região costeira da cidade.</p></article>
+<article class="card"><h3>Parque de Diversão</h3><p>Espaço recreativo para diversão, encontros e atividades para moradores e visitantes de todas as idades.</p></article>
+<article class="card"><h3>Siri Cascudo</h3><p>Filial do famoso restaurante Siri Cascudo, localizado na Fenda do Biquíni. A unidade em Auradon traz o conhecido restaurante para a cidade, sendo uma opção para refeições e encontros.</p></article>
+</div>
+</section>
+
+<a class="back" href="index.html">Voltar à página inicial</a>
+</main>
+
+<footer>Descendentes RPG • Auradon Prep</footer>
+<script type="module" src="./maintenance.js"></script>
+</body>
+</html>

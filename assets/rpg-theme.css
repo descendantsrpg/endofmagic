@@ -1,0 +1,102 @@
+
+/* ===== FUNDO OFICIAL DO RPG + TIPOGRAFIA BRANCA ===== */
+html{
+  min-height:100%;
+  background:#080509 url("./site-background.jpg") center center / cover fixed no-repeat!important;
+}
+body{
+  min-height:100vh!important;
+  background:transparent!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Todo texto do site */
+body *,
+body h1,body h2,body h3,body h4,body h5,body h6,
+body p,body span,body strong,body b,body small,body label,
+body a,body a:visited,body li,body td,body th,
+body .title,body .subtitle,body .label,body .meta,
+body .brand,body .section-kicker,body .type,body .status{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Cabeçalho e navegação deixam o fundo aparecer */
+header,.top,.home-main-nav,.admin-main-nav,footer{
+  background:rgba(5,3,10,.34)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+
+/* Cards, painéis e áreas de conteúdo: translúcidos para manter o fundo uniforme */
+.card,.panel,.side,.form-card,.admin-card,.notice-card,
+.modal,.item,.stat,.login,
+.admin-auth-info-card,.admin-exclusive-card{
+  background:rgba(8,5,14,.62)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.20)!important;
+}
+
+/* Campos */
+input,select,textarea{
+  background:rgba(0,0,0,.38)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+input::placeholder,textarea::placeholder{
+  color:rgba(255,255,255,.72)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
+}
+
+/* Botões */
+button,.btn{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+button:hover,.btn:hover,
+button.active,.btn.active,
+button.primary,.btn.primary{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Links */
+a,a:visited,a:hover{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Menu mobile/lateral */
+.mobile-menu,.mobile-menu-links,.home-nav-links,
+.admin-sidebar,.admin-sidebar-nav{
+  background:rgba(7,4,14,.94)!important;
+}
+.mobile-menu button,.mobile-menu a,
+.home-nav-links button,.home-nav-links a,
+.admin-sidebar button,.admin-sidebar a{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Remove regras antigas que tentavam pintar texto de vermelho/dourado. */
+:root{
+  --rpg-red:#fff!important;
+  --rpg-white:#fff!important;
+  --wine:#fff!important;
+  --wine-dark:#fff!important;
+  --gold:#fff!important;
+  --cream:#fff!important;
+  --text:#fff!important;
+  --muted:rgba(255,255,255,.78)!important;
+  --line:rgba(255,255,255,.20)!important;
+}
+
+/* Loading continua legível sobre o novo fundo */
+#dbLoadingOverlay{
+  background:rgba(4,2,8,.84)!important;
+}

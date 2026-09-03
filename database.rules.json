@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "site": {
+      "admins": {
+        ".read": true,
+        ".write": true
+      }
+    }
+  }
+}

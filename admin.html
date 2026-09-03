@@ -1,0 +1,2944 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel Admin — Descendentes RPG</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+/* IDENTIDADE VISUAL GLOBAL */
+:root{--red:#a51d36;--red-dark:#7c1226;--text:#2b171b;--muted:#6f555a;--line:rgba(165,29,54,.18)}
+*{box-sizing:border-box}
+html,body{background:#fff!important;color:var(--text)!important;font-family:"Comfortaa",sans-serif!important}
+body,button,input,textarea,select,a{font-family:"Comfortaa",sans-serif!important}
+header,.top,footer{background:#fff!important;color:var(--text)!important;border-color:var(--line)!important}
+h1,h2,h3,h4,h5,h6,.brand,.title,.type,.section-kicker{color:var(--red)!important;font-family:"Comfortaa",sans-serif!important;font-weight:300}
+p,.subtitle,.meta,.status,.label,.upload-status,.data{color:var(--muted)!important}
+.card,.side,.item,.student,.post,.group,.aff,.news-slider,.news-card{background:#fff!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:0 6px 20px rgba(124,18,38,.06)!important}
+.btn,.filter,.news-btn{background:#fff!important;color:var(--red)!important;border-color:rgba(165,29,54,.3)!important}
+.btn:hover,.filter:hover,.filter.active,.news-btn:hover,.btn.primary{background:var(--red)!important;color:#fff!important;border-color:var(--red)!important}
+input,textarea,select{background:#fff!important;color:var(--text)!important;border-color:rgba(165,29,54,.25)!important}
+input:focus,textarea:focus,select:focus{outline:2px solid rgba(165,29,54,.12)!important;border-color:var(--red)!important}
+a{color:var(--red)}
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+/* DESCENDENTES RPG — IDENTIDADE VISUAL GLOBAL */
+:root{
+  --wine:#a51d36!important;
+  --wine-dark:#7c1226!important;
+  --gold:#a51d36!important;
+  --cream:#ffffff!important;
+  --text:#2b171b!important;
+  --muted:#6f555a!important;
+  --line:rgba(165,29,54,.22)!important;
+  --danger:#a51d36!important;
+}
+html,body{
+  background:#fff!important;
+  color:#2b171b!important;
+}
+body{
+  font-family:"Comfortaa",sans-serif!important;
+}
+header,.top,footer{
+  background:#fff!important;
+  color:#2b171b!important;
+  border-color:rgba(165,29,54,.18)!important;
+}
+h1,h2,h3,h4,h5,h6,.brand,.title,.type,.section-kicker,
+button,input,textarea,select,a{
+  font-family:"Comfortaa",sans-serif!important;
+}
+h1,h2,h3,h4,h5,h6,.title,.type,.brand{
+  color:#a51d36!important;
+}
+p,.subtitle,.meta,.status,.label,.intro,.data,.upload-status{
+  color:#6f555a!important;
+}
+a{color:#a51d36}
+.card,.side,.item,.student,.post,.group,.aff,.news-slider,.news-card{
+  background:#fff!important;
+  color:#2b171b!important;
+  border-color:rgba(165,29,54,.18)!important;
+  box-shadow:0 6px 20px rgba(124,18,38,.06)!important;
+}
+.btn,.filter,.news-btn{
+  background:#fff!important;
+  color:#a51d36!important;
+  border-color:rgba(165,29,54,.3)!important;
+}
+.btn:hover,.filter:hover,.filter.active,.news-btn:hover{
+  background:#a51d36!important;
+  color:#fff!important;
+  border-color:#a51d36!important;
+}
+.btn.primary{
+  background:#a51d36!important;
+  color:#fff!important;
+  border-color:#a51d36!important;
+}
+input,textarea,select{
+  background:#fff!important;
+  color:#2b171b!important;
+  border-color:rgba(165,29,54,.25)!important;
+}
+input:focus,textarea:focus,select:focus{
+  outline:2px solid rgba(165,29,54,.12)!important;
+  border-color:#a51d36!important;
+}
+.menu a{
+  background:#fff!important;
+  color:#a51d36!important;
+  border-color:rgba(165,29,54,.22)!important;
+}
+.menu a:hover{
+  background:#a51d36!important;
+  color:#fff!important;
+  border-color:#a51d36!important;
+}
+.back{
+  color:#a51d36!important;
+  border-color:#a51d36!important;
+}
+.news-tag,.news-number,.news-more{
+  color:#a51d36!important;
+}
+.news-dot{background:rgba(165,29,54,.25)!important}
+.news-dot.active{background:#a51d36!important}
+
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+*{font-family:"Comfortaa",sans-serif!important}
+body,button,input,textarea,select{font-family:"Comfortaa",sans-serif!important;font-weight:300}
+h1,h2,h3,.brand,.title,.type,.section-kicker{font-family:"Comfortaa",sans-serif!important;font-weight:300}
+
+:root{--bg:#0d080a;--panel:#171013;--panel2:#20161a;--gold:#d5ad5a;--cream:#fff8e8;--muted:#b9aaad;--line:rgba(213,173,90,.2);--danger:#c96b6b;--ok:#83bd91}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#0d080a,#281018);color:var(--cream);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}.hidden{display:none!important}
+.container{width:min(1180px,calc(100% - 30px));margin:auto}
+.top{border-bottom:1px solid var(--line);padding:18px 0;background:rgba(10,5,7,.8);position:sticky;top:0;z-index:5}
+.topin{display:flex;justify-content:space-between;align-items:center;gap:15px}.brand{letter-spacing:.08em}.brand-logo{display:flex;align-items:center;gap:12px}.brand-logo img{width:170px;height:auto;display:block}.brand-logo span{color:var(--wine);font-size:.75rem}
+.btn{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--panel2);color:var(--cream);cursor:pointer}.btn:hover{border-color:var(--gold)}
+.primary{background:var(--gold);color:#21120d;border-color:var(--gold);font-weight:700}.danger{border-color:rgba(201,107,107,.5);color:#e99b9b}
+main{padding:35px 0 70px}.grid{display:grid;grid-template-columns:240px 1fr;gap:20px}.side,.card{border:1px solid var(--line);background:rgba(255,248,232,.045);border-radius:16px}
+.side{padding:12px;height:max-content}.side button{display:block;width:100%;text-align:left;border:0;background:none;color:var(--muted);padding:13px;border-radius:9px;cursor:pointer}.side button.active,.side button:hover{background:rgba(213,173,90,.1);color:var(--gold)}
+.content{min-width:0}.page{display:none}.page.active{display:block}.title{margin:0 0 7px;font-size:28px}.subtitle{color:var(--muted);margin:0 0 24px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{padding:20px}.stat b{display:block;font-size:28px;color:var(--gold);margin-top:8px}.label{color:var(--muted);font-size:13px}
+.card{padding:20px;margin-bottom:16px}.card h3{margin:0 0 15px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}
+label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}input,textarea,select{width:100%;border:1px solid var(--line);background:#100a0d;color:var(--cream);border-radius:9px;padding:11px}textarea{min-height:120px;resize:vertical}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.list{display:grid;gap:10px}.item{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:15px;background:rgba(255,255,255,.035);border:1px solid rgba(213,173,90,.12);border-radius:10px}.item strong{display:block}.meta{color:var(--muted);font-size:12px;margin-top:4px}.login{max-width:440px;margin:80px auto}.status{margin-top:10px;color:var(--muted);font-size:13px}.login-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:rgba(255,255,255,.55);font-size:12px;text-transform:uppercase;letter-spacing:.12em}.login-divider:before,.login-divider:after{content:"";height:1px;flex:1;background:rgba(255,255,255,.15)}.google-login-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff!important;color:#202124!important;border:1px solid rgba(255,255,255,.35)!important;box-shadow:0 8px 24px rgba(0,0,0,.18)}.google-login-btn:hover{background:#f4f4f4!important;color:#111!important}.google-icon{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-weight:800;font-family:Arial,sans-serif;font-size:17px;color:#4285f4;background:#fff}
+.image-preview{margin-top:10px;border:1px solid var(--line);border-radius:10px;overflow:hidden;max-width:360px}
+.image-preview img{display:block;width:100%;height:auto;max-height:220px;object-fit:cover}.student-thumb{width:64px;height:64px;object-fit:cover;border-radius:9px;border:1px solid var(--line);margin-right:12px;vertical-align:middle}.affiliation-group{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}.affiliation-story{margin-left:14px;padding:10px 0 2px;border-top:1px solid rgba(213,173,90,.10)}.affiliation-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0}.count{color:var(--gold);font-size:12px;white-space:nowrap}
+.upload-status{color:var(--muted);font-size:12px;margin-top:7px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.side{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.side button{text-align:center;font-size:12px}.item{align-items:flex-start;flex-direction:column}.topin{align-items:flex-start;flex-direction:column}}
+h1,h2,h3,.brand,.title,.type,.section-kicker{
+  font-family:"Comfortaa",sans-serif;
+}
+body,button,input,textarea,select{
+  font-family:"Comfortaa",sans-serif;
+}
+
+/* ===== PALETA DESCENDENTES RPG — BRANCO + VERMELHO ===== */
+:root{
+  --wine:#9b1c31;
+  --wine-dark:#650d1d;
+  --gold:#b21f35;
+  --cream:#ffffff;
+  --text:#2a1115;
+  --muted:#6f555a;
+  --line:rgba(155,28,49,.22);
+  --danger:#b21f35;
+  --ok:#2d7a4b;
+}
+body{
+  color:var(--text)!important;
+  background:#fff!important;
+}
+header,.top{
+  background:#fff!important;
+  border-bottom:1px solid var(--line)!important;
+}
+.brand{
+  color:var(--wine)!important;
+}
+footer{
+  color:#765f63!important;
+  background:#fff!important;
+  border-top:1px solid var(--line)!important;
+}
+.card,.side,.menu a,.student,.post,.news-slider{
+  background:#fff!important;
+  border-color:var(--line)!important;
+  box-shadow:0 5px 18px rgba(101,13,29,.07);
+}
+.menu a{
+  color:var(--wine)!important;
+}
+.menu a:hover{
+  background:var(--wine)!important;
+  color:#fff!important;
+  border-color:var(--wine)!important;
+}
+h1,h2,h3,.title,.section-kicker,.type{
+  color:var(--wine);
+}
+.intro p,.subtitle,.news-slide p,.post-excerpt,.post-content,.data,.status,.label,.meta{
+  color:var(--muted)!important;
+}
+.btn{
+  background:#fff!important;
+  color:var(--wine)!important;
+  border-color:var(--line)!important;
+}
+.btn:hover{
+  border-color:var(--wine)!important;
+}
+.btn.primary{
+  background:var(--wine)!important;
+  color:#fff!important;
+  border-color:var(--wine)!important;
+}
+.btn.danger{
+  color:var(--danger)!important;
+  border-color:rgba(178,31,53,.35)!important;
+}
+input,textarea,select{
+  background:#fff!important;
+  color:var(--text)!important;
+  border-color:var(--line)!important;
+}
+input:focus,textarea:focus,select:focus{
+  outline:2px solid rgba(155,28,49,.15);
+  border-color:var(--wine)!important;
+}
+.news-tag,.news-number,.news-more,.back{
+  color:var(--wine)!important;
+}
+.news-btn,.filter{
+  background:#fff!important;
+  color:var(--wine)!important;
+  border-color:var(--line)!important;
+}
+.news-btn:hover,.filter:hover,.filter.active{
+  background:var(--wine)!important;
+  color:#fff!important;
+  border-color:var(--wine)!important;
+}
+.news-dot{background:rgba(155,28,49,.25)!important}
+.news-dot.active{background:var(--wine)!important}
+.back{
+  border-color:var(--wine)!important;
+}
+.image-preview,.student-thumb{
+  border-color:var(--line)!important;
+}
+
+.admin-welcome{width:min(1100px,calc(100% - 32px));margin:22px auto 0;text-align:center;color:#a51d36;font-family:"Comfortaa",sans-serif;font-size:1.45rem;font-weight:400}.admin-welcome span{color:#2b171b;font-weight:300}
+
+.admin-top-welcome{
+  width:100%;
+  background:#fff;
+  border-bottom:1px solid rgba(165,29,54,.18);
+  padding:18px 16px;
+  margin:0 0 22px;
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+.admin-welcome{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#a51d36!important;
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:1.45rem!important;
+  line-height:1.4;
+  font-weight:400!important;
+  text-align:center!important;
+  margin:0 auto!important;
+}
+.admin-welcome span{
+  color:#2b171b!important;
+  font-weight:500!important;
+}
+
+/* TIPOGRAFIA PADRÃO DO SITE */
+body{
+  font-size:14px!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.brand{
+  font-size:20px!important;
+}
+p,li,td,th,label,.subtitle,.meta,.status,.description,.excerpt,.content,
+.empty,.empty-news,.data,.subject,.role,.date,.category{
+  font-size:14px!important;
+}
+
+/* ===== FUNDO GLOBAL AURADON ===== */
+html,body{
+  min-height:100%;
+}
+body{
+  background:#13051d!important;
+  color:#f8eefb!important;
+  position:relative;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(rgba(12,4,22,.42),rgba(12,4,22,.42)),
+    url("./assets/auradon-bg.jpg") center center / cover no-repeat;
+  opacity:.58;
+  pointer-events:none;
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:rgba(255,255,255,.10);
+  pointer-events:none;
+}
+header{
+  background:rgba(12,4,22,.72)!important;
+  backdrop-filter:blur(12px);
+  border-color:rgba(226,171,255,.20)!important;
+}
+footer{
+  background:rgba(12,4,22,.70)!important;
+  color:#eadcf0!important;
+  border-color:rgba(226,171,255,.18)!important;
+}
+h1,h2,h3,h4,h5,h6,.title,.section-title,.brand{
+  color:#fff!important;
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+p,.subtitle,.meta,.description,.excerpt,.content,.empty,.empty-news,
+label,.subject,.role,.date,.category{
+  color:#f0e5f4!important;
+}
+.card,.group,.aff,.post,.student,.person{
+  background:rgba(18,7,29,.68)!important;
+  border-color:rgba(226,171,255,.24)!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(7px);
+}
+.menu a{
+  background:rgba(18,7,29,.60)!important;
+  color:#fff!important;
+  border-color:rgba(226,171,255,.30)!important;
+}
+.menu a:hover{
+  background:rgba(151,34,117,.72)!important;
+  color:#fff!important;
+  border-color:#e5b7ff!important;
+}
+a{color:#f2cfff}
+.back{
+  color:#fff!important;
+  border-color:#e5b7ff!important;
+  background:rgba(18,7,29,.48);
+}
+.back:hover{
+  background:#8c2b79!important;
+  color:#fff!important;
+}
+.section-divider{
+  background:linear-gradient(90deg,transparent,rgba(226,171,255,.48),transparent)!important;
+}
+.empty-news,.empty{
+  background:rgba(18,7,29,.48)!important;
+  border-color:rgba(226,171,255,.30)!important;
+}
+input,select,textarea{
+  background:rgba(255,255,255,.94)!important;
+  color:#241329!important;
+}
+
+/* ===== IDENTIDADE TIPOGRÁFICA GLOBAL ===== */
+:root{
+  --site-text:#f3eaf6;
+  --site-muted:#d9c9df;
+  --site-title:#ffffff;
+  --site-accent:#e4b8f4;
+}
+html,body{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+}
+body{
+  color:var(--site-text)!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:20px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  color:var(--site-title)!important;
+}
+p,li,td,th,small,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,
+label,button,a,.menu a,.back{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  line-height:1.7!important;
+}
+.card h3,.person .name,.student .name,
+.post h2,.group h3{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:20px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  color:var(--site-title)!important;
+}
+/* Contraste para o fundo roxo/azul */
+p,li,td,th,.subtitle,.description,.excerpt,.content,.meta,.date,
+.subject,.role,.empty,.empty-news,label{
+  color:var(--site-muted)!important;
+}
+a,.back,.menu a{
+  color:var(--site-title)!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#fff!important;
+}
+/* Campos administrativos permanecem claros para facilitar a edição */
+input,select,textarea{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  line-height:1.5!important;
+}
+input,select,textarea{
+  color:#241329!important;
+}
+button{
+  font-family:"Comfortaa",sans-serif!important;
+}
+@media(max-width:650px){
+  html,body{font-size:14px!important}
+  h1,h2,h3,h4,h5,h6,.title,.section-title,
+  .school-title h1,.city-title h1,.floor-heading h2,.hero h1,
+  .card h3,.person .name,.student .name,.post h2,.group h3{
+    font-size:20px!important;
+  }
+  p,li,td,th,small,.subtitle,.description,.excerpt,.content,
+  .meta,.date,.category,.subject,.role,.empty,.empty-news,
+  label,button,a,.menu a,.back{
+    font-size:14px!important;
+  }
+}
+
+/* ===== TEXTO GLOBAL CLARO ===== */
+body,body *{
+  color:#f4edf7!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1,
+.card h3,.person .name,.student .name,.post h2,.group h3{
+  color:#ffffff!important;
+}
+p,li,td,th,small,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,
+.data,.info,.details,.label{
+  color:#f4edf7!important;
+}
+a,.back,.menu a{
+  color:#ffffff!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#ffffff!important;
+}
+/* Campos de edição continuam com contraste apropriado */
+input,select,textarea{
+  color:#241329!important;
+  background:#fff!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#6f5a72!important;
+}
+/* Ícones e elementos decorativos não recebem cores escuras */
+svg{color:#fff!important}
+
+/* ===== PAINEL ADMINISTRATIVO — FUNDO UNIFORME ===== */
+html,body{
+  min-height:100%!important;
+  background:#12051d!important;
+}
+body{
+  background:
+    linear-gradient(rgba(10,3,18,.48),rgba(10,3,18,.48)),
+    url("./assets/auradon-bg.jpg") center center / cover fixed no-repeat!important;
+  color:#f4edf7!important;
+}
+body::before,body::after{
+  display:none!important;
+}
+header,.admin-header,.topbar,.sidebar,.main,.content,.panel,.dashboard,
+main,section,footer{
+  background:transparent!important;
+}
+.card,.box,.stat,.panel-card,.admin-card{
+  background:rgba(18,7,29,.62)!important;
+  border-color:rgba(226,190,245,.20)!important;
+  color:#f4edf7!important;
+  backdrop-filter:blur(8px);
+}
+h1,h2,h3,h4,h5,h6,
+.title,.subtitle,.admin-welcome,.section-title,
+label,.description,.help,.meta,.status,
+p,li,span,div{
+  color:#f4edf7!important;
+}
+.admin-welcome{
+  color:#fff!important;
+}
+.admin-welcome span{
+  color:#fff!important;
+}
+button,.btn{
+  color:#fff!important;
+}
+input,select,textarea{
+  background:rgba(255,255,255,.94)!important;
+  color:#241329!important;
+  border-color:rgba(226,190,245,.35)!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#6f5a72!important;
+}
+table{
+  background:transparent!important;
+  color:#f4edf7!important;
+}
+th,td{
+  color:#f4edf7!important;
+  border-color:rgba(226,190,245,.18)!important;
+}
+a{
+  color:#fff!important;
+}
+
+/* ===== ADMIN: TEMA ÚNICO E UNIFORME ===== */
+html{
+  background:#12051d!important;
+}
+body{
+  margin:0!important;
+  min-height:100vh!important;
+  background:#12051d url("./assets/auradon-bg.jpg") center center / cover fixed no-repeat!important;
+  color:#fff!important;
+}
+body::before,body::after{display:none!important}
+
+/* Every layout container shares the same transparent surface. */
+header,nav,aside,main,section,footer,
+.container,.content,.dashboard,.page,.topbar,.sidebar,
+.admin-shell,.admin-content,.main-content,.wrapper,.layout{
+  background:transparent!important;
+  background-image:none!important;
+}
+
+/* Dashboard and content cards use one identical translucent treatment. */
+.card,.box,.panel,.panel-card,.admin-card,.stat,.stat-card,
+.form-card,.list-card,.table-card,.news-card,.item,.user-card{
+  background:rgba(13,5,23,.68)!important;
+  background-image:none!important;
+  border:1px solid rgba(226,190,245,.20)!important;
+  color:#fff!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+/* Typography */
+body,body *{
+  font-family:"Comfortaa",sans-serif!important;
+}
+h1,h2,h3,h4,h5,h6,.title,.section-title,.admin-welcome{
+  color:#fff!important;
+}
+p,span,div,li,td,th,label,.subtitle,.meta,.status,.description,.help{
+  color:#f4edf7!important;
+}
+a{color:#fff!important}
+
+/* Inputs are the only intentionally light surfaces. */
+input,select,textarea{
+  background:#fff!important;
+  background-image:none!important;
+  color:#241329!important;
+  border:1px solid rgba(226,190,245,.35)!important;
+}
+input::placeholder,textarea::placeholder{color:#6f5a72!important}
+
+/* Buttons */
+button,.btn{
+  color:#fff!important;
+  background:rgba(133,35,119,.72)!important;
+  border-color:rgba(226,190,245,.32)!important;
+}
+button:hover,.btn:hover{
+  background:#9b3b8d!important;
+  color:#fff!important;
+}
+
+/* Tables/lists */
+table,thead,tbody,tr{
+  background:transparent!important;
+}
+th,td{
+  background:transparent!important;
+  color:#f4edf7!important;
+  border-color:rgba(226,190,245,.18)!important;
+}
+
+/* Welcome title stays above Dashboard and uses the same surface. */
+.admin-top-welcome{
+  background:rgba(13,5,23,.68)!important;
+  border:1px solid rgba(226,190,245,.20)!important;
+  border-radius:16px!important;
+  color:#fff!important;
+}
+.admin-welcome,.admin-welcome span{
+  color:#fff!important;
+}
+
+/* ===== TOPO DO ADMIN COM O MESMO FUNDO ===== */
+html,body{
+  background:#12051d!important;
+}
+body{
+  background-image:url("./assets/auradon-bg.jpg")!important;
+  background-position:center top!important;
+  background-size:cover!important;
+  background-attachment:fixed!important;
+  background-repeat:no-repeat!important;
+}
+header,.admin-header,.topbar,.header,.navbar,.nav,.admin-top-welcome{
+  background:rgba(13,5,23,.68)!important;
+  background-image:none!important;
+  color:#fff!important;
+  border-color:rgba(226,190,245,.20)!important;
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+}
+header::before,header::after,.admin-header::before,.admin-header::after,
+.topbar::before,.topbar::after{
+  background:transparent!important;
+}
+
+/* ===== TEMA UNIFORME: FUNDO DO SITE + TEXTO BRANCO ===== */
+html,body{
+  background:#12051d!important;
+  color:#f4edf7!important;
+}
+body{
+  background-image:url("./assets/auradon-bg.jpg")!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-attachment:fixed!important;
+  background-repeat:no-repeat!important;
+}
+body::before,body::after{display:none!important}
+
+/* Remove superfícies brancas dos blocos de conteúdo */
+main,section,article,header,footer,nav,aside,
+.container,.content,.wrapper,.page,.group,.list,.grid,
+.panel,.dashboard,.topbar,.navbar,.sidebar{
+  background:transparent!important;
+  background-image:none!important;
+}
+
+/* Cards mantêm transparência, mas nunca ficam brancos */
+.card,.aff,.post,.student,.person,.item,.box,.panel-card,.stat,
+.form-card,.list-card,.table-card,.news-card,.group-card{
+  background:rgba(13,5,23,.68)!important;
+  color:#f4edf7!important;
+  border-color:rgba(226,190,245,.20)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+}
+
+/* Tipografia branca em todas as páginas públicas e admin */
+body *{
+  font-family:"Comfortaa",sans-serif!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1,.card h3,
+.student .name,.person .name,.post h2,.group h3,
+.admin-welcome,.admin-welcome span{
+  color:#fff!important;
+}
+p,li,td,th,span,label,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,.details,.data,.info{
+  color:#f4edf7!important;
+}
+a,.back,.menu a{
+  color:#fff!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#fff!important;
+}
+
+/* Filiações: remove o vermelho antigo dos textos e contadores.
+   O contador cheio continua podendo usar vermelho como indicador de lotação. */
+.count{
+  color:#fff!important;
+}
+.count.full{
+  color:#ff8fa4!important;
+}
+
+/* Notícias */
+.news-section,.news-list,.post{
+  color:#f4edf7!important;
+}
+.news-section h1,.news-section h2,.news-section h3,
+.news-list h1,.news-list h2,.news-list h3{
+  color:#fff!important;
+}
+
+/* Explore Auradon */
+.floor-heading h2,.school-title h1,.city-title h1{
+  color:#fff!important;
+}
+
+/* Admin: tudo branco/transparente; só campos de edição ficam claros */
+.admin-top-welcome,header,.admin-header,.topbar{
+  background:rgba(13,5,23,.68)!important;
+  color:#fff!important;
+  border-color:rgba(226,190,245,.20)!important;
+}
+input,select,textarea{
+  background:#fff!important;
+  color:#241329!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#6f5a72!important;
+}
+table,thead,tbody,tr{
+  background:transparent!important;
+}
+button,.btn{
+  color:#fff!important;
+}
+
+/* ===== ADMIN — BOTÕES INTEGRADOS AO FUNDO ===== */
+:root{
+  --admin-glass:rgba(13,5,23,.62);
+  --admin-glass-hover:rgba(28,10,40,.76);
+  --admin-border:rgba(226,190,245,.20);
+  --admin-text:#fff;
+  --admin-muted:#eadcf0;
+}
+
+/* Todos os botões seguem o mesmo acabamento do site */
+button,
+.btn,
+.filter,
+.news-btn,
+.actions button,
+.side button,
+.menu button,
+button[type="button"],
+button[type="submit"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  font-weight:500!important;
+  letter-spacing:.01em!important;
+  color:var(--admin-text)!important;
+  background:rgba(13,5,23,.58)!important;
+  background-image:none!important;
+  border:1px solid var(--admin-border)!important;
+  border-radius:12px!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.16)!important;
+  padding:11px 16px!important;
+  min-height:42px;
+  cursor:pointer!important;
+  transition:background .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease!important;
+}
+
+button:hover,
+.btn:hover,
+.filter:hover,
+.news-btn:hover,
+.actions button:hover,
+.side button:hover,
+.menu button:hover{
+  color:#fff!important;
+  background:rgba(48,18,61,.72)!important;
+  border-color:rgba(226,190,245,.42)!important;
+  box-shadow:0 9px 22px rgba(0,0,0,.24)!important;
+  transform:translateY(-1px)!important;
+}
+
+/* Botão selecionado: apenas um leve destaque, sem bloco roxo forte */
+button.active,
+.btn.active,
+.filter.active,
+.side button.active,
+.menu button.active{
+  color:#fff!important;
+  background:rgba(93,38,104,.58)!important;
+  border-color:rgba(226,190,245,.48)!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.22)!important;
+}
+
+/* Ações principais seguem o mesmo vidro, apenas um pouco mais destacadas */
+button.primary,
+.btn.primary,
+button[type="submit"]{
+  color:#fff!important;
+  background:rgba(93,38,104,.55)!important;
+  border-color:rgba(226,190,245,.36)!important;
+}
+button.primary:hover,
+.btn.primary:hover,
+button[type="submit"]:hover{
+  background:rgba(110,47,120,.68)!important;
+  border-color:rgba(226,190,245,.52)!important;
+}
+
+/* Exclusão: vermelho discreto, sem destoar do fundo */
+button.danger,
+.btn.danger{
+  color:#ffdfe5!important;
+  background:rgba(91,24,43,.38)!important;
+  border-color:rgba(255,143,164,.30)!important;
+}
+button.danger:hover,
+.btn.danger:hover{
+  color:#fff!important;
+  background:rgba(122,29,53,.58)!important;
+  border-color:rgba(255,143,164,.46)!important;
+}
+
+/* Botões pequenos de controles */
+.news-btn{
+  min-width:42px!important;
+  width:42px!important;
+  padding:8px!important;
+  border-radius:11px!important;
+}
+
+/* Menu lateral/topo com a mesma linguagem visual */
+.side button,
+.menu button{
+  width:100%!important;
+  text-align:left!important;
+  justify-content:flex-start!important;
+  background:rgba(13,5,23,.48)!important;
+}
+.side button:hover,
+.menu button:hover{
+  background:rgba(48,18,61,.68)!important;
+}
+
+/* Grupos de ações ficam alinhados e consistentes */
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  align-items:center;
+}
+.actions button{
+  margin:0!important;
+}
+
+/* No celular, botões continuam confortáveis */
+@media(max-width:650px){
+  button,
+  .btn,
+  .filter,
+  .actions button,
+  .side button,
+  .menu button{
+    min-height:44px!important;
+    padding:11px 14px!important;
+    font-size:14px!important;
+  }
+}
+
+/* ===== ADMINISTRATIVO — TEMA ORIGINAL ===== */
+html,body{
+  min-height:100%!important;
+  background:#fff!important;
+  color:#7f182c!important;
+}
+body{
+  background:#fff!important;
+  background-image:none!important;
+  font-family:"Comfortaa",sans-serif!important;
+}
+body::before,body::after{
+  display:none!important;
+}
+
+/* Estrutura */
+header,nav,aside,main,section,footer,
+.container,.content,.dashboard,.page,.topbar,.sidebar,
+.admin-shell,.admin-content,.main-content,.wrapper,.layout{
+  background:#fff!important;
+  background-image:none!important;
+}
+
+/* Cards e blocos */
+.card,.box,.panel,.panel-card,.admin-card,.stat,.stat-card,
+.form-card,.list-card,.table-card,.news-card,.item,.user-card,
+.post,.student,.person,.group,.aff{
+  background:#fff!important;
+  background-image:none!important;
+  color:#7f182c!important;
+  border:1px solid rgba(165,29,54,.18)!important;
+  box-shadow:0 6px 20px rgba(124,18,38,.06)!important;
+  backdrop-filter:none!important;
+}
+
+/* Tipografia */
+body *{
+  color:#7f182c!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.admin-welcome,
+.admin-welcome span{
+  color:#a51d36!important;
+}
+p,span,div,li,td,th,label,
+.subtitle,.meta,.status,.description,.help{
+  color:#7f182c!important;
+}
+a{
+  color:#a51d36!important;
+}
+a:hover{
+  color:#7f182c!important;
+}
+
+/* Menu / botões */
+button,.btn,.filter,.news-btn,
+.actions button,.side button,.menu button,
+button[type="button"],button[type="submit"]{
+  color:#a51d36!important;
+  background:#fff!important;
+  background-image:none!important;
+  border:1px solid rgba(165,29,54,.30)!important;
+  border-radius:10px!important;
+  box-shadow:0 4px 12px rgba(124,18,38,.05)!important;
+}
+button:hover,.btn:hover,.filter:hover,.news-btn:hover,
+.actions button:hover,.side button:hover,.menu button:hover{
+  color:#fff!important;
+  background:#a51d36!important;
+  border-color:#a51d36!important;
+}
+button.active,.btn.active,.filter.active,
+.side button.active,.menu button.active,
+button.primary,.btn.primary,button[type="submit"]{
+  color:#fff!important;
+  background:#a51d36!important;
+  border-color:#a51d36!important;
+}
+button.danger,.btn.danger{
+  color:#a51d36!important;
+  background:#fff!important;
+  border-color:rgba(165,29,54,.35)!important;
+}
+button.danger:hover,.btn.danger:hover{
+  color:#fff!important;
+  background:#a51d36!important;
+}
+
+/* Campos */
+input,select,textarea{
+  background:#fff!important;
+  color:#2b171b!important;
+  border:1px solid rgba(165,29,54,.25)!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#8b7075!important;
+}
+
+/* Tabelas */
+table,thead,tbody,tr{
+  background:#fff!important;
+}
+th,td{
+  background:#fff!important;
+  color:#7f182c!important;
+  border-color:rgba(165,29,54,.15)!important;
+}
+
+/* Área de boas-vindas */
+.admin-top-welcome{
+  background:#fff!important;
+  color:#a51d36!important;
+  border:1px solid rgba(165,29,54,.18)!important;
+  box-shadow:0 6px 20px rgba(124,18,38,.06)!important;
+}
+
+/* ===== RPG — ESQUEMA DE CORES DE TEXTO ===== */
+:root{
+  --rpg-red:#a51d36;
+  --rpg-white:#ffffff;
+}
+
+/* Superfícies brancas/claras */
+body,
+.card,
+.card *,
+section.card,
+.panel,
+.panel *,
+.form-card,
+.form-card *,
+table,
+thead,
+tbody,
+tr,
+td,
+th,
+input,
+select,
+textarea,
+label,
+.modal,
+.modal *,
+.admin-card,
+.admin-card *,
+.notice-card,
+.notice-card *{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Fundo roxo/escuro */
+.hero,
+.hero *,
+header.dark,
+.dark-section,
+.purple-section,
+.purple-bg,
+.site-purple,
+footer,
+footer *{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Navegação sobre fundo roxo */
+header,
+header nav,
+header nav *,
+.main-nav,
+.main-nav *,
+.home-main-nav,
+.home-main-nav *{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Links em áreas brancas */
+.card a,
+.panel a,
+section.card a,
+main a{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Placeholders permanecem legíveis */
+input::placeholder,
+textarea::placeholder{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+  opacity:.65;
+}
+
+/* Botões: texto vermelho no botão claro */
+button,
+.btn{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Botões que já usam fundo roxo/escuro */
+.btn-primary,
+.btn-dark,
+button.primary,
+button.dark,
+button[class*="purple"]{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Exceções para estados de hover que usam fundo vermelho/roxo */
+button:hover,
+.btn:hover{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+
+/* ===== ADMIN — LOGIN / AVISO ===== */
+.admin-auth-info-card,
+.admin-exclusive-card{
+  width:min(560px,calc(100% - 32px));
+  margin:12px auto;
+  padding:15px 18px;
+  box-sizing:border-box;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  color:var(--wine)!important;
+}
+.admin-auth-info-card{
+  font-size:12px;
+  line-height:1.6;
+}
+.admin-auth-info-card strong{
+  color:var(--wine)!important;
+}
+.admin-exclusive-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+}
+.admin-exclusive-card strong,
+.admin-exclusive-card span{
+  color:var(--wine)!important;
+}
+.return-site-notice{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:8px;
+  min-height:42px;
+  padding:8px 16px;
+  box-sizing:border-box;
+  border:1px solid rgba(155,28,49,.28);
+  border-radius:10px;
+  background:#fff;
+  color:var(--wine)!important;
+  text-decoration:none!important;
+}
+.return-site-notice:hover{
+  background:var(--wine)!important;
+  color:#fff!important;
+}
+
+.news-editor-toolbar{display:flex;gap:8px;margin:8px 0 0;padding:8px;background:rgba(0,0,0,.18);border:1px solid var(--line);border-bottom:0;border-radius:10px 10px 0 0}
+.news-format-btn{min-width:42px!important;padding:8px 12px!important;border-radius:8px!important;background:#b30000!important;color:#fff!important;border:1px solid #b30000!important;cursor:pointer}
+.news-format-btn:hover{background:#7f0000!important;border-color:#7f0000!important}
+.news-content-editor{min-height:180px;padding:13px;border:1px solid var(--line);border-radius:0 0 10px 10px;background:#100a0d;color:#fff;outline:none;line-height:1.65;white-space:pre-wrap}
+.news-content-editor:focus{border-color:#b30000;box-shadow:0 0 0 1px #b30000}
+.news-content-editor:empty:before{content:attr(data-placeholder);color:rgba(255,255,255,.45);pointer-events:none}
+</style>
+<style>
+header img{
+  filter:none!important;
+  image-rendering:auto!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
+}
+</style><style>
+header img{
+  height:auto!important;
+  max-width:100%!important;
+  filter:none!important;
+  image-rendering:auto!important;
+  mix-blend-mode:normal!important;
+  opacity:1!important;
+}
+</style>
+<style id="rpg-background-override">
+/* ===== FUNDO OFICIAL DO RPG + TIPOGRAFIA BRANCA ===== */
+html{
+  min-height:100%;
+  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
+}
+body{
+  min-height:100vh!important;
+  background:transparent!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Todo texto do site */
+body *,
+body h1,body h2,body h3,body h4,body h5,body h6,
+body p,body span,body strong,body b,body small,body label,
+body a,body a:visited,body li,body td,body th,
+body .title,body .subtitle,body .label,body .meta,
+body .brand,body .section-kicker,body .type,body .status{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Cabeçalho e navegação deixam o fundo aparecer */
+header,.top,.home-main-nav,.admin-main-nav,footer{
+  background:rgba(5,3,10,.34)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+
+/* Cards, painéis e áreas de conteúdo: translúcidos para manter o fundo uniforme */
+.card,.panel,.side,.form-card,.admin-card,.notice-card,
+.modal,.item,.stat,.login,
+.admin-auth-info-card,.admin-exclusive-card{
+  background:rgba(8,5,14,.62)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.20)!important;
+}
+
+/* Campos */
+input,select,textarea{
+  background:rgba(0,0,0,.38)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+input::placeholder,textarea::placeholder{
+  color:rgba(255,255,255,.72)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
+}
+
+/* Botões */
+button,.btn{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+button:hover,.btn:hover,
+button.active,.btn.active,
+button.primary,.btn.primary{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Links */
+a,a:visited,a:hover{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Menu mobile/lateral */
+.mobile-menu,.mobile-menu-links,.home-nav-links,
+.admin-sidebar,.admin-sidebar-nav{
+  background:rgba(7,4,14,.94)!important;
+}
+.mobile-menu button,.mobile-menu a,
+.home-nav-links button,.home-nav-links a,
+.admin-sidebar button,.admin-sidebar a{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Remove regras antigas que tentavam pintar texto de vermelho/dourado. */
+:root{
+  --rpg-red:#fff!important;
+  --rpg-white:#fff!important;
+  --wine:#fff!important;
+  --wine-dark:#fff!important;
+  --gold:#fff!important;
+  --cream:#fff!important;
+  --text:#fff!important;
+  --muted:rgba(255,255,255,.78)!important;
+  --line:rgba(255,255,255,.20)!important;
+}
+
+/* Loading continua legível sobre o novo fundo */
+#dbLoadingOverlay{
+  background:rgba(4,2,8,.84)!important;
+}
+</style>
+
+<style id="cpanel-theme-final">
+/* ===== CPAINEL — FUNDO E TIPOGRAFIA UNIFORMES ===== */
+html{
+  min-height:100%!important;
+  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
+}
+body{
+  min-height:100vh!important;
+  margin:0!important;
+  background:transparent!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body::before,
+body::after{
+  background:transparent!important;
+}
+
+/* Todas as áreas do CPainel deixam o fundo oficial aparecer */
+header,
+.admin-shell,
+.admin-layout,
+.admin-content,
+#adminView,
+main,
+section,
+article{
+  background:transparent!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Texto branco em absolutamente todos os elementos do painel */
+#adminView *,
+#loginView *,
+header *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Cards escuros translúcidos, sem blocos brancos quebrando o fundo */
+#adminView .card,
+#adminView .panel,
+#adminView .side,
+#adminView .form-card,
+#adminView .admin-card,
+#adminView .notice-card,
+#adminView .stat,
+#adminView .login,
+#adminView table,
+#adminView .admin-auth-info-card,
+#adminView .admin-exclusive-card{
+  background:rgba(7,4,14,.62)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.22)!important;
+}
+
+/* Formulários */
+#adminView input,
+#adminView select,
+#adminView textarea,
+#loginView input,
+#loginView select,
+#loginView textarea{
+  background:rgba(0,0,0,.42)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+#adminView input::placeholder,
+#adminView textarea::placeholder,
+#loginView input::placeholder,
+#loginView textarea::placeholder{
+  color:rgba(255,255,255,.72)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
+}
+
+/* Botões e menu */
+#adminView button,
+#adminView .btn,
+#loginView button,
+#loginView .btn{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+#adminView button:hover,
+#adminView .btn:hover,
+#adminView button.active,
+#adminView .btn.active{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Links */
+#adminView a,
+#adminView a:visited,
+#loginView a,
+#loginView a:visited{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Menu lateral, se presente */
+.admin-sidebar,
+.admin-sidebar-nav{
+  background:rgba(7,4,14,.94)!important;
+}
+.admin-sidebar *,
+.admin-sidebar-nav *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Avisos */
+.admin-auth-info-card,
+.admin-exclusive-card{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+.return-site-notice{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  background:rgba(7,4,14,.70)!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+
+/* Tabelas */
+#adminView th,
+#adminView td{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+
+/* Variáveis antigas não podem voltar a pintar o painel */
+#adminView{
+  --wine:#fff!important;
+  --wine-dark:#fff!important;
+  --gold:#fff!important;
+  --cream:#fff!important;
+  --text:#fff!important;
+  --muted:rgba(255,255,255,.78)!important;
+  --line:rgba(255,255,255,.20)!important;
+}
+</style>
+
+<style id="maintenance-admin-style">
+.maintenance-admin-card{padding:24px}
+.maintenance-status-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.maintenance-status-row h3{margin:0 0 6px}.maintenance-status-row p{margin:0}
+.maintenance-switch{min-width:150px;min-height:48px;border-radius:999px;border:1px solid rgba(255,255,255,.25)!important;background:rgba(255,255,255,.10)!important;color:#fff!important;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:8px 16px;cursor:pointer}
+.maintenance-switch.on{background:#9b1c31!important}.maintenance-switch-knob{width:20px;height:20px;border-radius:50%;background:#fff;display:block}
+.maintenance-help{margin-top:18px;opacity:.82}
+@media(max-width:700px){.maintenance-status-row{flex-direction:column;align-items:stretch}.maintenance-switch{width:100%}}
+<style id="cpanel-uniform-background-final">
+/* ===== CPAINEL: FUNDO 100% UNIFORME COM O RESTANTE DO SITE ===== */
+html, body{
+  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
+}
+body{
+  background-color:transparent!important;
+  background-image:url("./assets/site-background.jpg")!important;
+}
+body::before, body::after{
+  content:none!important;
+  display:none!important;
+  background:transparent!important;
+}
+#loginView, #adminView, #adminView > *, #loginView > *,
+.admin-shell, .admin-layout, .admin-content, .main-content,
+.container, .content, .dashboard, .page, .layout, main, section, article{
+  background-color:transparent!important;
+  background-image:none!important;
+}
+.admin-top-welcome{
+  background:rgba(7,4,14,.62)!important;
+  color:#fff!important;
+  border-color:rgba(255,255,255,.20)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+}
+/* Nenhum bloco branco opaco no CPainel */
+#adminView .card, #adminView .box, #adminView .panel,
+#adminView .panel-card, #adminView .admin-card, #adminView .stat,
+#adminView .stat-card, #adminView .form-card, #adminView .list-card,
+#adminView .table-card, #adminView .news-card, #adminView .item,
+#adminView .user-card, #adminView .post, #adminView .student,
+#adminView .person, #adminView .group, #adminView .aff,
+#adminView table, #adminView th, #adminView td,
+#loginView .card, #loginView .box, #loginView .panel, #loginView .login{
+  background-color:rgba(7,4,14,.62)!important;
+  background-image:none!important;
+}
+</style></style>
+<style id="bugfix-final-theme">
+/* ===== CORREÇÃO FINAL DO CPAINEL ===== */
+html,body{background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;}
+body{background-attachment:fixed!important;}
+
+
+/* Centralização correta do bloco de login. */
+#loginView{width:min(520px,calc(100% - 28px))!important;margin:56px auto 18px!important;}
+
+/* Botões padrão do CPainel: vermelho + texto branco. */
+#loginView button,
+#loginView .btn,
+#adminView button,
+#adminView .btn,
+#adminView a.btn,
+.actions button,
+.actions .btn,
+button[type="button"],button[type="submit"],
+button.primary,.btn.primary,
+.return-site-notice{
+  background:#a51d36!important;
+  background-image:none!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid #a51d36!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.18)!important;
+}
+#loginView button:hover,
+#loginView .btn:hover,
+#adminView button:hover,
+#adminView .btn:hover,
+.actions button:hover,
+.actions .btn:hover,
+button[type="button"]:hover,button[type="submit"]:hover,
+button.primary:hover,.btn.primary:hover,
+.return-site-notice:hover{
+  background:#c12645!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:#c12645!important;
+}
+#loginView button:disabled,#adminView button:disabled{opacity:.55;cursor:not-allowed;}
+
+/* Menus continuam organizados, mas seguem o mesmo padrão visual. */
+#adminView .side button{
+  background:#a51d36!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  margin-bottom:6px!important;
+  text-align:left!important;
+}
+#adminView .side button:hover,#adminView .side button.active{
+  background:#c12645!important;
+  color:#fff!important;
+}
+
+/* Google: também segue o padrão visual solicitado. */
+#loginView .google-login-btn{
+  background:#a51d36!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:#a51d36!important;
+}
+#loginView .google-login-btn:hover{background:#c12645!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
+#loginView .google-icon{background:#fff!important;color:#4285f4!important;-webkit-text-fill-color:#4285f4!important;}
+
+/* Cards e estrutura sem fundos brancos. */
+#loginView,.admin-auth-info-card,.admin-exclusive-card,
+#adminView .card,#adminView .side,#adminView .item,#adminView .panel,
+#adminView .admin-card,#adminView .form-card,#adminView .notice-card,
+#adminView .stat,#adminView table{
+  background:rgba(8,5,14,.68)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.20)!important;
+}
+
+/* Mobile: não deixar o login/avisos quebrados. */
+@media(max-width:650px){
+  #loginView{margin:28px auto 14px!important;width:min(100% - 20px,520px)!important;padding:18px!important;}
+  #loginView .actions{flex-direction:column!important;}
+  #loginView .actions .btn,#loginView .actions button{width:100%!important;}
+  
+}
+
+/* ===== MENU MOBILE LATERAL DO CPAINEL ===== */
+.admin-top-actions{display:flex;align-items:center;gap:8px}
+@media(max-width:700px){
+  body.admin-menu-locked{overflow:hidden!important;position:fixed!important;width:100%!important}
+  .admin-top-actions{margin-left:auto}
+  #adminView .grid{display:block!important}
+  #adminSidebar{
+    position:fixed!important;top:0;left:0;bottom:0;width:min(310px,86vw);height:100dvh!important;
+    margin:0!important;padding:76px 14px 22px!important;z-index:12000!important;
+    overflow-y:auto!important;transform:translateX(-105%);transition:transform .25s ease;
+    border-radius:0 18px 18px 0!important;background:rgba(7,4,14,.98)!important;
+    box-shadow:10px 0 35px rgba(0,0,0,.45)!important;
+  }
+  #adminSidebar.mobile-open{transform:translateX(0)}
+  #adminView .content{width:100%!important}
+}
+
+</style>
+
+<style id="global-button-standard">
+
+/* ===== PADRÃO GLOBAL DE BOTÕES: VERMELHO + TEXTO BRANCO ===== */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.button,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-success,
+.btn-warning,
+.btn-outline,
+[role="button"] {
+  background: #b30000 !important;
+  background-color: #b30000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #b30000 !important;
+  box-shadow: none;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+.btn:hover,
+.button:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover,
+.btn-success:hover,
+.btn-warning:hover,
+.btn-outline:hover,
+[role="button"]:hover {
+  background: #8f0000 !important;
+  background-color: #8f0000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #8f0000 !important;
+}
+
+button:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible,
+.btn:focus-visible,
+.button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #fff !important;
+  outline-offset: 2px;
+}
+
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled,
+.btn:disabled,
+.button:disabled {
+  background: #b30000 !important;
+  background-color: #b30000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  opacity: .55;
+}
+</style>
+
+</head>
+
+<style id="db-loading-style">
+#dbLoadingOverlay{
+  position:fixed;inset:0;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(8,4,18,.82);
+  backdrop-filter:blur(4px);
+  opacity:1;visibility:visible;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+#dbLoadingOverlay:not(.is-loading){
+  opacity:0;visibility:hidden;pointer-events:none;
+}
+#dbLoadingOverlay img{
+  display:block;width:min(360px,78vw);height:auto;
+  max-height:78vh;object-fit:contain;
+}
+@media(max-width:600px){
+  #dbLoadingOverlay img{width:min(310px,82vw);}
+}
+</style>
+<div id="dbLoadingOverlay" class="is-loading" role="status" aria-live="polite" aria-label="Aguarde, estamos carregando o banco de dados">
+  <img src="assets/db-loading.png" alt="Aguarde, estamos carregando o banco de dados">
+</div>
+
+<body>
+<header class="top"><div class="container topin"><div class="brand brand-logo"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"><span>ADMIN</span></div><div class="admin-top-actions"><button id="logout" class="btn hidden">Sair</button></div></div></header>
+
+<main class="container">
+<section id="loginView" class="login card">
+<h2>Acesso administrativo</h2>
+<p class="subtitle">Entre com uma conta de administrador cadastrada no banco de dados.</p>
+<form id="loginForm">
+<label>Login</label><input id="login" type="text" required autocomplete="username" placeholder="Seu login de administrador">
+<label style="margin-top:12px">Senha</label><input id="password" type="password" required autocomplete="current-password">
+<div class="actions"><button class="btn primary" type="submit">Entrar no CPainel</button><a class="btn primary" href="admin-cadastro.html">Cadastrar administrador</a><a class="btn primary" href="index.html">Retornar ao site</a></div>
+<div id="loginStatus" class="status"></div>
+</form>
+</section>
+<section id="adminView" class="hidden">
+<div class="grid">
+<div class="content">
+<section id="dashboard" class="page active">
+<div class="admin-top-welcome"><div id="adminWelcome" class="admin-welcome"></div></div><h1 class="title">Dashboard</h1><p class="subtitle">Visão geral do conteúdo administrado.</p>
+<div class="stats">
+<div class="card stat"><span class="label">Notícias</span><b id="statNews">0</b></div><div class="card stat"><span class="label">Filiações</span><b id="statAffiliations">0</b></div>
+<div class="card stat"><span class="label">Alunos</span><b id="statStudents">0</b></div><div class="card stat"><span class="label">Corpo Docente</span><b id="statDocentes">0</b></div>
+<div class="card stat"><span class="label">Status Firebase</span><b id="statFirebase">OK</b></div>
+</div>
+<aside class="side" id="adminSidebar">
+
+<button class="active" data-page="dashboard">Dashboard</button>
+<button data-page="noticias">Postar Notícias</button>
+<button data-page="filiacoes">Cadastrar/Remover Filiações</button>
+<button data-page="alunos">Cadastrar/Remover Alunos</button>
+<button data-page="docentes">Cadastrar/Remover Corpo Docente</button>
+<button data-page="usuario">Configuração de Usuário</button><button data-page="manutencao">Iniciar/Interromper Manutenção</button>
+</aside>
+</section>
+
+
+
+
+
+<section id="manutencao" class="page">
+<h1 class="title">Iniciar/Interromper Manutenção</h1>
+<p class="subtitle">Controle global do modo de manutenção do site.</p>
+<div class="card maintenance-admin-card">
+  <div class="maintenance-status-row">
+    <div>
+      <h3>Modo de manutenção</h3>
+      <p id="maintenanceStatus">Carregando status...</p>
+    </div>
+    <button id="maintenanceToggle" class="maintenance-switch" type="button" aria-pressed="false">
+      <span class="maintenance-switch-knob"></span>
+      <span id="maintenanceToggleText">Carregando...</span>
+    </button>
+  </div>
+  <div id="maintenanceAdminMessage" class="status"></div>
+  <p class="maintenance-help">Quando ativado, os visitantes verão a tela de manutenção. O CPainel permanece acessível para que o administrador possa desativar a manutenção.</p>
+</div>
+</section>
+
+<section id="noticias" class="page">
+<h1 class="title">Notícias</h1><p class="subtitle">Cadastre as notícias que poderão ser exibidas posteriormente na página inicial.</p>
+<div class="card">
+<h3>Nova notícia</h3>
+<form id="newsForm"><input id="newsId" type="hidden">
+<div class="formgrid">
+<div><label>Título</label><input id="newsTitle" required></div>
+<div><label>Categoria</label><input id="newsCategory" placeholder="Ex.: AURADON PREP" required></div>
+<div><label>Data</label><input id="newsDate" placeholder="Ex.: 24 de agosto" required></div>
+<div class="full">
+<label>Foto da notícia</label>
+<input id="newsImage" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+<div class="upload-status">A imagem será redimensionada e comprimida no navegador antes de ser salva no Realtime Database. Limite final: 350 KB.</div>
+<div id="imagePreview" class="image-preview hidden"></div>
+</div>
+<div><label>Ordem de exibição</label><input id="newsOrder" type="number" min="1" value="1" required></div>
+<div class="full"><label>Resumo</label><textarea id="newsExcerpt" required></textarea></div>
+<div class="full">
+<label>Conteúdo</label>
+<div class="news-editor-toolbar" role="toolbar" aria-label="Formatação do conteúdo">
+  <button type="button" class="news-format-btn" data-format="bold" title="Negrito"><strong>B</strong></button>
+  <button type="button" class="news-format-btn" data-format="italic" title="Itálico"><em>I</em></button>
+</div>
+<div id="newsContentEditor" class="news-content-editor" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Escreva o conteúdo da notícia..."></div>
+<textarea id="newsContent" class="hidden" aria-hidden="true"></textarea>
+</div>
+</div>
+<div class="actions"><button class="btn primary" type="submit">Salvar notícia</button><button class="btn" type="button" id="clearNews">Limpar</button></div>
+<div id="newsStatus" class="status"></div>
+</form>
+</div>
+<div class="card"><h3>Notícias cadastradas</h3><div id="newsList" class="list"></div></div>
+</section>
+
+
+
+<section id="filiacoes" class="page">
+<h1 class="title">Filiações</h1>
+<p class="subtitle">Cadastre a estrutura em três níveis: franquia → conto → filiação. A capacidade e a quantidade de filhos serão controladas pelo banco.</p>
+
+<div class="card">
+<h3>Adicionar filiação</h3>
+<form id="affiliationForm">
+<input id="affiliationId" type="hidden">
+<div class="formgrid">
+<div>
+<label>Franquia</label>
+<input id="affiliationStudio" placeholder="Ex.: Disney" required>
+</div>
+<div>
+<label>Conto / Obra</label>
+<input id="affiliationStory" placeholder="Ex.: Aladdin" required>
+</div>
+<div>
+<label>Nome da Filiação</label>
+<input id="affiliationName" placeholder="Ex.: Aladdin & Jasmine" required>
+</div>
+<div>
+<label>Quantidade máxima de filhos</label>
+<input id="affiliationMax" type="number" min="1" value="3" required>
+</div>
+<div class="full">
+<label>Foto da filiação</label>
+<input id="affiliationImage" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+<div class="upload-status">A imagem será recortada e redimensionada para 500 × 500 px e salva no Realtime Database.</div>
+<div id="affiliationImagePreview" class="image-preview hidden"></div>
+</div>
+<div class="full">
+<label>Descrição (opcional)</label>
+<textarea id="affiliationDescription" placeholder="Informações sobre esta filiação..."></textarea>
+</div>
+</div>
+<div class="actions">
+<button class="btn primary" type="submit">Salvar filiação</button>
+<button class="btn" type="button" id="clearAffiliation">Limpar</button>
+</div>
+<div id="affiliationStatus" class="status"></div>
+</form>
+</div>
+
+<div class="card">
+<h3>Importação rápida</h3>
+<p class="status">Cole uma linha por filiação no formato: <b>Franquia | Conto | Filiação | Limite</b>. Ex.: Disney | Aladdin | Aladdin &amp; Jasmine | 3</p>
+<textarea id="affiliationBulk" placeholder="Disney | Aladdin | Aladdin & Jasmine | 3&#10;Disney | Aladdin | Jafar | 3"></textarea>
+<div class="actions"><button class="btn primary" id="bulkAffiliation">Importar lista</button></div>
+<div id="bulkStatus" class="status"></div>
+</div>
+
+<div class="card">
+<h3>Filiações cadastradas</h3>
+<div id="affiliationList" class="list"></div>
+</div>
+</section>
+
+<section id="alunos" class="page">
+<h1 class="title">Alunos</h1>
+<p class="subtitle">Cadastre, edite e apague os alunos do RPG.</p>
+
+<div class="card">
+<h3>Adicionar aluno</h3>
+<form id="studentForm">
+<input id="studentId" type="hidden">
+<div class="formgrid">
+<div><label>Nome do Aluno</label><input id="studentName" required></div>
+
+<div><label>Tipo de Aluno</label>
+<select id="studentType" required>
+<option value="">Selecione</option>
+<option value="Rebel">Rebel</option>
+<option value="Royal">Royal</option>
+</select>
+</div>
+
+<div><label>Idade</label><input id="studentAge" type="number" min="1" max="100" required></div>
+
+<div><label>Sexualidade</label><input id="studentSexuality" required></div>
+
+<div><label>Franquia da Filiação</label><input id="studentAffiliationStudio" placeholder="Ex.: Disney"></div>
+<div><label>Conto da Filiação</label><input id="studentAffiliationStory" placeholder="Ex.: Aladdin"></div>
+<div><label>Filiação</label><input id="studentFiliation" required></div>
+
+<div><label>Conto de Fada</label><input id="studentFairyTale" required></div>
+
+<div class="full">
+<label>Foto do aluno</label>
+<input id="studentImage" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+<div class="upload-status">
+A foto será automaticamente recortada para formato quadrado, redimensionada para 500 × 500 px e salva no Realtime Database.
+</div>
+<div id="studentImagePreview" class="image-preview hidden"></div>
+</div>
+</div>
+
+<div class="actions">
+<button class="btn primary" type="submit">Salvar aluno</button>
+<button class="btn" type="button" id="clearStudent">Limpar</button>
+</div>
+<div id="studentStatus" class="status"></div>
+</form>
+</div>
+
+<div class="card">
+<h3>Alunos cadastrados</h3>
+<div id="studentList" class="list"></div>
+</div>
+</section>
+
+
+
+<section id="usuario" class="page">
+<h1 class="title">Meu Usuário</h1>
+<p class="subtitle">Edite os dados do administrador atualmente conectado.</p>
+
+<div class="card">
+  <h3>Dados da conta</h3>
+  <form id="userEditorForm">
+    <div class="formgrid">
+      <div>
+        <label>Nome</label>
+        <input id="profileDisplayName" maxlength="80" placeholder="Nome do administrador">
+        <div class="upload-status">Este nome será mostrado no topo do CPainel.</div>
+      </div>
+      <div>
+        <label>E-mail</label>
+        <input id="profileEmail" type="email" maxlength="160" placeholder="email@exemplo.com">
+        <div class="upload-status">E-mail cadastrado para este administrador.</div>
+      </div>
+      <div class="full">
+        <label>Senha atual</label>
+        <input id="currentPassword" type="password" autocomplete="current-password" placeholder="Obrigatória para trocar a senha">
+      </div>
+      <div>
+        <label>Nova senha</label>
+        <input id="newPassword" type="password" minlength="6" autocomplete="new-password">
+      </div>
+      <div>
+        <label>Confirmar nova senha</label>
+        <input id="confirmPassword" type="password" minlength="6" autocomplete="new-password">
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" type="submit">Salvar alterações</button>
+    </div>
+    <div id="profileStatus" class="status"></div>
+  </form>
+</div>
+</section>
+<section id="docentes" class="page">
+<h1 class="title">Corpo Docente</h1>
+<p class="subtitle">Cadastre e gerencie os professores e inspetores da Auradon Prep.</p>
+<div class="card">
+<h3>Adicionar docente</h3>
+<form id="facultyForm">
+<input id="facultyId" type="hidden">
+<div class="formgrid">
+<div><label>Nome do Professor</label><input id="facultyName" required></div>
+<div><label>Cargo</label>
+<select id="facultyRole">
+<option value="">Selecione um cargo</option>
+<option value="Professor">Professor</option>
+<option value="Inspetor">Inspetor</option>
+<option value="Diretor (a)">Diretor (a)</option>
+<option value="Vice-Diretor (a)">Vice-Diretor (a)</option>
+<option value="Coordenador">Coordenador</option>
+<option value="__manual__">Outro cargo...</option>
+</select>
+<input id="facultyRoleManual" type="text" placeholder="Digite o cargo manualmente" maxlength="80" style="display:none;margin-top:8px"></div>
+<div><label>Matéria</label><input id="facultySubject" placeholder="Ex.: Poções"></div>
+<div class="full"><label>Foto</label><input id="facultyImage" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><div class="upload-status">A foto será recortada para 500 × 500 px e salva no Realtime Database.</div><div id="facultyImagePreview" class="image-preview hidden"></div></div>
+</div>
+<div class="actions"><button class="btn primary" type="submit">Salvar docente</button><button class="btn" type="button" id="clearFaculty">Limpar</button></div>
+<div id="facultyStatus" class="status"></div>
+</form>
+</div>
+<div class="card"><h3>Docentes cadastrados</h3><div id="facultyList" class="list"></div></div>
+</section>
+</div>
+</div>
+</section>
+</main>
+
+<script type="module">
+import {dbOnValue,hideDbLoading} from "./db-loader.js";
+import { db } from "./firebase-init.js";
+import { ref, push, set, update, remove, onValue, get, runTransaction } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+const $ = id => document.getElementById(id);
+const loginView=$('loginView'), adminView=$('adminView'), logout=$('logout');
+const newsRef=ref(db,'site/noticias'), facultyRef=ref(db,'site/docentes');
+const maintenanceRef=ref(db,'site/manutencao/ativo');
+const ADMINS_PATH='site/admins';
+const SESSION_KEY='descendentes_admin_session';
+let currentAdmin=null, maintenanceEnabled=false;
+
+async function hashPassword(password){
+  const data=new TextEncoder().encode(password);
+  const digest=await crypto.subtle.digest('SHA-256',data);
+  return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function withTimeout(promise,ms=10000){
+  return Promise.race([
+    promise,
+    new Promise((_,reject)=>setTimeout(()=>reject(new Error("REQUEST_TIMEOUT")),ms))
+  ]);
+}
+function adminKey(login){
+  return String(login||'').trim().toLowerCase().replace(/[.#$\[\]/]/g,'_').replace(/\//g,'_');
+}
+function saveSession(admin){
+  currentAdmin=admin;
+  localStorage.setItem(SESSION_KEY,admin.key);
+}
+function clearSession(){
+  currentAdmin=null;
+  localStorage.removeItem(SESSION_KEY);
+  showLoggedState(false);
+}
+function updateAdminWelcome(admin){
+  const el=$('adminWelcome'); if(!el)return;
+  if(!admin){el.textContent='';return;}
+  let name=(admin.name||admin.login||'Administrador').trim();
+  name=name.charAt(0).toUpperCase()+name.slice(1);
+  el.innerHTML=`Bem Vindo <span>${escapeHtml(name)}</span>`;
+}
+function fillProfile(admin){
+  if(!admin)return;
+  $('profileDisplayName').value=admin.name||'';
+  $('profileEmail').value=admin.email||'';
+}
+function showLoggedState(logged){
+  loginView.classList.toggle('hidden',logged);
+  adminView.classList.toggle('hidden',!logged);
+  logout.classList.toggle('hidden',!logged);
+  updateAdminWelcome(currentAdmin);
+  if(!logged){ hideDbLoading(); return; }
+  fillProfile(currentAdmin);
+  loadNews();
+  loadFaculty();
+}
+async function restoreSession(){
+  const key=localStorage.getItem(SESSION_KEY);
+  if(!key){showLoggedState(false);return;}
+  try{
+    const snap=await withTimeout(get(ref(db,`${ADMINS_PATH}/${key}`)),10000);
+    const admin=snap.val();
+    if(admin && admin.active!==false){ currentAdmin={...admin,key}; showLoggedState(true); }
+    else clearSession();
+  }catch(err){
+    console.error('Sessão administrativa:',err);
+    clearSession();
+  }
+}
+
+function renderMaintenanceStatus(value){
+ maintenanceEnabled=value===true;
+ const status=$('maintenanceStatus'), toggle=$('maintenanceToggle'), text=$('maintenanceToggleText');
+ if(status)status.textContent=maintenanceEnabled?'MANUTENÇÃO ATIVADA':'MANUTENÇÃO DESATIVADA';
+ if(toggle){toggle.classList.toggle('on',maintenanceEnabled);toggle.setAttribute('aria-pressed',String(maintenanceEnabled));toggle.disabled=false;}
+ if(text)text.textContent=maintenanceEnabled?'Desligar manutenção':'Ligar manutenção';
+}
+// O Realtime Database é a fonte única de verdade para todos os dispositivos.
+onValue(maintenanceRef,snap=>{
+ renderMaintenanceStatus(snap.val()===true);
+ const msg=$('maintenanceAdminMessage');
+ if(msg && msg.dataset.pending==='true'){
+   msg.textContent='Sincronizado com o Firebase.';
+   delete msg.dataset.pending;
+   setTimeout(()=>{if(msg.textContent==='Sincronizado com o Firebase.')msg.textContent='';},1800);
+ }
+},err=>{
+ console.error('Firebase manutenção:',err);
+ const status=$('maintenanceStatus'); if(status)status.textContent='Erro ao carregar o status.';
+ const btn=$('maintenanceToggle'); if(btn)btn.disabled=false;
+});
+
+$('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ const status=$('loginStatus'); status.textContent='Verificando cadastro...';
+ const login=$('login').value.trim(); const password=$('password').value;
+ if(!login || !password){status.textContent='Informe o login e a senha.';return;}
+ try{
+   const key=adminKey(login), snap=await withTimeout(get(ref(db,`${ADMINS_PATH}/${key}`)),10000), admin=snap.val();
+   if(!admin || admin.active===false) throw new Error('LOGIN_NOT_FOUND');
+   const hash=await hashPassword(password);
+   if(hash!==admin.passwordHash) throw new Error('BAD_PASSWORD');
+   currentAdmin={...admin,key}; saveSession(currentAdmin); status.textContent='Login realizado com sucesso.'; showLoggedState(true);
+   setTimeout(()=>{status.textContent='';},800);
+ }catch(err){
+   console.error('Login administrativo:',err);
+   if(err.message==='LOGIN_NOT_FOUND') status.textContent='Login não encontrado ou administrador desativado.';
+   else if(err.message==='BAD_PASSWORD') status.textContent='Senha incorreta.';
+   else status.textContent='Não foi possível consultar o cadastro no banco de dados. Verifique a conexão com o Firebase.';
+ }
+});
+
+logout.addEventListener('click',clearSession);
+
+$('userEditorForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ const status=$('profileStatus');
+ if(!currentAdmin){status.textContent='Faça login novamente.';return;}
+ status.textContent='Salvando alterações...';
+ try{
+   const name=$('profileDisplayName').value.trim(), email=$('profileEmail').value.trim();
+   if(!name) throw new Error('Informe o nome.');
+   if(!email || !/^\S+@\S+\.\S+$/.test(email)) throw new Error('Informe um e-mail válido.');
+   const updates={name,email,updatedAt:Date.now()};
+   const currentPassword=$('currentPassword').value, newPassword=$('newPassword').value, confirm=$('confirmPassword').value;
+   if(currentPassword || newPassword || confirm){
+     if(!currentPassword) throw new Error('Informe a senha atual para trocar a senha.');
+     if(!newPassword) throw new Error('Informe a nova senha.');
+     if(newPassword.length<6) throw new Error('A nova senha deve ter pelo menos 6 caracteres.');
+     if(newPassword!==confirm) throw new Error('A confirmação da nova senha não confere.');
+     if(await hashPassword(currentPassword)!==currentAdmin.passwordHash) throw new Error('Senha atual incorreta.');
+     updates.passwordHash=await hashPassword(newPassword);
+   }
+   await update(ref(db,`${ADMINS_PATH}/${currentAdmin.key}`),updates);
+   currentAdmin={...currentAdmin,...updates}; saveSession(currentAdmin); fillProfile(currentAdmin); updateAdminWelcome(currentAdmin);
+   $('currentPassword').value='';$('newPassword').value='';$('confirmPassword').value='';
+   status.textContent='Configuração do administrador atualizada.';
+ }catch(err){status.textContent=err.message||'Não foi possível salvar as alterações.';}
+});
+
+document.querySelectorAll(".side button").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll(".side button").forEach(b=>b.classList.remove("active"));
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ btn.classList.add("active");$(btn.dataset.page).classList.add("active");
+}));
+
+$("maintenanceToggle")?.addEventListener("click",async()=>{
+ const btn=$("maintenanceToggle"), msg=$("maintenanceAdminMessage");
+ if(!btn)return;
+ btn.disabled=true;
+ if(msg)msg.textContent="Atualizando manutenção...";
+ try{
+   const next=!maintenanceEnabled;
+   if(msg){msg.dataset.pending='true';msg.textContent=next?'Ativando manutenção...':'Desativando manutenção...';}
+   await set(maintenanceRef,next);
+   // Confirmação real no banco antes de liberar o botão.
+   const confirmed=await get(maintenanceRef);
+   renderMaintenanceStatus(confirmed.val()===true);
+   if(msg){msg.dataset.pending='false';msg.textContent=next?'Manutenção ativada e sincronizada.':'Manutenção desativada e sincronizada.';setTimeout(()=>{if(msg)msg.textContent='';},2200);}
+ }catch(err){
+   console.error("Firebase manutenção:",err);
+   if(msg)msg.textContent="Não foi possível alterar o modo de manutenção: "+(err.message||err.code||"erro do Firebase");
+ }finally{btn.disabled=false;}
+});
+
+function safeKey(s){return s.replace(/[.#$[\]/]/g,"_");}
+
+function safeImageUrl(value){
+  const url=String(value||"").trim();
+  if(!url) return "";
+  if(/^data:image\/(jpeg|png|webp|gif);base64,/i.test(url)) return url;
+  try{
+    const parsed=new URL(url,location.href);
+    if(parsed.protocol==="https:" || parsed.protocol==="http:") return parsed.href;
+  }catch(_){}
+  return "";
+}
+
+function loadNews(){
+ dbOnValue(onValue,newsRef,snap=>{
+  const data=snap.val()||{}, entries=Object.entries(data).map(([key,v])=>({...v,key})).sort((a,b)=>{
+    const ta=Number(a.createdAt||a.updatedAt||0);
+    const tb=Number(b.createdAt||b.updatedAt||0);
+    if(tb!==ta) return tb-ta;
+    return Number(a.order||999999)-Number(b.order||999999);
+  });
+  $("statNews").textContent=entries.length;
+  $("newsList").innerHTML=entries.map(n=>`<div class="item"><div>${safeImageUrl(n.imageUrl)?`<img src="${escapeHtml(safeImageUrl(n.imageUrl))}" alt="" style="width:64px;height:42px;object-fit:cover;border-radius:6px;margin-right:10px;vertical-align:middle">`:""}<strong>${escapeHtml(n.title||"Sem título")}</strong><div class="meta">${escapeHtml(n.category||"")} • ${escapeHtml(n.date||"")}</div></div><div class="actions"><button class="btn" data-edit="${n.key}">Editar</button><button class="btn danger" data-delete="${n.key}">Excluir</button></div></div>`).join("")||'<div class="meta">Nenhuma notícia cadastrada.</div>';
+  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editNews(b.dataset.edit,entries));
+  document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteNews(b.dataset.delete));
+ },()=>{$("statFirebase").textContent="ERRO"});
+}
+
+function editNews(key,entries){
+ const n=entries.find(x=>x.key===key);if(!n)return;
+ $("newsId").value=key;$("newsTitle").value=n.title||"";$("newsCategory").value=n.category||"";$("newsDate").value=n.date||"";
+ $("newsOrder").value=n.order||1;$("newsExcerpt").value=n.excerpt||"";$("newsContentEditor").innerHTML=n.content||"";$("newsContent").value=$("newsContentEditor").innerHTML;newsEditorRange=null;
+ if(safeImageUrl(n.imageUrl)){$("imagePreview").classList.remove("hidden");$("imagePreview").innerHTML=`<img src="${escapeHtml(safeImageUrl(n.imageUrl))}" alt="Foto atual da notícia">`;}else{$("imagePreview").classList.add("hidden");$("imagePreview").innerHTML="";}
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+async function deleteNews(key){
+  if(!confirm("Excluir esta notícia?")) return;
+  try{
+    await remove(ref(db,"site/noticias/"+key));
+  }catch(err){alert("Erro ao excluir a notícia.");}
+}
+let newsEditorRange=null;
+const newsEditor=$("newsContentEditor");
+function syncNewsEditor(){
+  $("newsContent").value=newsEditor.innerHTML;
+}
+function saveNewsEditorSelection(){
+  const sel=window.getSelection();
+  if(!sel || !sel.rangeCount || !newsEditor.contains(sel.anchorNode)) return;
+  newsEditorRange=sel.getRangeAt(0).cloneRange();
+}
+function restoreNewsEditorSelection(){
+  if(!newsEditorRange) return;
+  const sel=window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(newsEditorRange);
+}
+function applyNewsFormat(format){
+  newsEditor.focus();
+  restoreNewsEditorSelection();
+  document.execCommand(format,false,null);
+  syncNewsEditor();
+  saveNewsEditorSelection();
+}
+newsEditor.addEventListener("mouseup",saveNewsEditorSelection);
+newsEditor.addEventListener("keyup",saveNewsEditorSelection);
+newsEditor.addEventListener("input",()=>{syncNewsEditor();saveNewsEditorSelection();});
+newsEditor.addEventListener("blur",saveNewsEditorSelection);
+document.querySelectorAll(".news-format-btn").forEach(btn=>{
+  btn.addEventListener("mousedown",e=>{e.preventDefault();saveNewsEditorSelection();});
+  btn.addEventListener("click",()=>applyNewsFormat(btn.dataset.format));
+});
+$("clearNews").onclick=()=>{$("newsForm").reset();$("newsId").value="";$("newsOrder").value=1;newsEditor.innerHTML="";$("newsContent").value="";newsEditorRange=null;$("imagePreview").classList.add("hidden");$("imagePreview").innerHTML=""};
+
+
+$("newsImage").addEventListener("change",()=>{
+  const file=$("newsImage").files[0];
+  const preview=$("imagePreview");
+  if(!file){preview.classList.add("hidden");preview.innerHTML="";return;}
+  if(file.size>8*1024*1024){
+    $("newsStatus").textContent="A imagem original deve ter no máximo 8 MB.";
+    $("newsImage").value="";
+    preview.classList.add("hidden");
+    return;
+  }
+  const url=URL.createObjectURL(file);
+  preview.classList.remove("hidden");
+  preview.innerHTML=`<img src="${url}" alt="Prévia da notícia">`;
+});
+
+async function prepareNewsImage(file){
+  if(!file) return null;
+  if(file.size>8*1024*1024) throw new Error("A imagem original deve ter no máximo 8 MB.");
+
+  const loadImage=()=>new Promise((resolve,reject)=>{
+    const url=URL.createObjectURL(file);
+    const img=new Image();
+    img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};
+    img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error("Não foi possível ler a imagem."))};
+    img.src=url;
+  });
+
+  const img=await loadImage();
+  const maxWidth=1000;
+  const scale=Math.min(1,maxWidth/img.naturalWidth);
+  const width=Math.max(1,Math.round(img.naturalWidth*scale));
+  const height=Math.max(1,Math.round(img.naturalHeight*scale));
+  const canvas=document.createElement("canvas");
+  canvas.width=width; canvas.height=height;
+  const ctx=canvas.getContext("2d",{alpha:false});
+  ctx.imageSmoothingEnabled=true;
+  ctx.imageSmoothingQuality="high";
+  ctx.fillStyle="#fff";
+  ctx.fillRect(0,0,width,height);
+  ctx.drawImage(img,0,0,width,height);
+
+  let quality=.78;
+  let dataUrl=canvas.toDataURL("image/jpeg",quality);
+  for(let i=0;i<7 && dataUrl.length>300*1024*1.37;i++){
+    quality-=.07;
+    dataUrl=canvas.toDataURL("image/jpeg",Math.max(.38,quality));
+  }
+  if(dataUrl.length>350*1024*1.37) throw new Error("A imagem ainda está muito grande. Escolha uma imagem menor.");
+  return dataUrl;
+}
+
+$("newsForm").addEventListener("submit",async e=>{
+ e.preventDefault();$("newsStatus").textContent="Salvando...";
+ const key=$("newsId").value||push(newsRef).key;
+ try{
+  const currentSnap=await get(ref(db,"site/noticias/"+key));
+  const current=currentSnap.val()||{};
+  let imageUrl=current.imageUrl||null;
+  const now=Date.now();
+  const file=$("newsImage").files[0];
+
+  if(file){
+    $("newsStatus").textContent="Processando e comprimindo imagem...";
+    imageUrl=await prepareNewsImage(file);
+  }
+
+  await set(ref(db,"site/noticias/"+key),{
+    title:$("newsTitle").value,
+    category:$("newsCategory").value,
+    date:$("newsDate").value,
+    order:Number($("newsOrder").value),
+    excerpt:$("newsExcerpt").value,
+    content:$("newsContentEditor").innerHTML,
+    imageUrl:imageUrl,
+    createdAt:current.createdAt||now,
+    updatedAt:now
+  });
+
+  $("newsStatus").textContent="Notícia salva.";
+  $("newsForm").reset();
+  $("newsOrder").value=1;
+  $("newsId").value="";
+  $("imagePreview").classList.add("hidden");
+  $("imagePreview").innerHTML="";
+}catch(err){
+  console.error(err);
+  $("newsStatus").textContent="Erro ao salvar notícia: "+(err.message||err.code||"erro desconhecido");
+}});
+
+
+
+const affiliationsRef=ref(db,"site/filiacoes");
+
+async function prepareAffiliationImage(file){
+  if(!file) return null;
+  if(file.size>8*1024*1024) throw new Error("A imagem original deve ter no máximo 8 MB.");
+  const bitmap=await createImageBitmap(file);
+  const size=Math.min(bitmap.width,bitmap.height);
+  const canvas=document.createElement("canvas");
+  canvas.width=500; canvas.height=500;
+  const ctx=canvas.getContext("2d",{alpha:false});
+  ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality="high";
+  ctx.drawImage(bitmap,(bitmap.width-size)/2,(bitmap.height-size)/2,size,size,0,0,500,500);
+  bitmap.close();
+  let q=.86, data=canvas.toDataURL("image/jpeg",q);
+  while(data.length>500*1024*1.37 && q>.45){q-=.08;data=canvas.toDataURL("image/jpeg",q);}
+  return data;
+}
+
+$("affiliationImage").addEventListener("change",()=>{
+  const file=$("affiliationImage").files[0], p=$("affiliationImagePreview");
+  if(!file){p.classList.add("hidden");p.innerHTML="";return;}
+  p.classList.remove("hidden");
+  p.innerHTML=`<img src="${URL.createObjectURL(file)}" alt="Prévia" style="width:200px;height:200px;object-fit:cover">`;
+});
+
+function affiliationKey(studio,story,name){
+  return [studio,story,name].map(x=>String(x).trim().toLowerCase().replace(/[.#$[\]/\s]+/g,"_")).join("__");
+}
+
+function loadAffiliations(){
+  dbOnValue(onValue,affiliationsRef,snap=>{
+    const data=snap.val()||{};
+    const entries=Object.entries(data).map(([key,v])=>({...v,key}));
+    $("statAffiliations").textContent=entries.length;
+
+    const groups={};
+    entries.forEach(a=>{
+      groups[a.studio||"Sem franquia"] ??= {};
+      groups[a.studio||"Sem franquia"][a.story||"Sem conto"] ??= [];
+      groups[a.studio||"Sem franquia"][a.story||"Sem conto"].push(a);
+    });
+
+    $("affiliationList").innerHTML=Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([studio,stories])=>`
+      <div class="affiliation-group">
+        <strong>${escapeHtml(studio)}</strong>
+        ${Object.entries(stories).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([story,items])=>`
+          <div class="affiliation-story">
+            <strong>${escapeHtml(story)}</strong>
+            ${items.sort((a,b)=>(a.name||"").localeCompare(b.name||"","pt-BR",{sensitivity:"base"})).map(a=>`
+              <div class="affiliation-row">
+                <span>${a.imageUrl?`<img class="student-thumb" src="${a.imageUrl}" alt="">`:""}${escapeHtml(a.name||"Sem nome")}</span>
+                <span class="count">(${Number(a.currentChildren||0).toString().padStart(2,"0")}/${Number(a.maxChildren||3).toString().padStart(2,"0")})
+                <button class="btn" data-aff-edit="${a.key}">Editar</button>
+                <button class="btn danger" data-aff-delete="${a.key}">Apagar</button></span>
+              </div>`).join("")}
+          </div>`).join("")}
+      </div>`).join("") || '<div class="meta">Nenhuma filiação cadastrada.</div>';
+
+    document.querySelectorAll("[data-aff-edit]").forEach(b=>b.onclick=()=>editAffiliation(b.dataset.affEdit,entries));
+    document.querySelectorAll("[data-aff-delete]").forEach(b=>b.onclick=()=>deleteAffiliation(b.dataset.affDelete));
+  });
+}
+
+function editAffiliation(key,entries){
+  const a=entries.find(x=>x.key===key);if(!a)return;
+  $("affiliationId").value=key;$("affiliationStudio").value=a.studio||"";
+  $("affiliationStory").value=a.story||"";$("affiliationName").value=a.name||"";
+  $("affiliationMax").value=a.maxChildren||3;$("affiliationDescription").value=a.description||"";
+  $("affiliationImage").value="";
+  const p=$("affiliationImagePreview");
+  if(a.imageUrl){p.classList.remove("hidden");p.innerHTML=`<img src="${a.imageUrl}" alt="Foto atual" style="width:200px;height:200px;object-fit:cover">`;}
+  else{p.classList.add("hidden");p.innerHTML="";}
+  $("affiliationStatus").textContent="Editando filiação.";
+  document.querySelector('[data-page="filiacoes"]').click();
+}
+
+async function deleteAffiliation(key){
+  if(!confirm("Apagar esta filiação? Os alunos já cadastrados não serão apagados."))return;
+  try{await remove(ref(db,"site/filiacoes/"+key));$("affiliationStatus").textContent="Filiação apagada.";}
+  catch(err){$("affiliationStatus").textContent="Erro ao apagar: "+err.code;}
+}
+
+$("clearAffiliation").onclick=()=>{
+  $("affiliationForm").reset();$("affiliationId").value="";$("affiliationMax").value=3;
+  $("affiliationImagePreview").classList.add("hidden");$("affiliationImagePreview").innerHTML="";
+};
+
+$("affiliationForm").addEventListener("submit",async e=>{
+  e.preventDefault();$("affiliationStatus").textContent="Salvando...";
+  try{
+    const key=$("affiliationId").value||affiliationKey($("affiliationStudio").value,$("affiliationStory").value,$("affiliationName").value);
+    const snap=await get(ref(db,"site/filiacoes/"+key)), current=snap.val()||{};
+    let imageUrl=current.imageUrl||null;
+    if($("affiliationImage").files[0]){ $("affiliationStatus").textContent="Processando foto...";imageUrl=await prepareAffiliationImage($("affiliationImage").files[0]); }
+    await set(ref(db,"site/filiacoes/"+key),{
+      studio:$("affiliationStudio").value.trim(),story:$("affiliationStory").value.trim(),
+      name:$("affiliationName").value.trim(),maxChildren:Number($("affiliationMax").value),
+      currentChildren:Number(current.currentChildren||0),description:$("affiliationDescription").value.trim(),
+      imageUrl,updatedAt:Date.now()
+    });
+    $("affiliationStatus").textContent="Filiação salva.";
+    $("clearAffiliation").click();
+  }catch(err){$("affiliationStatus").textContent="Erro ao salvar: "+(err.message||err.code);}
+});
+
+$("bulkAffiliation").onclick=async()=>{
+  const lines=$("affiliationBulk").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+  let ok=0, bad=0;
+  for(const line of lines){
+    const parts=line.split("|").map(x=>x.trim());
+    if(parts.length<3){bad++;continue;}
+    const [studio,story,name]=parts, max=Number(parts[3]||3);
+    const key=affiliationKey(studio,story,name);
+    try{await set(ref(db,"site/filiacoes/"+key),{studio,story,name,maxChildren:max||3,currentChildren:0,imageUrl:null,description:"",updatedAt:Date.now()});ok++;}
+    catch(e){bad++;}
+  }
+  $("bulkStatus").textContent=`Importadas: ${ok}. Linhas com erro: ${bad}.`;
+  if(ok)$("affiliationBulk").value="";
+};
+
+loadAffiliations();
+
+const studentsRef=ref(db,"site/alunos");
+
+async function syncAffiliationCounts(studentsData=null){
+  const [studentsSnap,affSnap]=await Promise.all([
+    studentsData===null?get(studentsRef):Promise.resolve({val:()=>studentsData}),
+    get(affiliationsRef)
+  ]);
+  const students=studentsData===null?(studentsSnap.val()||{}):(studentsData||{});
+  const affiliations=affSnap.val()||{};
+  const counts={};
+  Object.values(students).forEach(s=>{
+    const studio=String(s?.affiliationStudio||"").trim().toLowerCase();
+    const story=String(s?.affiliationStory||"").trim().toLowerCase();
+    const name=String(s?.filiation||"").trim().toLowerCase();
+    if(!studio||!story||!name)return;
+    const match=Object.entries(affiliations).find(([_,a])=>
+      String(a?.studio||"").trim().toLowerCase()===studio &&
+      String(a?.story||"").trim().toLowerCase()===story &&
+      String(a?.name||"").trim().toLowerCase()===name
+    );
+    if(match) counts[match[0]]=(counts[match[0]]||0)+1;
+  });
+  const changes={};
+  Object.entries(affiliations).forEach(([key,a])=>{
+    const expected=counts[key]||0;
+    const current=Number(a?.currentChildren||0);
+    if(current!==expected) changes[`site/filiacoes/${key}/currentChildren`]=expected;
+  });
+  if(Object.keys(changes).length) await update(ref(db),changes);
+}
+
+
+
+async function prepareStudentImage(file){
+  if(!file) return null;
+  if(file.size > 8*1024*1024) throw new Error("A foto original deve ter no máximo 8 MB.");
+
+  const bitmap=await createImageBitmap(file);
+  const size=Math.min(bitmap.width,bitmap.height);
+  const sx=(bitmap.width-size)/2;
+  const sy=(bitmap.height-size)/2;
+
+  const canvas=document.createElement("canvas");
+  canvas.width=500;
+  canvas.height=500;
+
+  const ctx=canvas.getContext("2d",{alpha:false});
+  ctx.imageSmoothingEnabled=true;
+  ctx.imageSmoothingQuality="high";
+  ctx.drawImage(bitmap,sx,sy,size,size,0,0,500,500);
+  bitmap.close();
+
+  let quality=0.86;
+  let dataUrl=canvas.toDataURL("image/jpeg",quality);
+
+  // Keep database payloads reasonably small.
+  while(dataUrl.length > 500*1024*1.37 && quality > 0.45){
+    quality-=0.08;
+    dataUrl=canvas.toDataURL("image/jpeg",quality);
+  }
+
+  if(dataUrl.length > 500*1024*1.37){
+    throw new Error("Não foi possível comprimir a foto o suficiente.");
+  }
+
+  return dataUrl;
+}
+
+$("studentImage").addEventListener("change",()=>{
+  const file=$("studentImage").files[0];
+  const preview=$("studentImagePreview");
+
+  if(!file){
+    preview.classList.add("hidden");
+    preview.innerHTML="";
+    return;
+  }
+
+  if(file.size>8*1024*1024){
+    $("studentStatus").textContent="A foto original deve ter no máximo 8 MB.";
+    $("studentImage").value="";
+    preview.classList.add("hidden");
+    return;
+  }
+
+  const url=URL.createObjectURL(file);
+  preview.classList.remove("hidden");
+  preview.innerHTML=`<img src="${url}" alt="Prévia do aluno" style="width:200px;height:200px;object-fit:cover">`;
+});
+
+function loadStudents(){
+  onValue(studentsRef,snap=>{
+    const data=snap.val()||{};
+    const entries=Object.entries(data)
+      .map(([key,v])=>({...v,key}))
+      .sort((a,b)=>(a.name||"").localeCompare(b.name||""));
+
+    $("statStudents").textContent=entries.length;
+
+    $("studentList").innerHTML=entries.map(s=>`
+      <div class="item">
+        <div>
+          ${s.imageUrl ? `<img class="student-thumb" src="${s.imageUrl}" alt="">` : ""}
+          <strong>${escapeHtml(s.name||"Sem nome")}</strong>
+          <div class="meta">
+            ${escapeHtml(s.type||"")} • ${escapeHtml(String(s.age||""))} anos •
+            ${escapeHtml(s.filiation||"")}
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn" data-student-edit="${s.key}">Editar</button>
+          <button class="btn danger" data-student-delete="${s.key}">Apagar</button>
+        </div>
+      </div>
+    `).join("") || '<div class="meta">Nenhum aluno cadastrado.</div>';
+
+    document.querySelectorAll("[data-student-edit]").forEach(button=>{
+      button.onclick=()=>editStudent(button.dataset.studentEdit,entries);
+    });
+
+    document.querySelectorAll("[data-student-delete]").forEach(button=>{
+      button.onclick=()=>deleteStudent(button.dataset.studentDelete);
+    });
+    syncAffiliationCounts(data).catch(err=>console.error("Sincronização das filiações:",err));
+  });
+}
+
+function editStudent(key,entries){
+  const student=entries.find(x=>x.key===key);
+  if(!student) return;
+
+  $("studentId").value=key;
+  $("studentName").value=student.name||"";
+  $("studentType").value=student.type||"";
+  $("studentAge").value=student.age||"";
+  $("studentSexuality").value=student.sexuality||"";
+  $("studentAffiliationStudio").value=student.affiliationStudio||"";
+  $("studentAffiliationStory").value=student.affiliationStory||"";
+  $("studentFiliation").value=student.filiation||"";
+  $("studentFairyTale").value=student.fairyTale||"";
+  $("studentImage").value="";
+
+  const preview=$("studentImagePreview");
+  if(student.imageUrl){
+    preview.classList.remove("hidden");
+    preview.innerHTML=`<img src="${student.imageUrl}" alt="Foto atual do aluno" style="width:200px;height:200px;object-fit:cover">`;
+  }else{
+    preview.classList.add("hidden");
+    preview.innerHTML="";
+  }
+
+  $("studentStatus").textContent="Editando aluno.";
+  document.querySelector('[data-page="alunos"]').click();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function deleteStudent(key){
+  if(!confirm("Apagar este aluno permanentemente?")) return;
+
+  try{
+    const snap=await get(ref(db,"site/alunos/"+key));
+    const student=snap.val()||{};
+
+    await remove(ref(db,"site/alunos/"+key));
+
+    await syncAffiliationCounts();
+
+    $("studentStatus").textContent="Aluno apagado e vaga liberada.";
+  }catch(err){
+    console.error(err);
+    $("studentStatus").textContent="Erro ao apagar aluno: "+(err.message||err.code||err);
+  }
+}
+
+$("clearStudent").onclick=()=>{
+  $("studentForm").reset();
+  $("studentId").value="";
+  $("studentImagePreview").classList.add("hidden");
+  $("studentImagePreview").innerHTML="";
+  $("studentStatus").textContent="";
+};
+
+$("studentForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+
+  const status=$("studentStatus");
+  status.textContent="Verificando disponibilidade da filiação...";
+
+  try{
+    const existingKey=$("studentId").value;
+    const key=existingKey || push(studentsRef).key;
+
+    const currentSnap=await get(ref(db,"site/alunos/"+key));
+    const current=currentSnap.val()||{};
+
+    const studio=$("studentAffiliationStudio")?.value?.trim()||current.affiliationStudio||"";
+    const story=$("studentAffiliationStory")?.value?.trim()||current.affiliationStory||"";
+    const filiation=$("studentFiliation").value.trim();
+
+    if(!studio || !story || !filiation){
+      status.textContent="Informe a franquia, o conto e a filiação para verificar a quantidade de filhos.";
+      return;
+    }
+
+    const studentsSnap=await get(studentsRef);
+    const studentsData=studentsSnap.val()||{};
+
+    const sameAffiliation=(student)=>{
+      return String(student?.affiliationStudio||"").trim().toLowerCase()===studio.toLowerCase()
+        && String(student?.affiliationStory||"").trim().toLowerCase()===story.toLowerCase()
+        && String(student?.filiation||"").trim().toLowerCase()===filiation.toLowerCase();
+    };
+
+    const oldSame=sameAffiliation(current);
+
+    // Find the exact affiliation record.
+    const affiliationsSnap=await get(affiliationsRef);
+    const affiliationsData=affiliationsSnap.val()||{};
+    const affiliationEntries=Object.entries(affiliationsData);
+    const affiliationMatch=affiliationEntries.find(([_,a])=>
+      String(a?.studio||"").trim().toLowerCase()===studio.toLowerCase()
+      && String(a?.story||"").trim().toLowerCase()===story.toLowerCase()
+      && String(a?.name||"").trim().toLowerCase()===filiation.toLowerCase()
+    );
+
+    if(!affiliationMatch){
+      status.textContent="Essa filiação não está cadastrada. Cadastre-a primeiro em Admin → Filiações.";
+      return;
+    }
+
+    const [affiliationKey,affiliation]=affiliationMatch;
+    const maxChildren=Number(affiliation.maxChildren||3);
+
+    // Count current students directly from the student records. The edited
+    // student itself is excluded so editing does not consume a second slot.
+    const currentCount=Object.entries(studentsData).filter(([studentKey,student])=>
+      studentKey!==key && sameAffiliation(student)
+    ).length;
+
+    // If this student is moving from another affiliation, remember the old one.
+    const oldAffiliation={
+      studio:String(current.affiliationStudio||"").trim(),
+      story:String(current.affiliationStory||"").trim(),
+      name:String(current.filiation||"").trim()
+    };
+
+    // Same affiliation: no new slot needed.
+    if(!oldSame){
+      status.textContent=`Verificando vagas: ${currentCount.toString().padStart(2,"0")}/${maxChildren.toString().padStart(2,"0")}...`;
+
+      // Atomic reservation. This prevents two simultaneous admin sessions
+      // from exceeding the configured capacity.
+      const result=await runTransaction(
+        ref(db,"site/filiacoes/"+affiliationKey+"/currentChildren"),
+        value=>{
+          const normalized=Number.isFinite(Number(value)) ? Number(value) : 0;
+          const authoritative=Math.max(0,currentCount);
+          const used=Math.max(normalized,authoritative);
+          if(used>=maxChildren) return;
+          return used+1;
+        }
+      );
+
+      if(!result.committed){
+        status.textContent=`Não será possível adicionar este aluno. A filiação "${filiation}" já atingiu o limite de ${maxChildren} filhos.`;
+        return;
+      }
+    }
+
+    let imageUrl=current.imageUrl||null;
+    const file=$("studentImage").files[0];
+
+    if(file){
+      status.textContent="Redimensionando foto para 500 × 500...";
+      imageUrl=await prepareStudentImage(file);
+    }
+
+    await set(ref(db,"site/alunos/"+key),{
+      name:$("studentName").value.trim(),
+      type:$("studentType").value,
+      age:Number($("studentAge").value),
+      sexuality:$("studentSexuality").value.trim(),
+      filiation:filiation,
+      affiliationStudio:studio,
+      affiliationStory:story,
+      fairyTale:$("studentFairyTale").value.trim(),
+      imageUrl:imageUrl,
+      updatedAt:Date.now()
+    });
+
+    // If editing and changing affiliation, release the old slot.
+    if(!oldSame && oldAffiliation.studio && oldAffiliation.story && oldAffiliation.name){
+      const oldMatch=affiliationEntries.find(([_,a])=>
+        String(a?.studio||"").trim().toLowerCase()===oldAffiliation.studio.toLowerCase()
+        && String(a?.story||"").trim().toLowerCase()===oldAffiliation.story.toLowerCase()
+        && String(a?.name||"").trim().toLowerCase()===oldAffiliation.name.toLowerCase()
+      );
+      if(oldMatch){
+        const [oldKey]=oldMatch;
+        await runTransaction(ref(db,"site/filiacoes/"+oldKey+"/currentChildren"),value=>{
+          return Math.max(0,Number(value||0)-1);
+        });
+      }
+    }
+
+    await syncAffiliationCounts();
+    status.textContent="Aluno salvo no banco de dados e vaga atualizada em tempo real.";
+    $("studentForm").reset();
+    $("studentId").value="";
+    $("studentImagePreview").classList.add("hidden");
+    $("studentImagePreview").innerHTML="";
+  }catch(err){
+    console.error(err);
+    status.textContent="Erro ao salvar aluno: "+(err.message||err.code||err);
+  }
+});
+
+loadStudents();
+
+
+
+const facultyRoleSelect=$("facultyRole");
+const facultyRoleManual=$("facultyRoleManual");
+facultyRoleSelect.addEventListener("change",()=>{
+  const manual=facultyRoleSelect.value==="__manual__";
+  facultyRoleManual.style.display=manual?"block":"none";
+  if(!manual) facultyRoleManual.value="";
+  if(manual) facultyRoleManual.focus();
+});
+function getFacultyRole(){
+  return facultyRoleSelect.value==="__manual__"
+    ? facultyRoleManual.value.trim()
+    : facultyRoleSelect.value;
+}
+
+async function prepareFacultyImage(file){
+ if(!file)return null;
+ const bitmap=await createImageBitmap(file),size=Math.min(bitmap.width,bitmap.height),canvas=document.createElement("canvas");
+ canvas.width=500;canvas.height=500;const ctx=canvas.getContext("2d",{alpha:false});
+ ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
+ ctx.drawImage(bitmap,(bitmap.width-size)/2,(bitmap.height-size)/2,size,size,0,0,500,500);bitmap.close();
+ let q=.86,data=canvas.toDataURL("image/jpeg",q);while(data.length>500*1024*1.37&&q>.45){q-=.08;data=canvas.toDataURL("image/jpeg",q)}return data;
+}
+$("facultyImage").addEventListener("change",()=>{const f=$("facultyImage").files[0],p=$("facultyImagePreview");if(!f){p.classList.add("hidden");return}p.classList.remove("hidden");p.innerHTML=`<img src="${URL.createObjectURL(f)}" alt="" style="width:200px;height:200px;object-fit:cover">`});
+function loadFaculty(){
+ dbOnValue(onValue,facultyRef,s=>{
+  const entries=Object.entries(s.val()||{}).map(([key,v])=>({...v,key})).sort((a,b)=>(a.name||"").localeCompare(b.name||"","pt-BR",{sensitivity:"base"}));
+  $("statDocentes").textContent=entries.length;
+  $("facultyList").innerHTML=entries.map(n=>`<div class="item"><div>${safeImageUrl(n.imageUrl)?`<img src="${escapeHtml(safeImageUrl(n.imageUrl))}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:8px;margin-right:10px;vertical-align:middle">`:""}<strong>${escapeHtml(n.name||"Sem nome")}</strong><div class="meta">${escapeHtml(n.role||"")} • ${escapeHtml(n.subject||"")}</div></div><div class="actions"><button class="btn" data-fedit="${n.key}">Editar</button><button class="btn danger" data-fdelete="${n.key}">Excluir</button></div></div>`).join("")||'<div class="meta">Nenhum docente cadastrado.</div>';
+  document.querySelectorAll("[data-fedit]").forEach(b=>b.onclick=()=>editFaculty(b.dataset.fedit,entries));
+  document.querySelectorAll("[data-fdelete]").forEach(b=>b.onclick=()=>deleteFaculty(b.dataset.fdelete));
+ });
+}
+function editFaculty(key,entries){const n=entries.find(x=>x.key===key);if(!n)return;$("facultyId").value=key;$("facultyName").value=n.name||"";if(["Professor","Inspetor","Diretor (a)","Vice-Diretor (a)","Coordenador"].includes(n.role||"")){$("facultyRole").value=n.role||"";$("facultyRoleManual").value="";$("facultyRoleManual").style.display="none"}else{$("facultyRole").value="__manual__";$("facultyRoleManual").value=n.role||"";$("facultyRoleManual").style.display="block"};$("facultySubject").value=n.subject||"";$("facultyImage").value="";const p=$("facultyImagePreview");if(n.imageUrl){p.classList.remove("hidden");p.innerHTML=`<img src="${n.imageUrl}" alt="" style="width:200px;height:200px;object-fit:cover">`}}
+async function deleteFaculty(key){if(!confirm("Apagar este docente?"))return;try{await remove(ref(db,"site/docentes/"+key))}catch(e){$("facultyStatus").textContent="Erro ao apagar: "+(e.message||e.code)}}
+$("clearFaculty").onclick=()=>{$("facultyForm").reset();$("facultyId").value="";$("facultyRoleManual").style.display="none";$("facultyRoleManual").value="";$("facultyImagePreview").classList.add("hidden");$("facultyImagePreview").innerHTML="";$("facultyStatus").textContent=""};
+$("facultyForm").addEventListener("submit",async e=>{e.preventDefault();const status=$("facultyStatus");status.textContent="Salvando...";try{const role=getFacultyRole();if(!role)throw new Error("Selecione ou informe um cargo.");const key=$("facultyId").value||push(facultyRef).key,old=(await get(ref(db,"site/docentes/"+key))).val()||{};let imageUrl=old.imageUrl||null;if($("facultyImage").files[0])imageUrl=await prepareFacultyImage($("facultyImage").files[0]);await set(ref(db,"site/docentes/"+key),{name:$("facultyName").value.trim(),role:getFacultyRole(),subject:$("facultySubject").value.trim(),imageUrl,updatedAt:Date.now()});status.textContent="Docente salvo no banco de dados.";$("clearFaculty").click()}catch(err){console.error(err);status.textContent="Erro ao salvar docente: "+(err.message||err.code||err)}});
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+
+
+
+restoreSession();
+</script>
+
+
+
+
+
+
+
+<style id="dashboard-menu-below-final">
+/* MENU DO DASHBOARD: SEMPRE VISÍVEL E LOGO ABAIXO DO TÍTULO DASHBOARD */
+#adminView{
+  width:100%!important;
+}
+#adminView > .grid{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:20px!important;
+  width:100%!important;
+}
+#adminSidebar{
+  order:0!important;
+  position:relative!important;
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+  transform:none!important;
+  inset:auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  margin:0!important;
+  padding:18px!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+  background:rgba(13,5,23,.78)!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  border-radius:18px!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.22)!important;
+  z-index:2!important;
+}
+#adminSidebar button{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  min-height:58px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0!important;
+  padding:13px 12px!important;
+  border-radius:11px!important;
+  background:#b30000!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid #b30000!important;
+  font-family:"Comfortaa",sans-serif!important;
+  font-weight:600!important;
+  line-height:1.3!important;
+}
+#adminSidebar button:hover,
+#adminSidebar button.active{
+  background:#7f0000!important;
+  border-color:#7f0000!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+#adminView .content{
+  order:1!important;
+  width:100%!important;
+  min-width:0!important;
+}
+@media(max-width:900px){
+  #adminSidebar{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:520px){
+  #adminSidebar{
+    grid-template-columns:1fr!important;
+    padding:14px!important;
+  }
+  #adminSidebar button{
+    min-height:54px!important;
+  }
+}
+</style>
+
+
+
+
+
+
+
+
+<style id="dashboard-card-menu-final">
+/* ===== CPAINEL: ÚNICO MENU EM CARDS ===== */
+#adminView > .grid{display:block!important;width:100%!important}
+#adminView > .grid > .content{display:block!important;width:100%!important;min-width:0!important}
+#dashboard{display:block!important;width:100%!important}
+#adminSidebar{
+  position:relative!important;inset:auto!important;display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;
+  width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;
+  margin:20px 0 24px!important;padding:18px!important;overflow:visible!important;
+  transform:none!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
+  background:rgba(13,5,23,.72)!important;border:1px solid rgba(255,255,255,.18)!important;
+  border-radius:18px!important;box-shadow:0 10px 28px rgba(0,0,0,.22)!important;
+  box-sizing:border-box!important;
+}
+#adminSidebar > button[data-page]{
+  display:flex!important;width:100%!important;min-height:58px!important;margin:0!important;padding:12px 14px!important;
+  align-items:center!important;justify-content:center!important;text-align:center!important;
+  border-radius:11px!important;background:#b30000!important;border:1px solid #b30000!important;
+  color:#fff!important;-webkit-text-fill-color:#fff!important;font-family:"Comfortaa",sans-serif!important;
+  font-weight:600!important;line-height:1.3!important;cursor:pointer!important;
+}
+#adminSidebar > button[data-page]:hover{background:#7f0000!important;border-color:#7f0000!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+#adminSidebar > button[data-page].active{background:#7f0000!important;border-color:#fff!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+@media(max-width:900px){#adminSidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:520px){#adminSidebar{grid-template-columns:1fr!important;gap:10px!important;padding:14px!important}#adminSidebar > button[data-page]{min-height:54px!important}}
+</style>
+
+
+<style id="news-editor-final-visibility">
+/* ===== EDITOR VISUAL DE NOTÍCIAS ===== */
+#newsContentEditor{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  min-height:220px!important;
+  padding:14px!important;
+  background:rgba(8,5,12,.88)!important;
+  color:#fff!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  border-radius:0 10px 10px 10px!important;
+  box-sizing:border-box!important;
+  outline:none!important;
+  line-height:1.65!important;
+  white-space:pre-wrap!important;
+  overflow:auto!important;
+}
+#newsContentEditor:empty::before{
+  content:attr(data-placeholder);
+  color:rgba(255,255,255,.55);
+  pointer-events:none;
+}
+#newsContentEditor strong,#newsContentEditor b{font-weight:700!important;color:inherit!important}
+#newsContentEditor em,#newsContentEditor i{font-style:italic!important;color:inherit!important}
+.news-editor-toolbar button:focus{outline:2px solid rgba(255,255,255,.8)!important;outline-offset:2px}
+.news-editor-toolbar{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  gap:8px!important;
+  padding:8px!important;
+  background:rgba(8,5,12,.88)!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  border-bottom:0!important;
+  border-radius:10px 10px 0 0!important;
+}
+.news-format-btn{
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  min-width:42px!important;
+  min-height:38px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#b30000!important;
+  color:#fff!important;
+  border:1px solid #b30000!important;
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notícias — Jornal da Auradon Prep</title><style>
+:root{
+  --wine:#5d1728;
+  --wine-dark:#21070e;
+  --gold:#d5ad5a;
+  --cream:#fff8e8;
+  --text:#eadfe0;
+  --muted:#c8b9bc;
+  --line:rgba(213,173,90,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  color:var(--cream);
+  font-family:Georgia,"Times New Roman",serif;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(213,173,90,.12),transparent 30%),
+    radial-gradient(circle at 85% 40%,rgba(93,23,40,.4),transparent 35%),
+    linear-gradient(145deg,#100509,#2a0b13 55%,#100509);
+}
+a{text-decoration:none;color:inherit}
+.container{width:min(1120px,calc(100% - 36px));margin:auto}
+header{
+  border-bottom:1px solid var(--line);
+  background:rgba(16,5,9,.82);
+  padding:18px 0;
+}
+.brand{
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);letter-spacing:.18em;text-transform:uppercase;
+  font-size:.78rem;
+}
+main{padding:70px 0 90px}
+.hero{text-align:center;max-width:850px;margin:auto}
+.logo{width:min(330px,75vw);margin-bottom:34px}
+h1{font-size:clamp(2.4rem,5vw,4.6rem);line-height:1.05;margin-bottom:24px}
+.intro{
+  max-width:760px;margin:auto;color:var(--text);
+  font-size:1.06rem;line-height:1.8;
+}
+.menu{
+  margin:60px auto 0;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+}
+.menu a{
+  min-height:130px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,248,232,.045);
+  color:var(--cream);
+  font-size:1.15rem;font-weight:bold;
+  transition:.2s;
+}
+.menu a:hover{
+  transform:translateY(-4px);
+  background:rgba(93,23,40,.65);
+  border-color:var(--gold);
+  color:var(--gold);
+}
+.page{
+  max-width:900px;margin:auto;text-align:center;
+}
+.page h1{color:var(--gold)}
+.page p{color:var(--muted);line-height:1.8;margin:16px 0}
+.back{
+  display:inline-block;margin-top:30px;padding:12px 18px;
+  border:1px solid var(--gold);border-radius:999px;color:var(--gold);
+}
+footer{
+  text-align:center;padding:25px;color:#9f9195;
+  border-top:1px solid rgba(213,173,90,.15);font-size:.8rem
+}
+@media(max-width:800px){.menu{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.menu{grid-template-columns:1fr}}
+
+/* ===== RESPONSIVIDADE PC / TABLET / CELULAR ===== */
+html { -webkit-text-size-adjust: 100%; }
+body { overflow-x: hidden; }
+
+.container {
+  width: min(1120px, calc(100% - 40px));
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+main {
+  min-height: calc(100vh - 130px);
+}
+
+.hero {
+  padding-inline: 0;
+}
+
+.menu a {
+  min-height: 132px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Telas grandes */
+@media (min-width: 1200px) {
+  .container { width: min(1180px, calc(100% - 64px)); }
+  main { padding-top: 90px; }
+}
+
+/* Notebook / tablet horizontal */
+@media (max-width: 1024px) {
+  .container { width: min(900px, calc(100% - 36px)); }
+  main { padding-top: 58px; }
+  .menu { gap: 14px; }
+  .menu a { min-height: 120px; }
+}
+
+/* Tablet vertical */
+@media (max-width: 800px) {
+  header { padding: 16px 0; }
+  .container { width: min(720px, calc(100% - 32px)); }
+
+  main { padding: 55px 0 70px; }
+
+  .logo {
+    width: min(300px, 72vw);
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 8vw, 3.8rem);
+  }
+
+  .intro {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 46px;
+  }
+
+  .menu a {
+    min-height: 112px;
+    padding: 20px 14px;
+    font-size: 1.05rem;
+  }
+}
+
+/* Celular */
+@media (max-width: 560px) {
+  .container {
+    width: calc(100% - 28px);
+  }
+
+  header {
+    padding: 14px 0;
+  }
+
+  .brand {
+    font-size: .68rem;
+    letter-spacing: .13em;
+  }
+
+  main {
+    padding: 42px 0 58px;
+  }
+
+  .hero,
+  .page {
+    width: 100%;
+  }
+
+  .logo {
+    width: min(260px, 78vw);
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 11vw, 3rem);
+    margin-bottom: 18px;
+  }
+
+  .intro,
+  .page p {
+    font-size: .96rem;
+    line-height: 1.72;
+  }
+
+  .menu {
+    grid-template-columns: 1fr;
+    gap: 11px;
+    margin-top: 34px;
+  }
+
+  .menu a {
+    min-height: 72px;
+    padding: 18px 16px;
+    border-radius: 15px;
+    font-size: 1rem;
+  }
+
+  .back {
+    margin-top: 24px;
+    padding: 12px 17px;
+  }
+
+  footer {
+    padding: 22px 14px;
+    line-height: 1.5;
+  }
+}
+
+/* Celulares muito pequenos */
+@media (max-width: 360px) {
+  .container { width: calc(100% - 22px); }
+
+  .brand {
+    font-size: .62rem;
+    letter-spacing: .1em;
+  }
+
+  main { padding-top: 34px; }
+
+  .logo {
+    width: 72vw;
+  }
+
+  .menu a {
+    min-height: 66px;
+  }
+}
+
+/* Acessibilidade / preferência de movimento */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu a { transition: none; }
+}
+
+
+/* ===== MENU REFINADO ===== */
+.menu {
+  width: min(760px, 100%);
+  margin: 42px auto 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 11px;
+}
+
+.menu a {
+  min-height: 72px;
+  padding: 15px 12px;
+  border-radius: 13px;
+  border: 1px solid rgba(213,173,90,.22);
+  background: linear-gradient(
+    145deg,
+    rgba(255,248,232,.075),
+    rgba(255,248,232,.025)
+  );
+  color: #eee3d2;
+  font-size: .94rem;
+  font-weight: 600;
+  letter-spacing: .025em;
+  box-shadow: 0 8px 24px rgba(0,0,0,.14);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 20%,
+    rgba(213,173,90,.09),
+    transparent 80%
+  );
+  transform: translateX(-110%);
+  transition: transform .35s ease;
+}
+
+.menu a:hover::before {
+  transform: translateX(110%);
+}
+
+.menu a:hover {
+  transform: translateY(-3px);
+  border-color: rgba(213,173,90,.58);
+  background: linear-gradient(
+    145deg,
+    rgba(93,23,40,.72),
+    rgba(93,23,40,.42)
+  );
+  color: #f4d58a;
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+.menu a:active {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 800px) {
+  .menu {
+    width: min(620px, 100%);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .menu a {
+    min-height: 68px;
+    font-size: .92rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .menu {
+    width: min(340px, 100%);
+    grid-template-columns: 1fr;
+    gap: 9px;
+    margin-top: 30px;
+  }
+
+  .menu a {
+    min-height: 58px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    font-size: .91rem;
+  }
+}
+
+
+/* ===== SLIDES DO JORNAL ===== */
+.news-section{
+  width:min(900px,100%);
+  margin:72px auto 0;
+  padding:34px 0 8px;
+  border-top:1px solid rgba(213,173,90,.18);
+}
+.news-header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:20px;
+}
+.news-header h2{
+  color:var(--cream);
+  font-size:clamp(1.7rem,4vw,2.6rem);
+  margin-top:6px;
+}
+.news-controls{display:flex;gap:7px}
+.news-btn{
+  width:36px;height:36px;
+  border:1px solid rgba(213,173,90,.35);
+  border-radius:50%;
+  background:rgba(255,248,232,.04);
+  color:var(--gold);
+  font-size:1.35rem;
+  line-height:1;
+  cursor:pointer;
+  transition:.2s;
+}
+.news-btn:hover{
+  background:rgba(93,23,40,.7);
+  border-color:var(--gold);
+  transform:translateY(-2px);
+}
+.news-slider{
+  position:relative;
+  min-height:190px;
+  overflow:hidden;
+  border:1px solid rgba(213,173,90,.22);
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(255,248,232,.065),rgba(255,248,232,.025));
+}
+.news-slide{
+  display:none;
+  grid-template-columns:72px 1fr;
+  gap:24px;
+  align-items:start;
+  padding:30px;
+}
+.news-slide.active{
+  display:grid;
+  animation:newsFade .35s ease;
+}
+.news-number{
+  color:rgba(213,173,90,.65);
+  font-size:1.65rem;
+  font-weight:bold;
+}
+.news-tag{
+  color:var(--gold);
+  font-size:.68rem;
+  letter-spacing:.16em;
+  font-weight:bold;
+}
+.news-slide h3{
+  margin:8px 0 10px;
+  font-size:clamp(1.25rem,3vw,1.7rem);
+  line-height:1.2;
+}
+.news-slide p{
+  color:var(--muted);
+  line-height:1.65;
+  font-size:.94rem;
+  max-width:680px;
+}
+.news-dots{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin-top:13px;
+}
+.news-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  border:0;
+  background:rgba(213,173,90,.28);
+  cursor:pointer;
+  padding:0;
+}
+.news-dot.active{background:var(--gold);transform:scale(1.25)}
+@keyframes newsFade{
+  from{opacity:0;transform:translateX(10px)}
+  to{opacity:1;transform:translateX(0)}
+}
+@media(max-width:560px){
+  .news-section{margin-top:52px}
+  .news-header{align-items:center}
+  .news-slide{
+    grid-template-columns:1fr;
+    gap:8px;
+    padding:24px 20px;
+  }
+  .news-number{font-size:1rem}
+  .news-slider{min-height:245px}
+  .news-btn{width:34px;height:34px}
+}
+
+
+/* ===== NOTÍCIAS DINÂMICAS ===== */
+.news-more{
+  display:block;
+  width:max-content;
+  margin:17px auto 0;
+  color:var(--gold);
+  font-size:.82rem;
+  transition:.2s;
+}
+.news-more:hover{color:#f4d58a;transform:translateX(3px)}
+.news-slide{display:none}
+.news-slide.active{display:grid}
+
+
+.blog{width:min(980px,100%);margin:auto}
+.blog-head{text-align:center;margin-bottom:42px}
+.blog-head h1{margin-bottom:15px}
+.blog-head p{max-width:680px;margin:auto;color:var(--muted);line-height:1.7}
+.news-list{display:grid;gap:18px}
+.post{display:grid;grid-template-columns:110px 1fr;gap:25px;padding:28px;border:1px solid rgba(213,173,90,.22);border-radius:18px;background:linear-gradient(145deg,rgba(255,248,232,.065),rgba(255,248,232,.025))}
+.post-meta{color:var(--gold);font-size:.72rem;letter-spacing:.12em;font-weight:bold}
+.post-date{color:#a99a9e;font-size:.78rem;margin-top:8px}
+.post h2{font-size:1.55rem;line-height:1.2;margin:7px 0 12px}
+.post-excerpt{color:#d8cbcd;line-height:1.65;margin-bottom:15px}
+.post-content{color:var(--muted);line-height:1.75;padding-top:15px;border-top:1px solid rgba(213,173,90,.13)}
+@media(max-width:600px){.post{grid-template-columns:1fr;padding:22px}.post-meta{display:flex;justify-content:space-between}.post h2{font-size:1.3rem}}
+/* PADRÃO VISUAL GLOBAL */
+body{background:#fff!important;color:#2b171b!important;font-family:"Comfortaa",sans-serif!important}
+header,footer{background:#fff!important;border-color:rgba(165,29,54,.18)!important}
+h1,h2,h3,.name,.title,.brand{color:#a51d36!important}
+.card,.group,.aff,.post,.student,.person{background:#fff!important;border-color:rgba(165,29,54,.18)!important;box-shadow:0 6px 20px rgba(124,18,38,.06)!important}
+
+/* TIPOGRAFIA PADRÃO DO SITE */
+body{
+  font-size:14px!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.brand{
+  font-size:20px!important;
+}
+p,li,td,th,label,.subtitle,.meta,.status,.description,.excerpt,.content,
+.empty,.empty-news,.data,.subject,.role,.date,.category{
+  font-size:14px!important;
+}
+
+/* ===== FUNDO GLOBAL AURADON ===== */
+html,body{
+  min-height:100%;
+}
+body{
+  background:#13051d!important;
+  color:#f8eefb!important;
+  position:relative;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(rgba(12,4,22,.42),rgba(12,4,22,.42)),
+    url("./assets/auradon-bg.jpg") center center / cover no-repeat;
+  opacity:.58;
+  pointer-events:none;
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:rgba(255,255,255,.10);
+  pointer-events:none;
+}
+header{
+  background:rgba(12,4,22,.72)!important;
+  backdrop-filter:blur(12px);
+  border-color:rgba(226,171,255,.20)!important;
+}
+footer{
+  background:rgba(12,4,22,.70)!important;
+  color:#eadcf0!important;
+  border-color:rgba(226,171,255,.18)!important;
+}
+h1,h2,h3,h4,h5,h6,.title,.section-title,.brand{
+  color:#fff!important;
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+p,.subtitle,.meta,.description,.excerpt,.content,.empty,.empty-news,
+label,.subject,.role,.date,.category{
+  color:#f0e5f4!important;
+}
+.card,.group,.aff,.post,.student,.person{
+  background:rgba(18,7,29,.68)!important;
+  border-color:rgba(226,171,255,.24)!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(7px);
+}
+.menu a{
+  background:rgba(18,7,29,.60)!important;
+  color:#fff!important;
+  border-color:rgba(226,171,255,.30)!important;
+}
+.menu a:hover{
+  background:rgba(151,34,117,.72)!important;
+  color:#fff!important;
+  border-color:#e5b7ff!important;
+}
+a{color:#f2cfff}
+.back{
+  color:#fff!important;
+  border-color:#e5b7ff!important;
+  background:rgba(18,7,29,.48);
+}
+.back:hover{
+  background:#8c2b79!important;
+  color:#fff!important;
+}
+.section-divider{
+  background:linear-gradient(90deg,transparent,rgba(226,171,255,.48),transparent)!important;
+}
+.empty-news,.empty{
+  background:rgba(18,7,29,.48)!important;
+  border-color:rgba(226,171,255,.30)!important;
+}
+input,select,textarea{
+  background:rgba(255,255,255,.94)!important;
+  color:#241329!important;
+}
+
+/* ===== IDENTIDADE TIPOGRÁFICA GLOBAL ===== */
+:root{
+  --site-text:#f3eaf6;
+  --site-muted:#d9c9df;
+  --site-title:#ffffff;
+  --site-accent:#e4b8f4;
+}
+html,body{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+}
+body{
+  color:var(--site-text)!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:20px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  color:var(--site-title)!important;
+}
+p,li,td,th,small,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,
+label,button,a,.menu a,.back{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  line-height:1.7!important;
+}
+.card h3,.person .name,.student .name,
+.post h2,.group h3{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:20px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  color:var(--site-title)!important;
+}
+/* Contraste para o fundo roxo/azul */
+p,li,td,th,.subtitle,.description,.excerpt,.content,.meta,.date,
+.subject,.role,.empty,.empty-news,label{
+  color:var(--site-muted)!important;
+}
+a,.back,.menu a{
+  color:var(--site-title)!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#fff!important;
+}
+/* Campos administrativos permanecem claros para facilitar a edição */
+input,select,textarea{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  line-height:1.5!important;
+}
+input,select,textarea{
+  color:#241329!important;
+}
+button{
+  font-family:"Comfortaa",sans-serif!important;
+}
+@media(max-width:650px){
+  html,body{font-size:14px!important}
+  h1,h2,h3,h4,h5,h6,.title,.section-title,
+  .school-title h1,.city-title h1,.floor-heading h2,.hero h1,
+  .card h3,.person .name,.student .name,.post h2,.group h3{
+    font-size:20px!important;
+  }
+  p,li,td,th,small,.subtitle,.description,.excerpt,.content,
+  .meta,.date,.category,.subject,.role,.empty,.empty-news,
+  label,button,a,.menu a,.back{
+    font-size:14px!important;
+  }
+}
+
+/* ===== TEXTO GLOBAL CLARO ===== */
+body,body *{
+  color:#f4edf7!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1,
+.card h3,.person .name,.student .name,.post h2,.group h3{
+  color:#ffffff!important;
+}
+p,li,td,th,small,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,
+.data,.info,.details,.label{
+  color:#f4edf7!important;
+}
+a,.back,.menu a{
+  color:#ffffff!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#ffffff!important;
+}
+/* Campos de edição continuam com contraste apropriado */
+input,select,textarea{
+  color:#241329!important;
+  background:#fff!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#6f5a72!important;
+}
+/* Ícones e elementos decorativos não recebem cores escuras */
+svg{color:#fff!important}
+
+/* ===== TEMA UNIFORME: FUNDO DO SITE + TEXTO BRANCO ===== */
+html,body{
+  background:#12051d!important;
+  color:#f4edf7!important;
+}
+body{
+  background-image:url("./assets/auradon-bg.jpg")!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-attachment:fixed!important;
+  background-repeat:no-repeat!important;
+}
+body::before,body::after{display:none!important}
+
+/* Remove superfícies brancas dos blocos de conteúdo */
+main,section,article,header,footer,nav,aside,
+.container,.content,.wrapper,.page,.group,.list,.grid,
+.panel,.dashboard,.topbar,.navbar,.sidebar{
+  background:transparent!important;
+  background-image:none!important;
+}
+
+/* Cards mantêm transparência, mas nunca ficam brancos */
+.card,.aff,.post,.student,.person,.item,.box,.panel-card,.stat,
+.form-card,.list-card,.table-card,.news-card,.group-card{
+  background:rgba(13,5,23,.68)!important;
+  color:#f4edf7!important;
+  border-color:rgba(226,190,245,.20)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+}
+
+/* Tipografia branca em todas as páginas públicas e admin */
+body *{
+  font-family:"Comfortaa",sans-serif!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1,.card h3,
+.student .name,.person .name,.post h2,.group h3,
+.admin-welcome,.admin-welcome span{
+  color:#fff!important;
+}
+p,li,td,th,span,label,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,.details,.data,.info{
+  color:#f4edf7!important;
+}
+a,.back,.menu a{
+  color:#fff!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#fff!important;
+}
+
+/* Filiações: remove o vermelho antigo dos textos e contadores.
+   O contador cheio continua podendo usar vermelho como indicador de lotação. */
+.count{
+  color:#fff!important;
+}
+.count.full{
+  color:#ff8fa4!important;
+}
+
+/* Notícias */
+.news-section,.news-list,.post{
+  color:#f4edf7!important;
+}
+.news-section h1,.news-section h2,.news-section h3,
+.news-list h1,.news-list h2,.news-list h3{
+  color:#fff!important;
+}
+
+/* Explore Auradon */
+.floor-heading h2,.school-title h1,.city-title h1{
+  color:#fff!important;
+}
+
+/* Admin: tudo branco/transparente; só campos de edição ficam claros */
+.admin-top-welcome,header,.admin-header,.topbar{
+  background:rgba(13,5,23,.68)!important;
+  color:#fff!important;
+  border-color:rgba(226,190,245,.20)!important;
+}
+input,select,textarea{
+  background:#fff!important;
+  color:#241329!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#6f5a72!important;
+}
+table,thead,tbody,tr{
+  background:transparent!important;
+}
+button,.btn{
+  color:#fff!important;
+}
+
+/* ===== RPG — ESQUEMA DE CORES DE TEXTO ===== */
+:root{
+  --rpg-red:#a51d36;
+  --rpg-white:#ffffff;
+}
+
+/* Superfícies brancas/claras */
+body,
+.card,
+.card *,
+section.card,
+.panel,
+.panel *,
+.form-card,
+.form-card *,
+table,
+thead,
+tbody,
+tr,
+td,
+th,
+input,
+select,
+textarea,
+label,
+.modal,
+.modal *,
+.admin-card,
+.admin-card *,
+.notice-card,
+.notice-card *{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Fundo roxo/escuro */
+.hero,
+.hero *,
+header.dark,
+.dark-section,
+.purple-section,
+.purple-bg,
+.site-purple,
+footer,
+footer *{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Navegação sobre fundo roxo */
+header,
+header nav,
+header nav *,
+.main-nav,
+.main-nav *,
+.home-main-nav,
+.home-main-nav *{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Links em áreas brancas */
+.card a,
+.panel a,
+section.card a,
+main a{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Placeholders permanecem legíveis */
+input::placeholder,
+textarea::placeholder{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+  opacity:.65;
+}
+
+/* Botões: texto vermelho no botão claro */
+button,
+.btn{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Botões que já usam fundo roxo/escuro */
+.btn-primary,
+.btn-dark,
+button.primary,
+button.dark,
+button[class*="purple"]{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Exceções para estados de hover que usam fundo vermelho/roxo */
+button:hover,
+.btn:hover{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+</style><style>
+header img{
+  filter:none!important;
+  image-rendering:auto!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
+}
+</style><style>
+header img{
+  height:auto!important;
+  max-width:100%!important;
+  filter:none!important;
+  image-rendering:auto!important;
+  mix-blend-mode:normal!important;
+  opacity:1!important;
+}
+</style>
+<style id="rpg-background-override">
+/* ===== FUNDO OFICIAL DO RPG + TIPOGRAFIA BRANCA ===== */
+html{
+  min-height:100%;
+  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
+}
+body{
+  min-height:100vh!important;
+  background:transparent!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Todo texto do site */
+body *,
+body h1,body h2,body h3,body h4,body h5,body h6,
+body p,body span,body strong,body b,body small,body label,
+body a,body a:visited,body li,body td,body th,
+body .title,body .subtitle,body .label,body .meta,
+body .brand,body .section-kicker,body .type,body .status{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Cabeçalho e navegação deixam o fundo aparecer */
+header,.top,.home-main-nav,.admin-main-nav,footer{
+  background:rgba(5,3,10,.34)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+
+/* Cards, painéis e áreas de conteúdo: translúcidos para manter o fundo uniforme */
+.card,.panel,.side,.form-card,.admin-card,.notice-card,
+.modal,.item,.stat,.login,
+.admin-auth-info-card,.admin-exclusive-card{
+  background:rgba(8,5,14,.62)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.20)!important;
+}
+
+/* Campos */
+input,select,textarea{
+  background:rgba(0,0,0,.38)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+input::placeholder,textarea::placeholder{
+  color:rgba(255,255,255,.72)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
+}
+
+/* Botões */
+button,.btn{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+button:hover,.btn:hover,
+button.active,.btn.active,
+button.primary,.btn.primary{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Links */
+a,a:visited,a:hover{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Menu mobile/lateral */
+.mobile-menu,.mobile-menu-links,.home-nav-links,
+.admin-sidebar,.admin-sidebar-nav{
+  background:rgba(7,4,14,.94)!important;
+}
+.mobile-menu button,.mobile-menu a,
+.home-nav-links button,.home-nav-links a,
+.admin-sidebar button,.admin-sidebar a{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Remove regras antigas que tentavam pintar texto de vermelho/dourado. */
+:root{
+  --rpg-red:#fff!important;
+  --rpg-white:#fff!important;
+  --wine:#fff!important;
+  --wine-dark:#fff!important;
+  --gold:#fff!important;
+  --cream:#fff!important;
+  --text:#fff!important;
+  --muted:rgba(255,255,255,.78)!important;
+  --line:rgba(255,255,255,.20)!important;
+}
+
+/* Loading continua legível sobre o novo fundo */
+#dbLoadingOverlay{
+  background:rgba(4,2,8,.84)!important;
+}
+</style>
+
+<style id="maintenance-style">
+#siteMaintenanceOverlay{
+  position:fixed;inset:0;z-index:2147483647;
+  display:flex;align-items:center;justify-content:center;
+  background:#05030a;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+#siteMaintenanceOverlay.is-active{
+  opacity:1;visibility:visible;pointer-events:auto;
+}
+#siteMaintenanceOverlay img{
+  width:100vw;height:100vh;object-fit:cover;display:block;
+}
+html.maintenance-mode,
+html.maintenance-mode body{
+  overflow:hidden!important;
+}
+html.maintenance-mode body > *:not(#siteMaintenanceOverlay){
+  visibility:hidden!important;
+}
+@media(max-width:700px){
+  #siteMaintenanceOverlay{padding:0;background:#05030a!important;}
+  #siteMaintenanceOverlay img{
+    width:100vw!important;
+    height:auto!important;
+    max-width:100vw!important;
+    max-height:100vh!important;
+    object-fit:contain!important;
+    object-position:center!important;
+    display:block!important;
+  }
+}
+</style>
+
+<style id="global-button-standard">
+
+/* ===== PADRÃO GLOBAL DE BOTÕES: VERMELHO + TEXTO BRANCO ===== */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.button,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-success,
+.btn-warning,
+.btn-outline,
+[role="button"] {
+  background: #b30000 !important;
+  background-color: #b30000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #b30000 !important;
+  box-shadow: none;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+.btn:hover,
+.button:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover,
+.btn-success:hover,
+.btn-warning:hover,
+.btn-outline:hover,
+[role="button"]:hover {
+  background: #8f0000 !important;
+  background-color: #8f0000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #8f0000 !important;
+}
+
+button:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible,
+.btn:focus-visible,
+.button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #fff !important;
+  outline-offset: 2px;
+}
+
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled,
+.btn:disabled,
+.button:disabled {
+  background: #b30000 !important;
+  background-color: #b30000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  opacity: .55;
+}
+</style>
+</head>
+
+<style id="db-loading-style">
+#dbLoadingOverlay{
+  position:fixed;inset:0;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(8,4,18,.82);
+  backdrop-filter:blur(4px);
+  opacity:1;visibility:visible;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+#dbLoadingOverlay:not(.is-loading){
+  opacity:0;visibility:hidden;pointer-events:none;
+}
+#dbLoadingOverlay img{
+  display:block;width:min(360px,78vw);height:auto;
+  max-height:78vh;object-fit:contain;
+}
+@media(max-width:600px){
+  #dbLoadingOverlay img{width:min(310px,82vw);}
+}
+</style>
+<div id="dbLoadingOverlay" class="is-loading" role="status" aria-live="polite" aria-label="Aguarde, estamos carregando o banco de dados">
+  <img src="assets/db-loading.png" alt="Aguarde, estamos carregando o banco de dados">
+</div>
+
+<body>
+<header><div class="container"><div class="brand">Descendentes RPG • Auradon</div></div></header>
+<main><div class="container blog">
+<section class="blog-head"><div class="section-kicker">Jornal da Auradon Prep</div><h1>Notícias</h1>
+<p>As últimas notícias, investigações e acontecimentos da vida escolar de Auradon Prep.</p></section>
+<section class="news-list" id="newsList"></section>
+<div style="text-align:center"><a class="back" href="index.html">Voltar à página inicial</a></div>
+</div></main>
+<footer>Descendentes RPG • Jornal da Auradon Prep</footer>
+
+<script type="module" src="noticias.js"></script>
+<script type="module" src="./maintenance.js"></script>
+
+<script>
+window.addEventListener("DOMContentLoaded",()=>{
+  const target=decodeURIComponent(location.hash.slice(1));
+  if(!target)return;
+  setTimeout(()=>{
+    const el=document.getElementById(target);
+    if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+  },250);
+});
+</script>
+</body></html>

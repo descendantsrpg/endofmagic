@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Filiações — Descendentes RPG</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+/* IDENTIDADE VISUAL GLOBAL */
+:root{--red:#a51d36;--red-dark:#7c1226;--text:#2b171b;--muted:#6f555a;--line:rgba(165,29,54,.18)}
+*{box-sizing:border-box}
+html,body{background:#fff!important;color:var(--text)!important;font-family:"Comfortaa",sans-serif!important}
+body,button,input,textarea,select,a{font-family:"Comfortaa",sans-serif!important}
+header,.top,footer{background:#fff!important;color:var(--text)!important;border-color:var(--line)!important}
+h1,h2,h3,h4,h5,h6,.brand,.title,.type,.section-kicker{color:var(--red)!important;font-family:"Comfortaa",sans-serif!important;font-weight:300}
+p,.subtitle,.meta,.status,.label,.upload-status,.data{color:var(--muted)!important}
+.card,.side,.item,.student,.post,.group,.aff,.news-slider,.news-card{background:#fff!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:0 6px 20px rgba(124,18,38,.06)!important}
+.btn,.filter,.news-btn{background:#fff!important;color:var(--red)!important;border-color:rgba(165,29,54,.3)!important}
+.btn:hover,.filter:hover,.filter.active,.news-btn:hover,.btn.primary{background:var(--red)!important;color:#fff!important;border-color:var(--red)!important}
+input,textarea,select{background:#fff!important;color:var(--text)!important;border-color:rgba(165,29,54,.25)!important}
+input:focus,textarea:focus,select:focus{outline:2px solid rgba(165,29,54,.12)!important;border-color:var(--red)!important}
+a{color:var(--red)}
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+:root{--red:#a51d36;--dark:#2b171b;--muted:#6f555a;--line:rgba(165,29,54,.18)}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--dark);font-family:"Comfortaa",sans-serif;font-weight:300}
+header{background:#fff;border-bottom:1px solid var(--line);padding:18px 0}
+.container{width:min(1120px,calc(100% - 32px));margin:auto}
+.brand{display:flex;justify-content:center;align-items:center}
+.brand img{width:min(330px,72vw);height:auto;display:block}
+main{padding:52px 0 75px}
+.hero{text-align:center;margin-bottom:35px}.hero h1{margin:0 0 10px;color:var(--red);font-weight:300;font-size:clamp(2rem,5vw,3.6rem)}.hero p{margin:0;color:var(--muted)}
+.groups{display:grid;gap:18px}.group{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 6px 20px rgba(124,18,38,.06)}
+.group h2{margin:0;color:var(--red);font-size:1.35rem;font-weight:400}
+.story{margin-top:18px;padding-top:18px;border-top:1px solid rgba(165,29,54,.1)}.story h3{margin:0 0 12px;color:var(--dark);font-weight:400}
+.affs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.aff{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;transition:.2s}.aff:hover{transform:translateY(-2px);border-color:var(--red)}
+.aff img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;margin-bottom:10px}.name{color:var(--red);font-weight:500;font-size:.9rem;line-height:1.35}.count{font-size:1.05rem!important;font-weight:700!important;color:#2b171b!important;margin-top:5px;line-height:1.15}.empty{text-align:center;color:var(--muted);padding:40px}.error{text-align:center;color:var(--red);padding:30px;border:1px solid var(--line);border-radius:12px}
+.back{display:block;width:max-content;margin:35px auto 0;padding:11px 17px;border:1px solid var(--red);border-radius:999px;color:var(--red);text-decoration:none}
+footer{text-align:center;padding:24px;color:var(--muted);border-top:1px solid var(--line);font-size:.8rem}
+@media(max-width:900px){.affs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.affs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.affs{grid-template-columns:1fr}.container{width:calc(100% - 24px)}}
+/* PADRÃO VISUAL GLOBAL */
+body{background:#fff!important;color:#2b171b!important;font-family:"Comfortaa",sans-serif!important}
+header,footer{background:#fff!important;border-color:rgba(165,29,54,.18)!important}
+h1,h2,h3,.name,.title,.brand{color:#a51d36!important}
+.card,.group,.aff,.post,.student,.person{background:#fff!important;border-color:rgba(165,29,54,.18)!important;box-shadow:0 6px 20px rgba(124,18,38,.06)!important}
+
+/* TIPOGRAFIA PADRÃO DO SITE */
+body{
+  font-size:14px!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.brand{
+  font-size:20px!important;
+}
+p,li,td,th,label,.subtitle,.meta,.status,.description,.excerpt,.content,
+.empty,.empty-news,.data,.subject,.role,.date,.category{
+  font-size:14px!important;
+}
+
+/* ===== FUNDO GLOBAL AURADON ===== */
+html,body{
+  min-height:100%;
+}
+body{
+  background:#13051d!important;
+  color:#f8eefb!important;
+  position:relative;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(rgba(12,4,22,.42),rgba(12,4,22,.42)),
+    url("./assets/auradon-bg.jpg") center center / cover no-repeat;
+  opacity:.58;
+  pointer-events:none;
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:rgba(255,255,255,.10);
+  pointer-events:none;
+}
+header{
+  background:rgba(12,4,22,.72)!important;
+  backdrop-filter:blur(12px);
+  border-color:rgba(226,171,255,.20)!important;
+}
+footer{
+  background:rgba(12,4,22,.70)!important;
+  color:#eadcf0!important;
+  border-color:rgba(226,171,255,.18)!important;
+}
+h1,h2,h3,h4,h5,h6,.title,.section-title,.brand{
+  color:#fff!important;
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+p,.subtitle,.meta,.description,.excerpt,.content,.empty,.empty-news,
+label,.subject,.role,.date,.category{
+  color:#f0e5f4!important;
+}
+.card,.group,.aff,.post,.student,.person{
+  background:rgba(18,7,29,.68)!important;
+  border-color:rgba(226,171,255,.24)!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(7px);
+}
+.menu a{
+  background:rgba(18,7,29,.60)!important;
+  color:#fff!important;
+  border-color:rgba(226,171,255,.30)!important;
+}
+.menu a:hover{
+  background:rgba(151,34,117,.72)!important;
+  color:#fff!important;
+  border-color:#e5b7ff!important;
+}
+a{color:#f2cfff}
+.back{
+  color:#fff!important;
+  border-color:#e5b7ff!important;
+  background:rgba(18,7,29,.48);
+}
+.back:hover{
+  background:#8c2b79!important;
+  color:#fff!important;
+}
+.section-divider{
+  background:linear-gradient(90deg,transparent,rgba(226,171,255,.48),transparent)!important;
+}
+.empty-news,.empty{
+  background:rgba(18,7,29,.48)!important;
+  border-color:rgba(226,171,255,.30)!important;
+}
+input,select,textarea{
+  background:rgba(255,255,255,.94)!important;
+  color:#241329!important;
+}
+
+/* ===== IDENTIDADE TIPOGRÁFICA GLOBAL ===== */
+:root{
+  --site-text:#f3eaf6;
+  --site-muted:#d9c9df;
+  --site-title:#ffffff;
+  --site-accent:#e4b8f4;
+}
+html,body{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+}
+body{
+  color:var(--site-text)!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:20px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  color:var(--site-title)!important;
+}
+p,li,td,th,small,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,
+label,button,a,.menu a,.back{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  line-height:1.7!important;
+}
+.card h3,.person .name,.student .name,
+.post h2,.group h3{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:20px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  color:var(--site-title)!important;
+}
+/* Contraste para o fundo roxo/azul */
+p,li,td,th,.subtitle,.description,.excerpt,.content,.meta,.date,
+.subject,.role,.empty,.empty-news,label{
+  color:var(--site-muted)!important;
+}
+a,.back,.menu a{
+  color:var(--site-title)!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#fff!important;
+}
+/* Campos administrativos permanecem claros para facilitar a edição */
+input,select,textarea{
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  line-height:1.5!important;
+}
+input,select,textarea{
+  color:#241329!important;
+}
+button{
+  font-family:"Comfortaa",sans-serif!important;
+}
+@media(max-width:650px){
+  html,body{font-size:14px!important}
+  h1,h2,h3,h4,h5,h6,.title,.section-title,
+  .school-title h1,.city-title h1,.floor-heading h2,.hero h1,
+  .card h3,.person .name,.student .name,.post h2,.group h3{
+    font-size:20px!important;
+  }
+  p,li,td,th,small,.subtitle,.description,.excerpt,.content,
+  .meta,.date,.category,.subject,.role,.empty,.empty-news,
+  label,button,a,.menu a,.back{
+    font-size:14px!important;
+  }
+}
+
+/* ===== TEXTO GLOBAL CLARO ===== */
+body,body *{
+  color:#f4edf7!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1,
+.card h3,.person .name,.student .name,.post h2,.group h3{
+  color:#ffffff!important;
+}
+p,li,td,th,small,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,
+.data,.info,.details,.label{
+  color:#f4edf7!important;
+}
+a,.back,.menu a{
+  color:#ffffff!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#ffffff!important;
+}
+/* Campos de edição continuam com contraste apropriado */
+input,select,textarea{
+  color:#241329!important;
+  background:#fff!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#6f5a72!important;
+}
+/* Ícones e elementos decorativos não recebem cores escuras */
+svg{color:#fff!important}
+
+/* ===== TEMA UNIFORME: FUNDO DO SITE + TEXTO BRANCO ===== */
+html,body{
+  background:#12051d!important;
+  color:#f4edf7!important;
+}
+body{
+  background-image:url("./assets/auradon-bg.jpg")!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-attachment:fixed!important;
+  background-repeat:no-repeat!important;
+}
+body::before,body::after{display:none!important}
+
+/* Remove superfícies brancas dos blocos de conteúdo */
+main,section,article,header,footer,nav,aside,
+.container,.content,.wrapper,.page,.group,.list,.grid,
+.panel,.dashboard,.topbar,.navbar,.sidebar{
+  background:transparent!important;
+  background-image:none!important;
+}
+
+/* Cards mantêm transparência, mas nunca ficam brancos */
+.card,.aff,.post,.student,.person,.item,.box,.panel-card,.stat,
+.form-card,.list-card,.table-card,.news-card,.group-card{
+  background:rgba(13,5,23,.68)!important;
+  color:#f4edf7!important;
+  border-color:rgba(226,190,245,.20)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+}
+
+/* Tipografia branca em todas as páginas públicas e admin */
+body *{
+  font-family:"Comfortaa",sans-serif!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,.school-title h1,.city-title h1,
+.floor-heading h2,.hero h1,.card h3,
+.student .name,.person .name,.post h2,.group h3,
+.admin-welcome,.admin-welcome span{
+  color:#fff!important;
+}
+p,li,td,th,span,label,
+.subtitle,.description,.excerpt,.content,.meta,.date,.category,
+.subject,.role,.empty,.empty-news,.details,.data,.info{
+  color:#f4edf7!important;
+}
+a,.back,.menu a{
+  color:#fff!important;
+}
+a:hover,.back:hover,.menu a:hover{
+  color:#fff!important;
+}
+
+/* Filiações: remove o vermelho antigo dos textos e contadores.
+   O contador cheio continua podendo usar vermelho como indicador de lotação. */
+.count{
+  color:#fff!important;
+}
+.count.full{
+  color:#ff8fa4!important;
+}
+
+/* Notícias */
+.news-section,.news-list,.post{
+  color:#f4edf7!important;
+}
+.news-section h1,.news-section h2,.news-section h3,
+.news-list h1,.news-list h2,.news-list h3{
+  color:#fff!important;
+}
+
+/* Explore Auradon */
+.floor-heading h2,.school-title h1,.city-title h1{
+  color:#fff!important;
+}
+
+/* Admin: tudo branco/transparente; só campos de edição ficam claros */
+.admin-top-welcome,header,.admin-header,.topbar{
+  background:rgba(13,5,23,.68)!important;
+  color:#fff!important;
+  border-color:rgba(226,190,245,.20)!important;
+}
+input,select,textarea{
+  background:#fff!important;
+  color:#241329!important;
+}
+input::placeholder,textarea::placeholder{
+  color:#6f5a72!important;
+}
+table,thead,tbody,tr{
+  background:transparent!important;
+}
+button,.btn{
+  color:#fff!important;
+}
+
+/* ===== FILIAÇÕES: TEXTO BRANCO UNIFORME ===== */
+body,body *{
+  color:#fff!important;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.section-title,
+.group-title,.family-title,.filiation-title,
+.card-title,.name,.description,.count,
+.meta,.subtitle,.info,.details,.family,
+.category,.text,.label{
+  color:#fff!important;
+}
+a,a:visited,a:hover,a:active{
+  color:#fff!important;
+}
+.card,.aff,.filiation-card,.family-card,.group,.item{
+  color:#fff!important;
+}
+.card p,.aff p,.filiation-card p,.family-card p,
+.card span,.aff span,.filiation-card span,.family-card span{
+  color:#fff!important;
+}
+/* Only the full counter remains highlighted as requested. */
+.count.full{
+  color:#ff8fa4!important;
+}
+
+/* CONTADOR DAS FILIAÇÕES: BRANCO */
+.count,
+.count.full{
+  color:#fff!important;
+  font-size:1.05rem!important;
+  font-weight:700!important;
+}
+
+/* FILIAÇÃO ESGOTADA */
+.count.full{
+  color:#ff5b78!important;
+  font-weight:700!important;
+}
+.filiation-full{
+  color:#ff5b78!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  margin-top:4px!important;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+
+/* ===== FILIAÇÕES — PADRÃO FINAL DOS CONTADORES ===== */
+.filiation-card .count,
+.aff .count,
+.affiliation-card .count,
+.group .count,
+.count{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:14px!important;
+  font-weight:700!important;
+  line-height:1.35!important;
+  opacity:1!important;
+  text-shadow:0 1px 4px rgba(0,0,0,.25)!important;
+}
+/* 03/03: vermelho somente quando atingir o limite */
+.filiation-card .count.full,
+.aff .count.full,
+.affiliation-card .count.full,
+.group .count.full,
+.count.full{
+  color:#ff5b78!important;
+  -webkit-text-fill-color:#ff5b78!important;
+  font-weight:700!important;
+}
+/* Mensagem de lotação */
+.filiation-full{
+  color:#ff5b78!important;
+  -webkit-text-fill-color:#ff5b78!important;
+  font-family:"Comfortaa",sans-serif!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:1.35!important;
+  margin-top:4px!important;
+}
+
+/* ===== RPG — ESQUEMA DE CORES DE TEXTO ===== */
+:root{
+  --rpg-red:#a51d36;
+  --rpg-white:#ffffff;
+}
+
+/* Superfícies brancas/claras */
+body,
+.card,
+.card *,
+section.card,
+.panel,
+.panel *,
+.form-card,
+.form-card *,
+table,
+thead,
+tbody,
+tr,
+td,
+th,
+input,
+select,
+textarea,
+label,
+.modal,
+.modal *,
+.admin-card,
+.admin-card *,
+.notice-card,
+.notice-card *{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Fundo roxo/escuro */
+.hero,
+.hero *,
+header.dark,
+.dark-section,
+.purple-section,
+.purple-bg,
+.site-purple,
+footer,
+footer *{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Navegação sobre fundo roxo */
+header,
+header nav,
+header nav *,
+.main-nav,
+.main-nav *,
+.home-main-nav,
+.home-main-nav *{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Links em áreas brancas */
+.card a,
+.panel a,
+section.card a,
+main a{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Placeholders permanecem legíveis */
+input::placeholder,
+textarea::placeholder{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+  opacity:.65;
+}
+
+/* Botões: texto vermelho no botão claro */
+button,
+.btn{
+  color:var(--rpg-red);
+  -webkit-text-fill-color:var(--rpg-red);
+}
+
+/* Botões que já usam fundo roxo/escuro */
+.btn-primary,
+.btn-dark,
+button.primary,
+button.dark,
+button[class*="purple"]{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+/* Exceções para estados de hover que usam fundo vermelho/roxo */
+button:hover,
+.btn:hover{
+  color:var(--rpg-white);
+  -webkit-text-fill-color:var(--rpg-white);
+}
+
+</style>
+<style>
+.count{font-size:1.25rem!important;font-weight:700!important;color:#2b171b!important;margin-top:6px;line-height:1.2}
+.count.full{color:#a51d36!important}
+</style><style>
+header img{
+  filter:none!important;
+  image-rendering:auto!important;
+  opacity:1!important;
+  mix-blend-mode:normal!important;
+}
+</style><style>
+header img{
+  height:auto!important;
+  max-width:100%!important;
+  filter:none!important;
+  image-rendering:auto!important;
+  mix-blend-mode:normal!important;
+  opacity:1!important;
+}
+</style>
+<style id="rpg-background-override">
+/* ===== FUNDO OFICIAL DO RPG + TIPOGRAFIA BRANCA ===== */
+html{
+  min-height:100%;
+  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
+}
+body{
+  min-height:100vh!important;
+  background:transparent!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Todo texto do site */
+body *,
+body h1,body h2,body h3,body h4,body h5,body h6,
+body p,body span,body strong,body b,body small,body label,
+body a,body a:visited,body li,body td,body th,
+body .title,body .subtitle,body .label,body .meta,
+body .brand,body .section-kicker,body .type,body .status{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Cabeçalho e navegação deixam o fundo aparecer */
+header,.top,.home-main-nav,.admin-main-nav,footer{
+  background:rgba(5,3,10,.34)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+
+/* Cards, painéis e áreas de conteúdo: translúcidos para manter o fundo uniforme */
+.card,.panel,.side,.form-card,.admin-card,.notice-card,
+.modal,.item,.stat,.login,
+.admin-auth-info-card,.admin-exclusive-card{
+  background:rgba(8,5,14,.62)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.20)!important;
+}
+
+/* Campos */
+input,select,textarea{
+  background:rgba(0,0,0,.38)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+input::placeholder,textarea::placeholder{
+  color:rgba(255,255,255,.72)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
+}
+
+/* Botões */
+button,.btn{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.28)!important;
+}
+button:hover,.btn:hover,
+button.active,.btn.active,
+button.primary,.btn.primary{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Links */
+a,a:visited,a:hover{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Menu mobile/lateral */
+.mobile-menu,.mobile-menu-links,.home-nav-links,
+.admin-sidebar,.admin-sidebar-nav{
+  background:rgba(7,4,14,.94)!important;
+}
+.mobile-menu button,.mobile-menu a,
+.home-nav-links button,.home-nav-links a,
+.admin-sidebar button,.admin-sidebar a{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Remove regras antigas que tentavam pintar texto de vermelho/dourado. */
+:root{
+  --rpg-red:#fff!important;
+  --rpg-white:#fff!important;
+  --wine:#fff!important;
+  --wine-dark:#fff!important;
+  --gold:#fff!important;
+  --cream:#fff!important;
+  --text:#fff!important;
+  --muted:rgba(255,255,255,.78)!important;
+  --line:rgba(255,255,255,.20)!important;
+}
+
+/* Loading continua legível sobre o novo fundo */
+#dbLoadingOverlay{
+  background:rgba(4,2,8,.84)!important;
+}
+</style>
+
+<style id="maintenance-style">
+#siteMaintenanceOverlay{
+  position:fixed;inset:0;z-index:2147483647;
+  display:flex;align-items:center;justify-content:center;
+  background:#05030a;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+#siteMaintenanceOverlay.is-active{
+  opacity:1;visibility:visible;pointer-events:auto;
+}
+#siteMaintenanceOverlay img{
+  width:100vw;height:100vh;object-fit:cover;display:block;
+}
+html.maintenance-mode,
+html.maintenance-mode body{
+  overflow:hidden!important;
+}
+html.maintenance-mode body > *:not(#siteMaintenanceOverlay){
+  visibility:hidden!important;
+}
+@media(max-width:700px){
+  #siteMaintenanceOverlay{padding:0;background:#05030a!important;}
+  #siteMaintenanceOverlay img{
+    width:100vw!important;
+    height:auto!important;
+    max-width:100vw!important;
+    max-height:100vh!important;
+    object-fit:contain!important;
+    object-position:center!important;
+    display:block!important;
+  }
+}
+</style>
+
+<style id="global-button-standard">
+
+/* ===== PADRÃO GLOBAL DE BOTÕES: VERMELHO + TEXTO BRANCO ===== */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.button,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-success,
+.btn-warning,
+.btn-outline,
+[role="button"] {
+  background: #b30000 !important;
+  background-color: #b30000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #b30000 !important;
+  box-shadow: none;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+.btn:hover,
+.button:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover,
+.btn-success:hover,
+.btn-warning:hover,
+.btn-outline:hover,
+[role="button"]:hover {
+  background: #8f0000 !important;
+  background-color: #8f0000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #8f0000 !important;
+}
+
+button:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible,
+.btn:focus-visible,
+.button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #fff !important;
+  outline-offset: 2px;
+}
+
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled,
+.btn:disabled,
+.button:disabled {
+  background: #b30000 !important;
+  background-color: #b30000 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  opacity: .55;
+}
+</style>
+</head>
+
+<style id="db-loading-style">
+#dbLoadingOverlay{
+  position:fixed;inset:0;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(8,4,18,.82);
+  backdrop-filter:blur(4px);
+  opacity:1;visibility:visible;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+#dbLoadingOverlay:not(.is-loading){
+  opacity:0;visibility:hidden;pointer-events:none;
+}
+#dbLoadingOverlay img{
+  display:block;width:min(360px,78vw);height:auto;
+  max-height:78vh;object-fit:contain;
+}
+@media(max-width:600px){
+  #dbLoadingOverlay img{width:min(310px,82vw);}
+}
+</style>
+<div id="dbLoadingOverlay" class="is-loading" role="status" aria-live="polite" aria-label="Aguarde, estamos carregando o banco de dados">
+  <img src="assets/db-loading.png" alt="Aguarde, estamos carregando o banco de dados">
+</div>
+
+<body>
+<header><div class="container brand"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></div></header>
+<main class="container">
+<section class="hero"><h1>Filiações</h1><p>Franquia → conto → filiação</p></section>
+<section class="groups" id="groups"><div class="empty">Carregando filiações...</div></section>
+<a class="back" href="index.html">Voltar à página inicial</a>
+</main>
+<footer>Descendentes RPG • Auradon Prep</footer>
+<script type="module">
+import {dbOnValue} from "./db-loader.js";
+import{db}from"./firebase-init.js";
+import{ref,onValue}from"https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+const box=document.getElementById("groups");
+let affiliations={},students={},affLoaded=false;
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+const errorMessage="Não foi possível carregar as filiações. Verifique a conexão e as regras de leitura do Firebase.";
+function render(){
+ const entries=Object.values(affiliations||{}).filter(Boolean), people=Object.values(students||{}).filter(Boolean);
+ if(!entries.length){box.innerHTML='<div class="empty">Nenhuma filiação cadastrada no Firebase.</div>';return;}
+ const groups={};
+ entries.forEach(raw=>{
+  const a=raw||{},studio=String(a.studio??a.franquia??"Sem franquia").trim()||"Sem franquia",story=String(a.story??a.conto??a.fairyTale??"Sem conto").trim()||"Sem conto",name=String(a.name??a.nome??a.filiation??"Sem nome").trim()||"Sem nome";
+  groups[studio]??={};groups[studio][story]??=[];
+  const current=people.filter(p=>{
+   const pn=String(p.filiation??"").trim().toLowerCase(),ps=String(p.affiliationStudio??p.studio??"").trim().toLowerCase(),pt=String(p.affiliationStory??p.story??"").trim().toLowerCase();
+   return pn===name.toLowerCase()&&(!ps||ps===studio.toLowerCase())&&(!pt||pt===story.toLowerCase());
+  }).length;
+  groups[studio][story].push({...a,name,current,maxChildren:Number(a.maxChildren??a.maxFilhos??3)});
+ });
+ box.innerHTML=Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([studio,stories])=>
+ `<article class="group"><h2>${esc(studio)}</h2>${Object.entries(stories).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([story,items])=>
+ `<div class="story"><h3>${esc(story)}</h3><div class="affs">${items.sort((a,b)=>a.name.localeCompare(b.name,"pt-BR",{sensitivity:"base"})).map(a=>
+ `<div class="aff">${a.imageUrl?`<img src="${esc(a.imageUrl)}" alt="Foto de ${esc(a.name)}">`:""}<div class="name">${esc(a.name)}</div><div class="count ${a.current >= a.maxChildren ? "full" : ""}">(${String(a.current).padStart(2,"0")}/${String(a.maxChildren).padStart(2,"0")})</div>
+${a.current >= a.maxChildren ? '<div class="filiation-full">Filiação Cheia</div>' : ''}</div>`).join("")}</div></div>`).join("")}</article>`).join("");
+}
+box.innerHTML='<div class="empty">Carregando filiações...</div>';
+dbOnValue(onValue, ref(db,"site/filiacoes"),snap=>{affiliations=snap.val()||{};affLoaded=true;render()},err=>{console.error(err);box.innerHTML=`<div class="error">${errorMessage}</div>`});
+dbOnValue(onValue, ref(db,"site/alunos"),snap=>{students=snap.val()||{};if(affLoaded)render()},err=>{console.error(err);if(affLoaded)render()});
+setTimeout(()=>{if(box.textContent.includes("Carregando filiações"))box.innerHTML='<div class="error">O Firebase demorou para responder. Atualize a página e verifique as regras de leitura do Realtime Database.</div>'},10000);
+</script>
+<script type="module" src="./maintenance.js"></script>
+</body>
+</html>
