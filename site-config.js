@@ -47,7 +47,7 @@ function apply(config){
   const global=config.global||{}, page=config.pages?.[pageKey]||{};
   const body=document.body;
   const bg=safeUrl(global.backgroundUrl);
-  if(bg){body.style.setProperty('background-image',`linear-gradient(rgba(0,0,0,${Math.max(0,Math.min(0.7,Number(global.backgroundOverlay)||0))}),rgba(0,0,0,${Math.max(0,Math.min(0.7,Number(global.backgroundOverlay)||0))})),url("${bg}")`,'important');body.style.backgroundSize='cover';body.style.backgroundAttachment='fixed';body.style.backgroundPosition='center';}
+  if(bg){body.style.setProperty('background-image',`linear-gradient(rgba(0,0,0,${Math.max(0,Math.min(0.7,Number(global.backgroundOverlay)||0))}),rgba(0,0,0,${Math.max(0,Math.min(0.7,Number(global.backgroundOverlay)||0))})),url("${bg}")`,'important');body.style.backgroundSize='100% 100%';body.style.backgroundAttachment='fixed';body.style.backgroundPosition='center';}
   else {body.style.removeProperty('background-image');}
   if(global.primaryColor) document.documentElement.style.setProperty('--site-primary',global.primaryColor);
   if(global.primaryDark) document.documentElement.style.setProperty('--site-primary-dark',global.primaryDark);
@@ -80,7 +80,7 @@ style.textContent=`
 :root{--site-primary:#a51d36;--site-primary-dark:#7c1226}
 #siteDynamicBanner{width:100%;margin:0 auto 28px;padding:0 16px;position:relative;z-index:2}
 #siteDynamicBanner[hidden],#siteCustomBlocks[hidden]{display:none!important}
-.site-banner-inner{min-height:210px;max-width:1200px;margin:auto;border-radius:22px;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.20)}
+.site-banner-inner{min-height:210px;max-width:1200px;margin:auto;border-radius:22px;background-size:100% 100%;background-position:center;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.20)}
 .site-banner-content{text-align:center;color:#fff;padding:34px 24px;max-width:900px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
 .site-banner-content h2{margin:0 0 10px;font:300 clamp(1.8rem,5vw,3.5rem)/1.1 Comfortaa,sans-serif;color:#fff!important}
 .site-banner-content p{margin:0;font:300 clamp(.9rem,2vw,1.15rem)/1.7 Comfortaa,sans-serif;color:#fff!important}
