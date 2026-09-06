@@ -109,4 +109,5 @@ buttons.forEach(btn=>btn.addEventListener('click',()=>{const id=btn.dataset.peri
 const nav=document.querySelector('.home-main-nav'), links=document.querySelector('.home-nav-links'), openBtn=document.querySelector('.mobile-menu-toggle'), closeBtn=document.querySelector('.mobile-menu-close');
 let scrollY=0;function openMenu(){scrollY=window.scrollY;links.classList.add('open');nav.classList.add('menu-open');openBtn.setAttribute('aria-expanded','true');document.body.classList.add('home-menu-locked');document.body.style.top=`-${scrollY}px`;}function closeMenu(){links.classList.remove('open');nav.classList.remove('menu-open');openBtn.setAttribute('aria-expanded','false');document.body.classList.remove('home-menu-locked');document.body.style.top='';window.scrollTo(0,scrollY);}openBtn.addEventListener('click',openMenu);closeBtn.addEventListener('click',closeMenu);nav.addEventListener('click',e=>{if(e.target===nav)closeMenu();});links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(window.innerWidth<=650)closeMenu();}));
 </script>
+<script type="module" src="./site-config.js"></script>
 </body></html>

@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Painel Admin — Descendentes RPG</title>
@@ -1640,6 +1643,9 @@ input[type="reset"]:disabled,
 }
 </style>
 
+<style id="site-editor-style">
+.site-editor-card{margin-bottom:20px}.site-editor-card h3{color:#fff!important}.site-editor-help{color:rgba(255,255,255,.75)!important;line-height:1.6}.site-editor-card input[type="color"]{height:48px;padding:4px}.site-editor-card input[type="range"]{width:100%;accent-color:#b30000}.site-editor-card label{display:block}.site-editor-card textarea{min-height:120px;resize:vertical}
+</style>
 </head>
 
 <style id="db-loading-style">
@@ -1694,6 +1700,7 @@ input[type="reset"]:disabled,
 
 <button class="active" data-page="dashboard">Dashboard</button>
 <button data-page="noticias">Postar Notícias</button>
+<button data-page="editor-site">Editor do Site</button>
 <button data-page="filiacoes">Cadastrar/Remover Filiações</button>
 <button data-page="alunos">Cadastrar/Remover Alunos</button>
 <button data-page="docentes">Cadastrar/Remover Corpo Docente</button>
@@ -1704,6 +1711,47 @@ input[type="reset"]:disabled,
 
 
 
+
+<section id="editor-site" class="page">
+<h1 class="title">Editor do Site</h1>
+<p class="subtitle">Altere a aparência e partes das páginas pelo CPainel. As mudanças são salvas no Firebase e aparecem no site sem novo upload dos arquivos.</p>
+<div class="card site-editor-card">
+<h3>Aparência geral</h3>
+<div class="formgrid">
+<div class="full"><label>Plano de fundo do site</label><input id="siteBackgroundFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="upload-status">A imagem será comprimida antes de ser salva. Para remover, use o botão abaixo.</div><div id="siteBackgroundPreview" class="image-preview hidden"></div></div>
+<div><label>Cor principal</label><input id="sitePrimaryColor" type="color" value="#a51d36"></div>
+<div><label>Cor principal escura</label><input id="sitePrimaryDark" type="color" value="#7c1226"></div>
+<div><label>Escurecimento do fundo</label><input id="siteBackgroundOverlay" type="range" min="0" max="0.7" step="0.05" value="0"><span id="siteBackgroundOverlayValue">0%</span></div>
+</div>
+<div class="actions"><button class="btn primary" type="button" id="saveSiteAppearance">Salvar aparência</button><button class="btn" type="button" id="removeSiteBackground">Remover plano de fundo personalizado</button></div>
+<div id="siteAppearanceStatus" class="status"></div>
+</div>
+<div class="card site-editor-card">
+<h3>Banner do site</h3>
+<div class="formgrid">
+<div><label><input id="siteBannerEnabled" type="checkbox"> Ativar banner</label></div>
+<div><label>Título do banner</label><input id="siteBannerTitle" placeholder="Ex.: Bem-vindos a Auradon"></div>
+<div class="full"><label>Subtítulo do banner</label><input id="siteBannerSubtitle" placeholder="Uma nova aventura está começando..."></div>
+<div class="full"><label>Imagem do banner</label><input id="siteBannerFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="upload-status">A imagem será comprimida e armazenada no Firebase.</div><div id="siteBannerPreview" class="image-preview hidden"></div></div>
+</div>
+<div class="actions"><button class="btn primary" type="button" id="saveSiteBanner">Salvar banner</button><button class="btn" type="button" id="removeSiteBanner">Remover banner</button></div>
+<div id="siteBannerStatus" class="status"></div>
+</div>
+<div class="card site-editor-card">
+<h3>Editar estrutura de uma página</h3>
+<p class="site-editor-help">Você pode alterar o título, subtítulo, visibilidade e adicionar um bloco personalizado sem editar o HTML.</p>
+<div class="formgrid">
+<div><label>Página</label><select id="sitePageSelect"><option value="index">Página Inicial</option><option value="noticias">Notícias</option><option value="filiacoes">Filiações</option><option value="alunos">Alunos</option><option value="corpo-docente">Corpo Docente</option><option value="explore-auradon">Explore Auradon</option><option value="sistema-de-aulas">Sistema de Aulas</option><option value="guia-para-novos-usuarios">Guia para Novos Usuários</option></select></div>
+<div><label><input id="sitePageEnabled" type="checkbox" checked> Página visível</label></div>
+<div><label>Título da página</label><input id="sitePageTitle" placeholder="Deixe vazio para manter o título original"></div>
+<div><label>Subtítulo</label><input id="sitePageSubtitle" placeholder="Deixe vazio para manter o original"></div>
+<div class="full"><label>Bloco personalizado (HTML simples)</label><textarea id="sitePageHtml" rows="8" placeholder="Ex.: <h2>Novidade</h2><p>Texto...</p>"></textarea></div>
+<div class="full"><label>CSS personalizado da página</label><textarea id="sitePageCss" rows="7" placeholder="Ex.: .minha-classe { padding: 20px; }"></textarea></div>
+</div>
+<div class="actions"><button class="btn primary" type="button" id="saveSitePage">Salvar alterações da página</button><button class="btn" type="button" id="clearSitePage">Limpar personalizações desta página</button></div>
+<div id="sitePageStatus" class="status"></div>
+</div>
+</section>
 
 <section id="manutencao" class="page">
 <h1 class="title">Iniciar/Interromper Manutenção</h1>
@@ -1743,9 +1791,13 @@ input[type="reset"]:disabled,
 <div class="full"><label>Resumo</label><textarea id="newsExcerpt" required></textarea></div>
 <div class="full">
 <label>Conteúdo</label>
-<div class="news-editor-toolbar" role="toolbar" aria-label="Formatação do conteúdo">
-  <button type="button" class="news-format-btn" data-format="bold" title="Negrito"><strong>B</strong></button>
-  <button type="button" class="news-format-btn" data-format="italic" title="Itálico"><em>I</em></button>
+<div class="news-format-card">
+  <div class="news-format-card-title">Formatação de texto</div>
+  <div class="news-editor-toolbar" role="toolbar" aria-label="Formatação do conteúdo">
+    <button type="button" class="news-format-btn" data-format="bold" title="Negrito" aria-label="Negrito"><strong>B</strong></button>
+    <button type="button" class="news-format-btn" data-format="italic" title="Itálico" aria-label="Itálico"><em>I</em></button>
+  </div>
+  <div class="news-format-help">Selecione um trecho do texto e clique em <strong>B</strong> para negrito ou <em>I</em> para itálico.</div>
 </div>
 <div id="newsContentEditor" class="news-content-editor" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Escreva o conteúdo da notícia..."></div>
 <textarea id="newsContent" class="hidden" aria-hidden="true"></textarea>
@@ -2940,5 +2992,78 @@ restoreSession();
 }
 </style>
 
+
+<style id="news-format-card-final">
+.news-format-card{
+  display:block!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  margin:8px 0 0!important;
+  padding:12px!important;
+  background:rgba(179,0,0,.10)!important;
+  border:1px solid rgba(179,0,0,.55)!important;
+  border-radius:12px!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+.news-format-card-title{
+  display:block!important;
+  margin:0 0 8px!important;
+  color:#fff!important;
+  font-size:14px!important;
+  font-weight:700!important;
+}
+.news-format-help{
+  display:block!important;
+  margin-top:8px!important;
+  color:rgba(255,255,255,.72)!important;
+  font-size:12px!important;
+  line-height:1.5!important;
+}
+.news-format-card .news-editor-toolbar{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+}
+.news-format-card .news-format-btn{
+  display:inline-flex!important;
+  width:44px!important;
+  height:40px!important;
+  min-width:44px!important;
+  min-height:40px!important;
+  padding:0!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:18px!important;
+  background:#b30000!important;
+  color:#fff!important;
+  border:1px solid #b30000!important;
+  border-radius:8px!important;
+}
+</style>
+<script type="module">
+import {db} from './firebase-init.js';
+import {ref,get,set,remove} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js';
+const SITE_CONFIG_REF=ref(db,'site/configuracao');
+const $=id=>document.getElementById(id);
+let siteConfig={global:{},pages:{}};
+const pageNames={index:'Página Inicial',noticias:'Notícias',filiacoes:'Filiações',alunos:'Alunos','corpo-docente':'Corpo Docente','explore-auradon':'Explore Auradon','sistema-de-aulas':'Sistema de Aulas','guia-para-novos-usuarios':'Guia para Novos Usuários'};
+function setStatus(id,msg){const el=$(id);if(el)el.textContent=msg;}
+function preview(fileId,previewId){const f=$(fileId)?.files?.[0],p=$(previewId);if(!f||!p)return null;p.classList.remove('hidden');p.innerHTML='';const img=document.createElement('img');img.src=URL.createObjectURL(f);img.alt='Prévia';img.style.cssText='max-width:260px;max-height:150px;object-fit:cover;border-radius:10px';p.appendChild(img);return f;}
+async function imageData(file,max=450000){if(!file)return null;if(file.size>10*1024*1024)throw new Error('Imagem original muito grande. Use no máximo 10 MB.');const bmp=await createImageBitmap(file);const scale=Math.min(1,1600/Math.max(bmp.width,bmp.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(bmp.width*scale));c.height=Math.max(1,Math.round(bmp.height*scale));const x=c.getContext('2d');x.drawImage(bmp,0,0,c.width,c.height);bmp.close();let q=.84,d=c.toDataURL('image/jpeg',q);while(d.length>max*1.37&&q>.4){q-=.07;d=c.toDataURL('image/jpeg',q);}if(d.length>max*1.37)throw new Error('A imagem ainda está muito grande. Escolha outra.');return d;}
+function fillEditor(){const g=siteConfig.global||{},b=g.banner||{}; $('sitePrimaryColor').value=g.primaryColor||'#a51d36';$('sitePrimaryDark').value=g.primaryDark||'#7c1226';$('siteBackgroundOverlay').value=Number(g.backgroundOverlay)||0;$('siteBackgroundOverlayValue').textContent=Math.round((Number(g.backgroundOverlay)||0)*100)+'%';$('siteBannerEnabled').checked=b.enabled===true;$('siteBannerTitle').value=b.title||'';$('siteBannerSubtitle').value=b.subtitle||''; const url=g.backgroundUrl||''; if(url){$('siteBackgroundPreview').classList.remove('hidden');$('siteBackgroundPreview').innerHTML=`<img src="${url}" alt="Plano de fundo atual" style="max-width:320px;max-height:180px;object-fit:cover;border-radius:10px">`;} const bu=b.imageUrl||'';if(bu){$('siteBannerPreview').classList.remove('hidden');$('siteBannerPreview').innerHTML=`<img src="${bu}" alt="Banner atual" style="max-width:420px;max-height:180px;object-fit:cover;border-radius:10px">`;}}
+function fillPage(){const k=$('sitePageSelect').value,p=siteConfig.pages?.[k]||{};$('sitePageEnabled').checked=p.enabled!==false;$('sitePageTitle').value=p.title||'';$('sitePageSubtitle').value=p.subtitle||'';$('sitePageHtml').value=p.customHtml||'';$('sitePageCss').value=p.customCss||'';}
+async function loadSiteConfig(){try{const snap=await get(SITE_CONFIG_REF);siteConfig=snap.val()||{global:{},pages:{}};fillEditor();fillPage();}catch(e){console.error(e);setStatus('siteAppearanceStatus','Não foi possível carregar a configuração do site.');}}
+$('siteBackgroundOverlay')?.addEventListener('input',e=>$('siteBackgroundOverlayValue').textContent=Math.round(Number(e.target.value)*100)+'%');
+$('siteBackgroundFile')?.addEventListener('change',()=>preview('siteBackgroundFile','siteBackgroundPreview'));$('siteBannerFile')?.addEventListener('change',()=>preview('siteBannerFile','siteBannerPreview'));$('sitePageSelect')?.addEventListener('change',fillPage);
+$('saveSiteAppearance')?.addEventListener('click',async()=>{try{setStatus('siteAppearanceStatus','Salvando...');let bg=siteConfig.global?.backgroundUrl||'';const f=$('siteBackgroundFile').files[0];if(f)bg=await imageData(f);siteConfig.global={...(siteConfig.global||{}),backgroundUrl:bg,primaryColor:$('sitePrimaryColor').value,primaryDark:$('sitePrimaryDark').value,backgroundOverlay:Number($('siteBackgroundOverlay').value)};await set(SITE_CONFIG_REF,siteConfig);setStatus('siteAppearanceStatus','Aparência salva e sincronizada com o site.');}catch(e){console.error(e);setStatus('siteAppearanceStatus','Erro: '+e.message);}});
+$('removeSiteBackground')?.addEventListener('click',async()=>{try{siteConfig.global={...(siteConfig.global||{}),backgroundUrl:''};await set(SITE_CONFIG_REF,siteConfig);fillEditor();setStatus('siteAppearanceStatus','Plano de fundo personalizado removido.');}catch(e){setStatus('siteAppearanceStatus','Erro: '+e.message);}});
+$('saveSiteBanner')?.addEventListener('click',async()=>{try{setStatus('siteBannerStatus','Salvando...');let b={...(siteConfig.global?.banner||{}),enabled:$('siteBannerEnabled').checked,title:$('siteBannerTitle').value.trim(),subtitle:$('siteBannerSubtitle').value.trim(),imageUrl:siteConfig.global?.banner?.imageUrl||''};const f=$('siteBannerFile').files[0];if(f)b.imageUrl=await imageData(f);siteConfig.global={...(siteConfig.global||{}),banner:b};await set(SITE_CONFIG_REF,siteConfig);fillEditor();setStatus('siteBannerStatus','Banner salvo e sincronizado com o site.');}catch(e){console.error(e);setStatus('siteBannerStatus','Erro: '+e.message);}});
+$('removeSiteBanner')?.addEventListener('click',async()=>{try{siteConfig.global={...(siteConfig.global||{}),banner:{enabled:false,title:'',subtitle:'',imageUrl:''}};await set(SITE_CONFIG_REF,siteConfig);fillEditor();setStatus('siteBannerStatus','Banner removido.');}catch(e){setStatus('siteBannerStatus','Erro: '+e.message);}});
+$('saveSitePage')?.addEventListener('click',async()=>{try{setStatus('sitePageStatus','Salvando...');const k=$('sitePageSelect').value;siteConfig.pages=siteConfig.pages||{};siteConfig.pages[k]={enabled:$('sitePageEnabled').checked,title:$('sitePageTitle').value.trim(),subtitle:$('sitePageSubtitle').value.trim(),customHtml:$('sitePageHtml').value,customCss:$('sitePageCss').value};await set(SITE_CONFIG_REF,siteConfig);setStatus('sitePageStatus','Alterações da página salvas e sincronizadas.');}catch(e){console.error(e);setStatus('sitePageStatus','Erro: '+e.message);}});
+$('clearSitePage')?.addEventListener('click',async()=>{try{const k=$('sitePageSelect').value;siteConfig.pages=siteConfig.pages||{};delete siteConfig.pages[k];await set(SITE_CONFIG_REF,siteConfig);fillPage();setStatus('sitePageStatus','Personalizações removidas; a página voltou ao conteúdo original.');}catch(e){setStatus('sitePageStatus','Erro: '+e.message);}});
+loadSiteConfig();
+</script>
 </body>
 </html>

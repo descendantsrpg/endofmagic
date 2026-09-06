@@ -834,5 +834,6 @@ dbOnValue(onValue, ref(db,"site/alunos"),snap=>{students=snap.val()||{};if(affLo
 setTimeout(()=>{if(box.textContent.includes("Carregando filiações"))box.innerHTML='<div class="error">O Firebase demorou para responder. Atualize a página e verifique as regras de leitura do Realtime Database.</div>'},10000);
 </script>
 <script type="module" src="./maintenance.js"></script>
+<script type="module" src="./site-config.js"></script>
 </body>
 </html>

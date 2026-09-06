@@ -1,4 +1,3 @@
-import {dbOnValue} from "./db-loader.js";
 import { db } from "./firebase-init.js";
 import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
@@ -89,8 +88,11 @@ function showError(error){
  * Qualquer publicação, edição ou exclusão feita pelo painel admin em
  * site/noticias será refletida automaticamente aqui.
  */
-dbOnValue(onValue, 
+onValue(
   ref(db, "site/noticias"),
-  renderNews,
-  showError
+  snapshot => {
+    renderNews(snapshot);
+  },
+  showError,
+  { onlyOnce: false }
 );

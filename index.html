@@ -1385,11 +1385,15 @@ window.nextHomeNews=nextHomeNews;
 /* Fonte única e sincronização em tempo real com o mesmo caminho usado pelo CPainel. */
 onValue(
   ref(db,"site/noticias"),
-  renderHomeNews,
+  snapshot=>{
+    console.log("Notícias sincronizadas com o Firebase:", snapshot.exists() ? snapshot.numChildren() : 0);
+    renderHomeNews(snapshot);
+  },
   error=>{
     console.error("Firebase notícias:",error);
-    if(area)area.innerHTML='<div class="empty-news">Não foi possível carregar as notícias.</div>';
-  }
+    if(area)area.innerHTML='<div class="empty-news"><h3>Não foi possível carregar as notícias.</h3><p>Verifique a conexão com o banco de dados.</p></div>';
+  },
+  { onlyOnce:false }
 );
 
 setInterval(nextHomeNews,8000);
@@ -1397,5 +1401,6 @@ setInterval(nextHomeNews,8000);
 
 
 <script type="module" src="./maintenance.js"></script>
+<script type="module" src="./site-config.js"></script>
 </body>
 </html>

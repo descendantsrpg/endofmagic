@@ -708,5 +708,6 @@ document.querySelectorAll(".filter").forEach(btn=>btn.onclick=()=>{document.quer
 dbOnValue(onValue, ref(db,"site/alunos"),snap=>{const data=snap.val()||{};allStudents=Object.values(data).sort((a,b)=>(a.name||"").localeCompare(b.name||""));render(document.querySelector(".filter.active").dataset.filter)},err=>{console.error(err);container.innerHTML='<div class="empty"><strong>Não foi possível carregar os alunos.</strong><span>Verifique as regras de leitura do Firebase Realtime Database.</span></div>'});
 </script>
 <script type="module" src="./maintenance.js"></script>
+<script type="module" src="./site-config.js"></script>
 </body>
 </html>
