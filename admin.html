@@ -1718,7 +1718,7 @@ input[type="reset"]:disabled,
 <div class="card site-editor-card">
 <h3>Aparência geral</h3>
 <div class="formgrid">
-<div class="full"><label>Plano de fundo do site</label><input id="siteBackgroundFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="upload-status">A imagem será comprimida antes de ser salva. Para remover, use o botão abaixo.</div><div id="siteBackgroundPreview" class="image-preview hidden"></div></div>
+<div class="full"><label>Plano de fundo do site</label><input id="siteBackgroundFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="upload-status">A imagem será recortada proporcionalmente e salva em exatamente 1920 × 1080 px. Esta regra vale somente para o plano de fundo do site; os demais uploads continuam com seus tamanhos próprios.</div><div id="siteBackgroundPreview" class="image-preview hidden"></div></div>
 <div><label>Cor principal</label><input id="sitePrimaryColor" type="color" value="#a51d36"></div>
 <div><label>Cor principal escura</label><input id="sitePrimaryDark" type="color" value="#7c1226"></div>
 <div><label>Escurecimento do fundo</label><input id="siteBackgroundOverlay" type="range" min="0" max="0.7" step="0.05" value="0"><span id="siteBackgroundOverlayValue">0%</span></div>
@@ -3052,12 +3052,31 @@ const pageNames={index:'Página Inicial',noticias:'Notícias',filiacoes:'Filiaç
 function setStatus(id,msg){const el=$(id);if(el)el.textContent=msg;}
 function preview(fileId,previewId){const f=$(fileId)?.files?.[0],p=$(previewId);if(!f||!p)return null;p.classList.remove('hidden');p.innerHTML='';const img=document.createElement('img');img.src=URL.createObjectURL(f);img.alt='Prévia';img.style.cssText='max-width:260px;max-height:150px;object-fit:cover;border-radius:10px';p.appendChild(img);return f;}
 async function imageData(file,max=450000){if(!file)return null;if(file.size>10*1024*1024)throw new Error('Imagem original muito grande. Use no máximo 10 MB.');const bmp=await createImageBitmap(file);const scale=Math.min(1,1600/Math.max(bmp.width,bmp.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(bmp.width*scale));c.height=Math.max(1,Math.round(bmp.height*scale));const x=c.getContext('2d');x.drawImage(bmp,0,0,c.width,c.height);bmp.close();let q=.84,d=c.toDataURL('image/jpeg',q);while(d.length>max*1.37&&q>.4){q-=.07;d=c.toDataURL('image/jpeg',q);}if(d.length>max*1.37)throw new Error('A imagem ainda está muito grande. Escolha outra.');return d;}
+
+// Upload exclusivo do plano de fundo do CPainel: força exatamente 1920 × 1080 px.
+// Os demais uploads continuam usando imageData()/seus próprios redimensionamentos.
+async function backgroundImageData(file,max=900000){
+  if(!file)return null;
+  if(file.size>10*1024*1024)throw new Error('Imagem original muito grande. Use no máximo 10 MB.');
+  const bmp=await createImageBitmap(file);
+  const W=1920,H=1080;
+  const c=document.createElement('canvas'); c.width=W; c.height=H;
+  const x=c.getContext('2d');
+  const scale=Math.max(W/bmp.width,H/bmp.height);
+  const sw=bmp.width*scale, sh=bmp.height*scale;
+  x.drawImage(bmp,(W-sw)/2,(H-sh)/2,sw,sh);
+  bmp.close();
+  let q=.82,d=c.toDataURL('image/jpeg',q);
+  while(d.length>max*1.37&&q>.35){q-=.06;d=c.toDataURL('image/jpeg',q);}
+  if(d.length>max*1.37)throw new Error('O plano de fundo ainda está muito grande. Escolha outra imagem.');
+  return d;
+}
 function fillEditor(){const g=siteConfig.global||{},b=g.banner||{}; $('sitePrimaryColor').value=g.primaryColor||'#a51d36';$('sitePrimaryDark').value=g.primaryDark||'#7c1226';$('siteBackgroundOverlay').value=Number(g.backgroundOverlay)||0;$('siteBackgroundOverlayValue').textContent=Math.round((Number(g.backgroundOverlay)||0)*100)+'%';$('siteBannerEnabled').checked=b.enabled===true;$('siteBannerTitle').value=b.title||'';$('siteBannerSubtitle').value=b.subtitle||''; const url=g.backgroundUrl||''; if(url){$('siteBackgroundPreview').classList.remove('hidden');$('siteBackgroundPreview').innerHTML=`<img src="${url}" alt="Plano de fundo atual" style="max-width:320px;max-height:180px;object-fit:cover;border-radius:10px">`;} const bu=b.imageUrl||'';if(bu){$('siteBannerPreview').classList.remove('hidden');$('siteBannerPreview').innerHTML=`<img src="${bu}" alt="Banner atual" style="max-width:420px;max-height:180px;object-fit:cover;border-radius:10px">`;}}
 function fillPage(){const k=$('sitePageSelect').value,p=siteConfig.pages?.[k]||{};$('sitePageEnabled').checked=p.enabled!==false;$('sitePageTitle').value=p.title||'';$('sitePageSubtitle').value=p.subtitle||'';$('sitePageHtml').value=p.customHtml||'';$('sitePageCss').value=p.customCss||'';}
 async function loadSiteConfig(){try{const snap=await get(SITE_CONFIG_REF);siteConfig=snap.val()||{global:{},pages:{}};fillEditor();fillPage();}catch(e){console.error(e);setStatus('siteAppearanceStatus','Não foi possível carregar a configuração do site.');}}
 $('siteBackgroundOverlay')?.addEventListener('input',e=>$('siteBackgroundOverlayValue').textContent=Math.round(Number(e.target.value)*100)+'%');
 $('siteBackgroundFile')?.addEventListener('change',()=>preview('siteBackgroundFile','siteBackgroundPreview'));$('siteBannerFile')?.addEventListener('change',()=>preview('siteBannerFile','siteBannerPreview'));$('sitePageSelect')?.addEventListener('change',fillPage);
-$('saveSiteAppearance')?.addEventListener('click',async()=>{try{setStatus('siteAppearanceStatus','Salvando...');let bg=siteConfig.global?.backgroundUrl||'';const f=$('siteBackgroundFile').files[0];if(f)bg=await imageData(f);siteConfig.global={...(siteConfig.global||{}),backgroundUrl:bg,primaryColor:$('sitePrimaryColor').value,primaryDark:$('sitePrimaryDark').value,backgroundOverlay:Number($('siteBackgroundOverlay').value)};await set(SITE_CONFIG_REF,siteConfig);setStatus('siteAppearanceStatus','Aparência salva e sincronizada com o site.');}catch(e){console.error(e);setStatus('siteAppearanceStatus','Erro: '+e.message);}});
+$('saveSiteAppearance')?.addEventListener('click',async()=>{try{setStatus('siteAppearanceStatus','Salvando...');let bg=siteConfig.global?.backgroundUrl||'';const f=$('siteBackgroundFile').files[0];if(f)bg=await backgroundImageData(f);siteConfig.global={...(siteConfig.global||{}),backgroundUrl:bg,primaryColor:$('sitePrimaryColor').value,primaryDark:$('sitePrimaryDark').value,backgroundOverlay:Number($('siteBackgroundOverlay').value)};await set(SITE_CONFIG_REF,siteConfig);setStatus('siteAppearanceStatus','Aparência salva e sincronizada com o site.');}catch(e){console.error(e);setStatus('siteAppearanceStatus','Erro: '+e.message);}});
 $('removeSiteBackground')?.addEventListener('click',async()=>{try{siteConfig.global={...(siteConfig.global||{}),backgroundUrl:''};await set(SITE_CONFIG_REF,siteConfig);fillEditor();setStatus('siteAppearanceStatus','Plano de fundo personalizado removido.');}catch(e){setStatus('siteAppearanceStatus','Erro: '+e.message);}});
 $('saveSiteBanner')?.addEventListener('click',async()=>{try{setStatus('siteBannerStatus','Salvando...');let b={...(siteConfig.global?.banner||{}),enabled:$('siteBannerEnabled').checked,title:$('siteBannerTitle').value.trim(),subtitle:$('siteBannerSubtitle').value.trim(),imageUrl:siteConfig.global?.banner?.imageUrl||''};const f=$('siteBannerFile').files[0];if(f)b.imageUrl=await imageData(f);siteConfig.global={...(siteConfig.global||{}),banner:b};await set(SITE_CONFIG_REF,siteConfig);fillEditor();setStatus('siteBannerStatus','Banner salvo e sincronizado com o site.');}catch(e){console.error(e);setStatus('siteBannerStatus','Erro: '+e.message);}});
 $('removeSiteBanner')?.addEventListener('click',async()=>{try{siteConfig.global={...(siteConfig.global||{}),banner:{enabled:false,title:'',subtitle:'',imageUrl:''}};await set(SITE_CONFIG_REF,siteConfig);fillEditor();setStatus('siteBannerStatus','Banner removido.');}catch(e){setStatus('siteBannerStatus','Erro: '+e.message);}});
