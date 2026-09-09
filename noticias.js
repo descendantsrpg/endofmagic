@@ -1,4 +1,4 @@
-import { db } from "./firebase-init.js";
+import { db } from "./firebase-init.js?v=20260909-news";
 import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 import { hideDbLoading } from "./db-loader.js";
 

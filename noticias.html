@@ -1127,7 +1127,41 @@ body{
 }
 </style>
 
-<link rel="stylesheet" href="./assets/global-background.css?v=20260909">
+<link rel="stylesheet" href="./assets/global-background.css?v=20260909-headerfix">
+
+<style id="fixed-news-logo">
+.site-header-fixed{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  width:100% !important;
+  z-index:9999 !important;
+  box-sizing:border-box !important;
+}
+.site-header-fixed .brand{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+.site-header-fixed img{
+  display:block !important;
+  width:min(280px,70vw) !important;
+  height:auto !important;
+  margin:0 auto !important;
+}
+body{padding-top:var(--news-header-space,120px) !important;}
+</style>
+
+<style id="fixed-header-responsive">
+.site-header-fixed{min-height:96px !important;}
+.site-header-fixed img{max-height:86px !important;object-fit:contain !important;}
+@media(max-width:700px){
+  .site-header-fixed{min-height:82px !important;padding:8px 12px !important;}
+  .site-header-fixed img{max-height:68px !important;width:min(240px,76vw) !important;}
+  body{padding-top:98px !important;}
+}
+</style>
 </head>
 
 <style id="db-loading-style">
@@ -1155,7 +1189,7 @@ body{
 </div>
 
 <body>
-<header><div class="container"><div class="brand">Descendentes RPG • Auradon</div></div></header>
+<header class="site-header-fixed"><div class="container"><div class="brand"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></div></div></header>
 <main><div class="container blog">
 <section class="blog-head"><div class="section-kicker">Jornal da Auradon Prep</div><h1>Notícias</h1>
 <p>As últimas notícias, investigações e acontecimentos da vida escolar de Auradon Prep.</p></section>
@@ -1164,7 +1198,7 @@ body{
 </div></main>
 <footer>Descendentes RPG • Jornal da Auradon Prep</footer>
 
-<script type="module" src="noticias.js?v=20260909-syncfix"></script>
+<script type="module" src="noticias.js?v=20260909-definitive"></script>
 <script type="module" src="./maintenance.js"></script>
 
 <script>
