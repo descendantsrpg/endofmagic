@@ -1,14 +1,15 @@
 import { db } from "./firebase-init.js";
 import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+import { hideDbLoading } from "./db-loader.js";
 
 const list = document.getElementById("newsList");
+let firstResponseReceived = false;
 
 function esc(value){
   return String(value ?? "").replace(/[&<>"']/g, c => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
   }[c]));
 }
-
 
 function richText(value){
   const source=String(value||"");
@@ -30,69 +31,99 @@ function richText(value){
     });
   };
   clean(holder);
-  return holder.innerHTML.replace(/<div>/gi,"").replace(/<\/div>/gi,"<br>").replace(/(<br>\s*){3,}/gi,"<br><br>");
+  return holder.innerHTML
+    .replace(/<div>/gi,"")
+    .replace(/<\/div>/gi,"<br>")
+    .replace(/(<br>\s*){3,}/gi,"<br><br>");
+}
+
+function newsTimestamp(n){
+  return Number(n.createdAt || n.updatedAt || 0);
+}
+
+function sortNews(posts){
+  return posts.sort((a,b)=>{
+    const tb=newsTimestamp(b), ta=newsTimestamp(a);
+    if(tb!==ta) return tb-ta;
+    const oa=Number(a.order || 999999), ob=Number(b.order || 999999);
+    if(oa!==ob) return oa-ob;
+    return String(b.key).localeCompare(String(a.key));
+  });
 }
 
 function renderNews(snapshot){
   const data = snapshot.val() || {};
+  const posts = sortNews(
+    Object.entries(data)
+      .map(([key, value]) => ({key, ...(value || {})}))
+      .filter(n => n && typeof n === "object" && (n.title || n.excerpt || n.content))
+  );
 
-  const posts = Object.entries(data)
-    .map(([key, value]) => ({key, ...(value || {})}))
-    .filter(n => n.title || n.excerpt || n.content)
-    .sort((a,b) => {
-      const oa = Number(a.order || 999999);
-      const ob = Number(b.order || 999999);
-      if (oa !== ob) return oa - ob;
-      return Number(b.updatedAt || 0) - Number(a.updatedAt || 0);
-    });
-
-  if (!posts.length){
-    list.innerHTML = '<div class="empty-news">Nenhuma notícia publicada.</div>';
+  if(!list){
+    hideDbLoading();
     return;
   }
 
-  list.innerHTML = posts.map(n => `
-    <article class="post" id="noticia-${esc(n.key)}">
-      <div class="post-meta-wrap">
-        <div class="post-meta">${esc(n.category || "Notícia")}</div>
-        <div class="post-date">${esc(n.date || "")}</div>
-      </div>
-      <div>
-        ${n.imageUrl ? `
-          <img
-            src="${esc(n.imageUrl)}"
-            alt="${esc(n.title || "Imagem da notícia")}"
-            style="width:100%;max-height:360px;object-fit:cover;border-radius:14px;margin-bottom:18px;display:block"
-          >
-        ` : ""}
-        <h2>${esc(n.title || "Sem título")}</h2>
-        ${n.excerpt ? `<p class="post-excerpt">${esc(n.excerpt)}</p>` : ""}
-        ${n.content ? `<p class="post-content">${richText(n.content)}</p>` : ""}
-      </div>
-    </article>
-  `).join("");
+  if(!posts.length){
+    list.innerHTML = '<div class="empty-news">Nenhuma notícia publicada.</div>';
+  }else{
+    list.innerHTML = posts.map(n => `
+      <article class="post" id="noticia-${esc(n.key)}">
+        <div class="post-meta-wrap">
+          <div class="post-meta">${esc(n.category || "Notícia")}</div>
+          <div class="post-date">${esc(n.date || "")}</div>
+        </div>
+        <div>
+          ${n.imageUrl ? `
+            <img
+              src="${esc(n.imageUrl)}"
+              alt="${esc(n.title || "Imagem da notícia")}"
+              style="width:100%;max-height:360px;object-fit:contain;border-radius:14px;margin-bottom:18px;display:block"
+            >
+          ` : ""}
+          <h2>${esc(n.title || "Sem título")}</h2>
+          ${n.excerpt ? `<p class="post-excerpt">${esc(n.excerpt)}</p>` : ""}
+          ${n.content ? `<div class="post-content">${richText(n.content)}</div>` : ""}
+        </div>
+      </article>
+    `).join("");
+  }
+
+  firstResponseReceived = true;
+  hideDbLoading();
 }
 
 function showError(error){
   console.error("Firebase notícias:", error);
-  list.innerHTML = `
-    <div class="empty-news">
-      Não foi possível carregar as notícias.
-    </div>
-  `;
+  firstResponseReceived = true;
+  hideDbLoading();
+  if(list){
+    list.innerHTML = `
+      <div class="empty-news">
+        Não foi possível carregar as notícias.
+      </div>
+    `;
+  }
 }
 
 /*
- * IMPORTANTE:
- * onValue mantém esta página conectada ao Firebase Realtime Database.
- * Qualquer publicação, edição ou exclusão feita pelo painel admin em
- * site/noticias será refletida automaticamente aqui.
+ * Fonte única: site/noticias.
+ * O listener permanece ativo, então publicar/editar/excluir no CPainel
+ * atualiza esta página automaticamente.
  */
 onValue(
   ref(db, "site/noticias"),
-  snapshot => {
-    renderNews(snapshot);
-  },
+  renderNews,
   showError,
-  { onlyOnce: false }
+  { onlyOnce:false }
 );
+
+/* Failsafe: nunca deixar o overlay de carregamento preso. */
+setTimeout(()=>{
+  if(!firstResponseReceived){
+    hideDbLoading();
+    if(list && !list.children.length){
+      list.innerHTML = '<div class="empty-news">Não foi possível conectar ao banco de notícias.</div>';
+    }
+  }
+}, 8000);

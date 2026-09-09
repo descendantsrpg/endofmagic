@@ -1343,10 +1343,13 @@ function renderHomeNews(snapshot){
     .map(([key,n])=>({key,...(n||{})}))
     .filter(n=>n && typeof n==="object" && (n.title||n.excerpt||n.content))
     .sort((a,b)=>{
-      // A notícia mais recentemente publicada/atualizada sempre fica primeiro.
       const ta=Number(a.createdAt||a.updatedAt||0);
       const tb=Number(b.createdAt||b.updatedAt||0);
-      return tb-ta;
+      if(tb!==ta) return tb-ta;
+      const oa=Number(a.order||999999);
+      const ob=Number(b.order||999999);
+      if(oa!==ob) return oa-ob;
+      return String(b.key).localeCompare(String(a.key));
     })
     .slice(0,3);
 
