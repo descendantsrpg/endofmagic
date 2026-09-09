@@ -785,6 +785,67 @@ body{
 </style>
 
 <link rel="stylesheet" href="./assets/global-background.css?v=20260909-headerfix">
+
+<style id="filiacao-lotada-overlay">
+.filiacao-photo-wrap{
+  position:relative !important;
+  overflow:hidden !important;
+}
+.filiacao-photo-wrap > img.filiacao-photo{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+}
+.filiacao-full-overlay{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  z-index:3 !important;
+  pointer-events:none !important;
+}
+.filiacao-vagas{
+  color:#d00000 !important;
+  -webkit-text-fill-color:#d00000 !important;
+  font-weight:700 !important;
+}
+</style>
+
+<style id="filiacao-lotada-final">
+.filiacao-photo-wrap{
+  position:relative !important;
+  width:100% !important;
+  overflow:hidden !important;
+  border-radius:inherit !important;
+  line-height:0 !important;
+}
+.filiacao-photo-wrap .filiacao-photo{
+  display:block !important;
+  width:100% !important;
+  height:auto !important;
+  max-width:100% !important;
+  object-fit:cover !important;
+}
+.filiacao-photo-wrap .filiacao-full-overlay{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  z-index:5 !important;
+  pointer-events:none !important;
+}
+.filiacao-vagas{
+  color:#d00000 !important;
+  -webkit-text-fill-color:#d00000 !important;
+  font-weight:700 !important;
+}
+</style>
 </head>
 
 <style id="db-loading-style">
@@ -843,14 +904,18 @@ function render(){
  box.innerHTML=Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([studio,stories])=>
  `<article class="group"><h2>${esc(studio)}</h2>${Object.entries(stories).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([story,items])=>
  `<div class="story"><h3>${esc(story)}</h3><div class="affs">${items.sort((a,b)=>a.name.localeCompare(b.name,"pt-BR",{sensitivity:"base"})).map(a=>
- `<div class="aff">${a.imageUrl?`<img src="${esc(a.imageUrl)}" alt="Foto de ${esc(a.name)}">`:""}<div class="name">${esc(a.name)}</div><div class="count ${a.current >= a.maxChildren ? "full" : ""}">(${String(a.current).padStart(2,"0")}/${String(a.maxChildren).padStart(2,"0")})</div>
-${a.current >= a.maxChildren ? '<div class="filiation-full">Filiação Cheia</div>' : ''}</div>`).join("")}</div></div>`).join("")}</article>`).join("");
+ `<div class="aff">
+  ${a.imageUrl?`<div class="filiacao-photo-wrap"><img class="filiacao-photo" src="${esc(a.imageUrl)}" alt="Foto de ${esc(a.name)}">${a.current >= a.maxChildren ? '<img class="filiacao-full-overlay" src="./assets/filiacao-lotada.png" alt="" aria-hidden="true">' : ''}</div>`:""}
+  <div class="name">${esc(a.name)}</div>
+  <div class="count ${a.current >= a.maxChildren ? "full filiacao-vagas" : ""}">(${String(a.current).padStart(2,"0")}/${String(a.maxChildren).padStart(2,"0")})</div>
+</div>`).join("")}</div></div>`).join("")}</article>`).join("");
 }
 box.innerHTML='<div class="empty">Carregando filiações...</div>';
 dbOnValue(onValue, ref(db,"site/filiacoes"),snap=>{affiliations=snap.val()||{};affLoaded=true;render()},err=>{console.error(err);box.innerHTML=`<div class="error">${errorMessage}</div>`});
 dbOnValue(onValue, ref(db,"site/alunos"),snap=>{students=snap.val()||{};if(affLoaded)render()},err=>{console.error(err);if(affLoaded)render()});
 setTimeout(()=>{if(box.textContent.includes("Carregando filiações"))box.innerHTML='<div class="error">O Firebase demorou para responder. Atualize a página e verifique as regras de leitura do Realtime Database.</div>'},10000);
 </script>
-<script type="module" src="./maintenance.js"></script>
+<script type="module" src="./maintenance.js">
+</script>
 </body>
 </html>
