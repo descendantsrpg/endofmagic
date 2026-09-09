@@ -1786,7 +1786,7 @@ label, .menu button, nav a { font-family: "Comfortaa", Arial, sans-serif !import
     const cats=[];
     const seen=new Set();
     events.forEach(e=>{const c=String(e.category||e.title||'').trim();if(c&&!seen.has(c)){seen.add(c);cats.push(c);}});
-    legend.innerHTML=cats.length?cats.map(c=>{const ev=events.find(e=>String(e.category||e.title||'').trim()===c);return `<span class="calendar-legend-item"><span class="calendar-event-dot" style="background:${colorOf(ev||{})}"></span>${esc(c)}</span>`}).join(''):'<span class="calendar-empty">Nenhum evento cadastrado.</span>';
+    legend.innerHTML=`<span class="calendar-legend-item"><span class="calendar-event-dot" style="background:#d62828"></span>Eventos Oficiais/Festas</span><span class="calendar-legend-item"><span class="calendar-event-dot" style="background:#1976d2"></span>Dia Letivo</span><span class="calendar-legend-item"><span class="calendar-event-dot" style="background:#111"></span>Missão/Evento Atípico</span><span class="calendar-legend-item"><span class="calendar-event-dot" style="background:#7b2cbf"></span>Festas Não Oficiais</span>`;
     const mobile=document.getElementById('rpgCalendarMobile');
     if(mobile){
       const days=[];

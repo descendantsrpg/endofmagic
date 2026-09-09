@@ -84,7 +84,7 @@ let currentAdmin=null, maintenance=false, events={}, affiliations={}, students={
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const timeout=(p,ms=10000)=>Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('Tempo esgotado')),ms))]);
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-function key(s){return String(s||'').trim().toLowerCase().replace(/[.#$\[\]/]/g,'_')}
+function key(s){return String(s||'').trim().toLowerCase().replace(/[^a-z0-9._-]/g,'')}
 function showAdmin(ok){$('loginView').classList.toggle('active',!ok);$('adminView').classList.toggle('active',ok);$('logout').hidden=!ok;if(ok){$('welcome').innerHTML='Bem-vindo, <b>'+esc(currentAdmin.name||currentAdmin.login||'Administrador')+'</b>.';fillProfile();}else $('loginStatus').textContent='';}
 function fillProfile(){if(!currentAdmin)return;$('profileDisplayName').value=currentAdmin.name||'';$('profileEmail').value=currentAdmin.email||''}
 async function restore(){const k=localStorage.getItem(SESSION);if(!k)return;try{const s=await timeout(get(ref(db,ADMIN+'/'+k)));const a=s.val();if(a&&a.active!==false){currentAdmin={...a,key:k};showAdmin(true)}}catch(e){localStorage.removeItem(SESSION)}}
