@@ -52,7 +52,7 @@ body::before{
   z-index:-2;
   background:
     linear-gradient(rgba(12,4,22,.42),rgba(12,4,22,.42)),
-    url("./assets/auradon-bg.jpg") center center / cover no-repeat;
+    url("./auradon-bg.jpg") center center / cover no-repeat;
   opacity:.58;
   pointer-events:none;
 }
@@ -235,7 +235,7 @@ html,body{
   color:#f4edf7!important;
 }
 body{
-  background-image:url("./assets/auradon-bg.jpg")!important;
+  background-image:url("./auradon-bg.jpg")!important;
   background-position:center center!important;
   background-size:cover!important;
   background-attachment:fixed!important;
@@ -452,7 +452,7 @@ header img{
 /* ===== FUNDO OFICIAL DO RPG + TIPOGRAFIA BRANCA ===== */
 html{
   min-height:100%;
-  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
+  background:#080509 url("./site-background.jpg") center center / cover fixed no-repeat!important;
 }
 body{
   min-height:100vh!important;
@@ -661,7 +661,7 @@ html{
   background-color:#020608 !important;
   background-image:
     linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
-    url("./assets/site-background.jpg") !important;
+    url("./site-background.jpg") !important;
   background-position:center center !important;
   background-size:cover !important;
   background-repeat:no-repeat !important;
@@ -672,7 +672,7 @@ body{
 }
 </style>
 
-<link rel="stylesheet" href="./assets/global-background.css?v=20260909-headerfix">
+<link rel="stylesheet" href="./global-background.css?v=20260909-headerfix">
 
 <style id="rpg-logo-standard-global">
 /* ===== LOGO RPG PADRONIZADO EM TODAS AS PÁGINAS ===== */
@@ -704,7 +704,53 @@ html body img[alt="Descendentes RPG"]{
   .site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important;}
 }
 </style>
-<style>.site-disclaimer-footer,.site-disclaimer-footer *{font-size:10px!important;line-height:1.55}</style><link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v2">
+<style>.site-disclaimer-footer,.site-disclaimer-footer *{font-size:10px!important;line-height:1.55}</style><link rel="stylesheet" href="./halloween.css?v=20260909-halloween-v2">
+
+<style id="visual-audit-final">
+/* VISUAL AUDIT — PADRÃO FINAL DO SITE */
+html,body{min-height:100%;}
+body.halloween-theme{min-height:100vh!important;display:flex!important;flex-direction:column!important;overflow-x:hidden!important;}
+body.halloween-theme main{flex:0 0 auto;}
+body.halloween-theme footer.site-disclaimer-footer,body.halloween-theme footer.footer{margin-top:auto!important;position:relative!important;float:none!important;clear:both!important;width:min(1100px,calc(100% - 28px))!important;align-self:center!important;box-sizing:border-box!important;font-size:10px!important;line-height:1.55!important;text-align:center!important;}
+body.halloween-theme footer.site-disclaimer-footer *{font-size:10px!important;line-height:1.55!important;}
+body.halloween-theme h1,body.halloween-theme h2,body.halloween-theme h3,body.halloween-theme h4,body.halloween-theme .section-title{font-family:"Comfortaa",Arial,sans-serif!important;color:#fff!important;text-shadow:0 3px 16px #000!important;overflow-wrap:anywhere;}
+body.halloween-theme h1{font-size:clamp(24px,4vw,34px)!important;line-height:1.2!important;}
+body.halloween-theme h2{font-size:clamp(20px,3vw,27px)!important;line-height:1.25!important;}
+body.halloween-theme h3{font-size:clamp(17px,2.4vw,21px)!important;line-height:1.3!important;}
+body.halloween-theme h4{font-size:16px!important;line-height:1.35!important;}
+body.halloween-theme button,body.halloween-theme input[type=submit],body.halloween-theme input[type=button],body.halloween-theme .btn,body.halloween-theme .button,body.halloween-theme a.btn,body.halloween-theme .home-quick-menu a,body.halloween-theme .home-nav-links a,body.halloween-theme .home-main-nav a,body.halloween-theme .admin-main-nav a,body.halloween-theme [role=button]{font-family:Comfortaa,Arial,sans-serif!important;background:#f57c00!important;background-color:#f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border:1px solid #f57c00!important;box-shadow:0 4px 16px rgba(245,124,0,.22)!important;}
+body.halloween-theme button:hover,body.halloween-theme .btn:hover,body.halloween-theme a.btn:hover,body.halloween-theme .home-quick-menu a:hover,body.halloween-theme .home-nav-links a:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;color:#fff!important;}
+body.halloween-theme .site-header-fixed{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:100%!important;flex:0 0 auto!important;}
+body.halloween-theme .site-header-fixed img[alt="Descendentes RPG"]{width:min(330px,72vw)!important;max-width:330px!important;height:auto!important;margin:0 auto!important;}
+body.halloween-theme .rpg-disclaimer{width:100%!important;box-sizing:border-box!important;}
+body.halloween-theme .rpg-disclaimer p{margin:5px 0!important;}
+@media(max-width:650px){body.halloween-theme h1{font-size:24px!important}body.halloween-theme h2{font-size:20px!important}.site-disclaimer-footer{width:calc(100% - 20px)!important}.site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important}}
+</style>
+
+
+<style id="typography-comfortaa-final">
+/* Tipografia oficial do site */
+html, body { font-family: "Comfortaa", Arial, sans-serif !important; }
+h1, h2, h3, h4, h5, h6,
+.title, .section-title, .page-title, .card-title, .brand-title, .section-kicker {
+  font-family: "Comfortaa", Arial, sans-serif !important;
+  font-weight: 700 !important;
+}
+p, .paragraph, .description, .subtitle, .help, .intro, .text, .content-text {
+  font-family: "Comfortaa", Arial, sans-serif !important;
+  font-weight: 300 !important;
+}
+</style>
+
+<style id="comfortaa-global-final">
+/* TIPOGRAFIA GLOBAL FINAL: Comfortaa */
+html, body, button, input, textarea, select, a { font-family: "Comfortaa", Arial, sans-serif !important; }
+body { font-weight: 300 !important; }
+h1, h2, h3, h4, h5, h6, .title, .brand, .section-title, .page-title, .card-title { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 700 !important; }
+p, .subtitle, .description, .help, .meta, .notice, .content, li, td, th { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 300 !important; }
+button, input[type="submit"], input[type="button"], .btn, .button, a.btn, [role="button"] { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 700 !important; }
+label, .menu button, nav a { font-family: "Comfortaa", Arial, sans-serif !important; }
+</style>
 </head>
 
 <style id="db-loading-style">
@@ -728,7 +774,7 @@ html body img[alt="Descendentes RPG"]{
 }
 </style>
 <div id="dbLoadingOverlay" class="is-loading" role="status" aria-live="polite" aria-label="Aguarde, estamos carregando o banco de dados">
-  <img src="assets/db-loading.png" alt="Aguarde, estamos carregando o banco de dados">
+  <img src="db-loading.png" alt="Aguarde, estamos carregando o banco de dados">
 </div>
 <body class="halloween-theme">
 <div class="halloween-decor" aria-hidden="true">
@@ -738,7 +784,7 @@ html body img[alt="Descendentes RPG"]{
   <span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span>
 </div>
 
-<header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header>
+<header><img src="./logo-descendentes.png" alt="Descendentes RPG"></header>
 <main class="container">
 <section class="intro"><h1>Alunos</h1><p>Conheça os estudantes de Auradon Prep.</p></section>
 <div class="filters"><button class="filter active" data-filter="Todos">Todos</button><button class="filter" data-filter="Royal">Royals</button><button class="filter" data-filter="Rebel">Rebels</button></div>

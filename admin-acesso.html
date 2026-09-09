@@ -1,112 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Acesso Restrito • Painel Administrativo</title>
+<link rel="stylesheet" href="./global-background.css?v=20260909-audit">
+<link rel="stylesheet" href="./halloween.css?v=20260909-audit">
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
-:root{--red:#b30000;--red-dark:#7f0000;--panel:rgba(12,10,22,.84)}
-*{box-sizing:border-box}
-html{min-height:100%;background:#0b0a18 url("./assets/site-background.jpg") center/cover fixed no-repeat}
-body{margin:0;min-height:100vh;display:block;padding:24px;font-family:"Comfortaa",sans-serif;color:#fff;background:transparent}
-.access-card{margin:0 auto 28px}
-.site-disclaimer-footer{display:block;width:min(1100px,100%);margin:0 auto;box-sizing:border-box;clear:both}
-.access-card{width:min(620px,100%);padding:38px 30px;background:var(--panel);border:1px solid rgba(255,255,255,.18);border-radius:24px;box-shadow:0 16px 45px rgba(0,0,0,.35);backdrop-filter:blur(9px);text-align:center}
-.logo{display:block;width:min(300px,75vw);height:auto;margin:0 auto 25px}
-h1{font-size:clamp(1.7rem,4vw,2.4rem);margin:0 0 16px}
-p{font-size:1rem;line-height:1.75;color:#f4f4f4;margin:0 auto 24px}
-.notice{padding:17px 18px;margin:0 0 24px;border-left:4px solid var(--red);border-radius:11px;background:rgba(179,0,0,.14);text-align:left}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btn{display:flex;align-items:center;justify-content:center;min-height:52px;padding:12px 16px;border-radius:11px;border:1px solid var(--red);background:var(--red);color:#fff!important;-webkit-text-fill-color:#fff!important;text-decoration:none;font-weight:700;transition:.18s ease}
-.btn:hover{background:var(--red-dark);border-color:var(--red-dark);transform:translateY(-1px)}
-@media(max-width:560px){body{padding:15px}.access-card{padding:30px 18px}.actions{grid-template-columns:1fr}.btn{min-height:54px}}
+*{box-sizing:border-box}html{min-height:100%;background:#050308}body{margin:0;min-height:100vh;padding:28px 16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:Comfortaa,Arial,sans-serif;color:#fff;overflow-x:hidden}.page-wrap{width:min(700px,100%);margin:auto 0 28px}.access-card{width:100%;padding:34px 30px;background:rgba(8,5,12,.88);border:1px solid rgba(245,124,0,.32);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.75),0 0 25px rgba(245,124,0,.08);text-align:center}.logo{display:block;width:min(330px,72vw);max-width:330px;height:auto;margin:0 auto 22px}.access-card h1{font-family:"Comfortaa",Arial,sans-serif;font-size:clamp(24px,4vw,34px);line-height:1.2;margin:0 0 18px;text-shadow:0 3px 16px #000}.notice{padding:16px 18px;margin:0 0 22px;border-left:4px solid #f57c00;border-radius:10px;background:rgba(245,124,0,.10);text-align:left}.notice p{margin:0!important;font-size:14px;line-height:1.65}.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.btn{min-height:50px;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;background:#f57c00!important;color:#fff!important;border:1px solid #f57c00!important}.btn:hover{background:#ff9d2e!important;border-color:#ff9d2e!important;transform:translateY(-2px)}.site-disclaimer-footer{width:min(1100px,100%);margin-top:auto!important;text-align:center;font-size:10px!important;line-height:1.55!important}.site-disclaimer-footer *{font-size:10px!important;line-height:1.55!important}@media(max-width:560px){body{padding:18px 12px}.page-wrap{margin:20px 0}.access-card{padding:28px 18px}.actions{grid-template-columns:1fr}.logo{width:min(240px,76vw)}}
 </style>
 
-<style id="dark-background-focus">
-html{
-  background-color:#020608 !important;
-  background-image:
-    linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
-    url("./assets/site-background.jpg") !important;
-  background-position:center center !important;
-  background-size:cover !important;
-  background-repeat:no-repeat !important;
-  background-attachment:fixed !important;
+<style id="typography-comfortaa-final">
+/* Tipografia oficial do site */
+html, body { font-family: "Comfortaa", Arial, sans-serif !important; }
+h1, h2, h3, h4, h5, h6,
+.title, .section-title, .page-title, .card-title, .brand-title, .section-kicker {
+  font-family: "Comfortaa", Arial, sans-serif !important;
+  font-weight: 700 !important;
 }
-body{
-  background:transparent !important;
+p, .paragraph, .description, .subtitle, .help, .intro, .text, .content-text {
+  font-family: "Comfortaa", Arial, sans-serif !important;
+  font-weight: 300 !important;
 }
 </style>
 
-<link rel="stylesheet" href="./assets/global-background.css?v=20260909-headerfix">
-
-<style id="rpg-logo-standard-global">
-/* ===== LOGO RPG PADRONIZADO EM TODAS AS PÁGINAS ===== */
-html body img[alt="Descendentes RPG"]{
-  width:min(330px,72vw)!important;
-  height:auto!important;
-  max-width:330px!important;
-  max-height:none!important;
-  object-fit:contain!important;
-  display:block!important;
-}
-.site-header-fixed{
-  min-height:165px!important;
-  padding:0 12px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-.site-header-fixed img[alt="Descendentes RPG"]{
-  width:min(330px,72vw)!important;
-  max-width:330px!important;
-}
-@media(max-width:650px){
-  html body img[alt="Descendentes RPG"]{
-    width:min(240px,76vw)!important;
-    max-width:240px!important;
-  }
-  .site-header-fixed{min-height:120px!important;padding:6px 10px!important;}
-  .site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important;}
-}
-</style>
-<style>.site-disclaimer-footer,.site-disclaimer-footer *{font-size:10px!important;line-height:1.55}</style><link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v2">
-<style id="access-footer-fix">
-.access-card{margin:0 auto 28px!important}
-.site-disclaimer-footer{position:relative!important;display:block!important;width:min(1100px,100%)!important;margin:0 auto!important;clear:both!important;box-sizing:border-box!important;float:none!important}
-.site-disclaimer-footer .rpg-disclaimer{width:100%!important}
+<style id="comfortaa-global-final">
+/* TIPOGRAFIA GLOBAL FINAL: Comfortaa */
+html, body, button, input, textarea, select, a { font-family: "Comfortaa", Arial, sans-serif !important; }
+body { font-weight: 300 !important; }
+h1, h2, h3, h4, h5, h6, .title, .brand, .section-title, .page-title, .card-title { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 700 !important; }
+p, .subtitle, .description, .help, .meta, .notice, .content, li, td, th { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 300 !important; }
+button, input[type="submit"], input[type="button"], .btn, .button, a.btn, [role="button"] { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 700 !important; }
+label, .menu button, nav a { font-family: "Comfortaa", Arial, sans-serif !important; }
 </style>
 </head>
 <body class="halloween-theme">
-<div class="halloween-decor" aria-hidden="true">
-  <span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span>
-  <span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span>
-  <span class="h-skull s1">💀</span><span class="h-skull s2">💀</span>
-  <span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span>
-</div>
-
-<main class="access-card">
-  <img class="logo" src="./assets/logo-descendentes.png" alt="Descendentes RPG">
-  <h1>Área Restrita</h1>
-  <div class="notice">
-    <p style="margin:0"><strong>Você está entrando em uma página restrita.</strong><br>
-    O Painel Administrativo é destinado exclusivamente aos administradores autorizados do Descendentes RPG.</p>
-  </div>
-  <div class="actions">
-    <a class="btn" href="admin.html">Sou Administrador</a>
-    <a class="btn" href="index.html">Sou Jogador</a>
-  </div>
-</main>
-
-
-<footer class="site-disclaimer-footer">
-<div class="rpg-disclaimer">
-    <p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p>
-    <p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p>
-    <p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p>
-    <p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p>
-  </div>
-</footer>
-</body>
-</html>
+<div class="halloween-decor" aria-hidden="true"><span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span><span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span><span class="h-skull s1">💀</span><span class="h-skull s2">💀</span><span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span></div>
+<div class="page-wrap"><main class="access-card"><img class="logo" src="./logo-descendentes.png" alt="Descendentes RPG"><h1>Área Restrita</h1><div class="notice"><p><strong>Você está entrando em uma página restrita.</strong><br>O Painel Administrativo é destinado exclusivamente aos administradores autorizados do Descendentes RPG.</p></div><div class="actions"><a class="btn" href="admin.html">Sou Administrador</a><a class="btn" href="index.html">Sou Jogador</a></div></main></div>
+<footer class="site-disclaimer-footer"><div class="rpg-disclaimer"><p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p><p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p><p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p><p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p></div></footer>
+</body></html>
