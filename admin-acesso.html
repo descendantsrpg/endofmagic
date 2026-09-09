@@ -8,7 +8,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
 :root{--red:#b30000;--red-dark:#7f0000;--panel:rgba(12,10,22,.84)}
 *{box-sizing:border-box}
-html{min-height:100%;background:#0b0a18 url("./assets/site-background.jpg") center/100% 100% fixed no-repeat}
+html{min-height:100%;background:#0b0a18 url("./assets/site-background.jpg") center/cover fixed no-repeat}
 body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;font-family:"Comfortaa",sans-serif;color:#fff;background:transparent}
 .access-card{width:min(620px,100%);padding:38px 30px;background:var(--panel);border:1px solid rgba(255,255,255,.18);border-radius:24px;box-shadow:0 16px 45px rgba(0,0,0,.35);backdrop-filter:blur(9px);text-align:center}
 .logo{display:block;width:min(300px,75vw);height:auto;margin:0 auto 25px}
@@ -20,6 +20,24 @@ p{font-size:1rem;line-height:1.75;color:#f4f4f4;margin:0 auto 24px}
 .btn:hover{background:var(--red-dark);border-color:var(--red-dark);transform:translateY(-1px)}
 @media(max-width:560px){body{padding:15px}.access-card{padding:30px 18px}.actions{grid-template-columns:1fr}.btn{min-height:54px}}
 </style>
+
+<style id="dark-background-focus">
+html{
+  background-color:#020608 !important;
+  background-image:
+    linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
+    url("./assets/site-background.jpg") !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+}
+body{
+  background:transparent !important;
+}
+</style>
+
+<link rel="stylesheet" href="./assets/global-background.css?v=20260909">
 </head>
 <body>
 <main class="access-card">
@@ -34,6 +52,5 @@ p{font-size:1rem;line-height:1.75;color:#f4f4f4;margin:0 auto 24px}
     <a class="btn" href="index.html">Sou Jogador</a>
   </div>
 </main>
-<script type="module" src="./site-config.js"></script>
 </body>
 </html>

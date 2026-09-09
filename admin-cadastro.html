@@ -6,7 +6,7 @@
 <title>Cadastro de Administrador — Descendentes RPG</title>
 <style>
 :root{--gold:#d5ad5a;--muted:rgba(255,255,255,.72)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:#fff;background:#171022 url('./assets/site-background.jpg') center/100% 100% fixed no-repeat}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:#fff;background:#171022 url('./assets/site-background.jpg') center/cover fixed no-repeat}
 body:before{content:"";position:fixed;inset:0;background:rgba(5,4,12,.30);z-index:-1}.container{width:min(680px,calc(100% - 32px));margin:auto}.top{padding:20px 0}.topin{display:flex;justify-content:space-between;align-items:center}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.08em}.brand img{width:52px;height:52px;object-fit:contain}.card{background:rgba(9,7,18,.76);border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 50px rgba(0,0,0,.28);border-radius:16px;padding:28px;backdrop-filter:blur(10px)}h1{margin:0 0 8px}.subtitle,.help{color:var(--muted);line-height:1.5}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{display:block;font-size:13px;margin:0 0 7px;font-weight:700}input{width:100%;padding:12px 13px;border-radius:9px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;outline:none}input:focus{border-color:var(--gold)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:9px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;text-decoration:none;cursor:pointer;font-weight:700}.btn.primary{background:var(--gold);border-color:var(--gold);color:#130e19}.status{margin-top:14px;min-height:20px;color:#fff}.notice{margin-top:16px;padding:13px;border-radius:10px;background:rgba(213,173,90,.08);border:1px solid rgba(213,173,90,.20);font-size:12px;line-height:1.5;color:var(--muted)}@media(max-width:620px){.grid{grid-template-columns:1fr}.full{grid-column:auto}}
 </style>
 <style id="admin-cadastro-button-final">
@@ -81,6 +81,24 @@ input[type="reset"]:disabled,
   opacity: .55;
 }
 </style>
+
+<style id="dark-background-focus">
+html{
+  background-color:#020608 !important;
+  background-image:
+    linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
+    url("./assets/site-background.jpg") !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+}
+body{
+  background:transparent !important;
+}
+</style>
+
+<link rel="stylesheet" href="./assets/global-background.css?v=20260909">
 </head>
 <body>
 <header class="top"><div class="container topin"><div class="brand"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"><span>ADMIN</span></div><a class="btn" href="admin.html">← Voltar ao login</a></div></header>

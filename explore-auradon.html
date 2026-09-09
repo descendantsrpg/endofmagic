@@ -280,7 +280,7 @@ html,body{
 body{
   background-image:url("./assets/auradon-bg.jpg")!important;
   background-position:center center!important;
-  background-size:100% 100%!important;
+  background-size:cover!important;
   background-attachment:fixed!important;
   background-repeat:no-repeat!important;
 }
@@ -495,7 +495,7 @@ header img{
 /* ===== FUNDO OFICIAL DO RPG + TIPOGRAFIA BRANCA ===== */
 html{
   min-height:100%;
-  background:#080509 url("./assets/site-background.jpg") center center / 100% 100% fixed no-repeat!important;
+  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
 }
 body{
   min-height:100vh!important;
@@ -695,6 +695,24 @@ input[type="reset"]:disabled,
   opacity: .55;
 }
 </style>
+
+<style id="dark-background-focus">
+html{
+  background-color:#020608 !important;
+  background-image:
+    linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
+    url("./assets/site-background.jpg") !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+}
+body{
+  background:transparent !important;
+}
+</style>
+
+<link rel="stylesheet" href="./assets/global-background.css?v=20260909">
 </head>
 <body>
 <header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header>
@@ -807,6 +825,5 @@ input[type="reset"]:disabled,
 
 <footer>Descendentes RPG • Auradon Prep</footer>
 <script type="module" src="./maintenance.js"></script>
-<script type="module" src="./site-config.js"></script>
 </body>
 </html>

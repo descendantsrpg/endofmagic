@@ -8,7 +8,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
 :root{--red:#a51d36;--red-dark:#7c1226;--white:#fff;--muted:rgba(255,255,255,.78);--card:rgba(12,5,22,.72);--line:rgba(255,255,255,.16)}
 *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;min-height:100vh;background:#13051d;color:#fff;font-family:"Comfortaa",sans-serif}
-body::before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(rgba(10,3,18,.42),rgba(10,3,18,.52)),url("./assets/site-background.jpg") center/100% 100% no-repeat;pointer-events:none}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(rgba(10,3,18,.42),rgba(10,3,18,.52)),url("./assets/site-background.jpg") center/cover no-repeat;pointer-events:none}
 body::after{content:"";position:fixed;inset:0;z-index:-1;background:rgba(20,4,30,.08);pointer-events:none}
 header{padding:20px 16px;text-align:center;background:rgba(10,3,18,.72);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
 header img{width:min(330px,72vw);height:auto;display:block;margin:auto}
@@ -34,6 +34,24 @@ footer{text-align:center;padding:24px;color:rgba(255,255,255,.65);font-size:12px
  main{width:calc(100% - 20px);padding:40px 0 55px}.intro-grid,.subject-grid,.info-grid,.club-grid,.two-col{grid-template-columns:1fr}.periods{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.period-btn{padding:13px 10px}.period-btn strong{font-size:13px}.period-head{display:block}.age{display:inline-block;margin-top:12px}.card{padding:19px;border-radius:17px}
 }
 </style>
+
+<style id="dark-background-focus">
+html{
+  background-color:#020608 !important;
+  background-image:
+    linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
+    url("./assets/site-background.jpg") !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+}
+body{
+  background:transparent !important;
+}
+</style>
+
+<link rel="stylesheet" href="./assets/global-background.css?v=20260909">
 </head>
 <body>
 <header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header>
@@ -109,5 +127,4 @@ buttons.forEach(btn=>btn.addEventListener('click',()=>{const id=btn.dataset.peri
 const nav=document.querySelector('.home-main-nav'), links=document.querySelector('.home-nav-links'), openBtn=document.querySelector('.mobile-menu-toggle'), closeBtn=document.querySelector('.mobile-menu-close');
 let scrollY=0;function openMenu(){scrollY=window.scrollY;links.classList.add('open');nav.classList.add('menu-open');openBtn.setAttribute('aria-expanded','true');document.body.classList.add('home-menu-locked');document.body.style.top=`-${scrollY}px`;}function closeMenu(){links.classList.remove('open');nav.classList.remove('menu-open');openBtn.setAttribute('aria-expanded','false');document.body.classList.remove('home-menu-locked');document.body.style.top='';window.scrollTo(0,scrollY);}openBtn.addEventListener('click',openMenu);closeBtn.addEventListener('click',closeMenu);nav.addEventListener('click',e=>{if(e.target===nav)closeMenu();});links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(window.innerWidth<=650)closeMenu();}));
 </script>
-<script type="module" src="./site-config.js"></script>
 </body></html>

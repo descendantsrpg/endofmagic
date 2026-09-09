@@ -237,7 +237,7 @@ html,body{
 body{
   background-image:url("./assets/auradon-bg.jpg")!important;
   background-position:center center!important;
-  background-size:100% 100%!important;
+  background-size:cover!important;
   background-attachment:fixed!important;
   background-repeat:no-repeat!important;
 }
@@ -452,7 +452,7 @@ header img{
 /* ===== FUNDO OFICIAL DO RPG + TIPOGRAFIA BRANCA ===== */
 html{
   min-height:100%;
-  background:#080509 url("./assets/site-background.jpg") center center / 100% 100% fixed no-repeat!important;
+  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
 }
 body{
   min-height:100vh!important;
@@ -655,6 +655,24 @@ input[type="reset"]:disabled,
   opacity: .55;
 }
 </style>
+
+<style id="dark-background-focus">
+html{
+  background-color:#020608 !important;
+  background-image:
+    linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
+    url("./assets/site-background.jpg") !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+}
+body{
+  background:transparent !important;
+}
+</style>
+
+<link rel="stylesheet" href="./assets/global-background.css?v=20260909">
 </head>
 
 <style id="db-loading-style">
@@ -708,6 +726,5 @@ document.querySelectorAll(".filter").forEach(btn=>btn.onclick=()=>{document.quer
 dbOnValue(onValue, ref(db,"site/alunos"),snap=>{const data=snap.val()||{};allStudents=Object.values(data).sort((a,b)=>(a.name||"").localeCompare(b.name||""));render(document.querySelector(".filter.active").dataset.filter)},err=>{console.error(err);container.innerHTML='<div class="empty"><strong>Não foi possível carregar os alunos.</strong><span>Verifique as regras de leitura do Firebase Realtime Database.</span></div>'});
 </script>
 <script type="module" src="./maintenance.js"></script>
-<script type="module" src="./site-config.js"></script>
 </body>
 </html>
