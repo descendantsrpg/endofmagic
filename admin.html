@@ -558,7 +558,7 @@ html body img[alt="Descendentes RPG"]{
 <style id="rpg-events-admin-style">
 #adminView .page{display:none!important}#adminView .page.active{display:block!important}.event-admin-item{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:12px;margin-bottom:10px}.event-admin-item .meta{margin-top:5px;font-size:.78rem}.event-admin-item p{margin:7px 0 0;font-size:.82rem}.event-admin-item .actions{display:flex;gap:7px;flex-wrap:wrap}.event-admin-item .actions .btn{margin:0!important}
 </style>
-<link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v2">
+<link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v3">
 </head>
 
 <style id="db-loading-style">
@@ -860,6 +860,8 @@ import { db } from "./firebase-init.js";
 import { ref, push, set, update, remove, onValue, get, runTransaction } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
 const $ = id => document.getElementById(id);
+// Failsafe: o carregamento não pode bloquear o CPainel indefinidamente.
+setTimeout(()=>hideDbLoading(),12000);
 const loginView=$('loginView'), adminView=$('adminView'), logout=$('logout');
 const maintenanceRef=ref(db,'site/manutencao/ativo');
 const ADMINS_PATH='site/admins';
@@ -1006,7 +1008,7 @@ document.querySelectorAll("#adminSidebar button[data-page]").forEach(btn=>btn.ad
 })();
 
 const eventsRef=ref(db,"site/eventos");
-function escapeEventHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;"}[c]));}
+function escapeEventHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","\'":"&#039;"}[c]));}
 function renderEventList(data){
  const box=$("eventList"); if(!box)return; const arr=Object.entries(data||{}).map(([key,e])=>({key,...e})).sort((a,b)=>String(a.startDate||"").localeCompare(String(b.startDate||"")));
  if(!arr.length){box.innerHTML='<p class="status">Nenhum evento cadastrado.</p>';return;}
@@ -1664,8 +1666,55 @@ restoreSession();
 @media(max-width:520px){#adminSidebar{grid-template-columns:1fr!important;gap:10px!important;padding:14px!important}#adminSidebar > button[data-page]{min-height:54px!important}}
 </style>
 
-
-
+<style id="cpanel-halloween-final-v3">
+/* ===== CPAINEL — HALLOWEEN FINAL ===== */
+body.halloween-theme #adminSidebar,
+body.halloween-theme #adminSidebar > button[data-page]{
+  background:#f57c00!important;
+  background-color:#f57c00!important;
+  border-color:#f57c00!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  box-shadow:0 5px 18px rgba(245,124,0,.28)!important;
+}
+body.halloween-theme #adminSidebar > button[data-page]:hover,
+body.halloween-theme #adminSidebar > button[data-page].active{
+  background:#ff9d2e!important;
+  background-color:#ff9d2e!important;
+  border-color:#ff9d2e!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body.halloween-theme #adminView button,
+body.halloween-theme #adminView .btn,
+body.halloween-theme #loginView button,
+body.halloween-theme #loginView .btn,
+body.halloween-theme #logout,
+body.halloween-theme .actions button,
+body.halloween-theme .actions .btn{
+  background:#f57c00!important;
+  background-color:#f57c00!important;
+  border-color:#f57c00!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body.halloween-theme #adminView button:hover,
+body.halloween-theme #adminView .btn:hover,
+body.halloween-theme #loginView button:hover,
+body.halloween-theme #loginView .btn:hover,
+body.halloween-theme #logout:hover,
+body.halloween-theme .actions button:hover,
+body.halloween-theme .actions .btn:hover{
+  background:#ff9d2e!important;
+  background-color:#ff9d2e!important;
+  border-color:#ff9d2e!important;
+}
+body.halloween-theme .maintenance-switch{
+  background:#f57c00!important;
+  border-color:#f57c00!important;
+}
+body.halloween-theme footer.site-disclaimer-footer{font-size:10px!important}
+</style>
 
 <footer class="site-disclaimer-footer">
   <p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p>
