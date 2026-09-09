@@ -1,0 +1,55 @@
+/* DESCENDENTES RPG — TEMA HALLOWEEN */
+:root{--halloween-orange:#f57c00;--halloween-orange-2:#ff9d2e;--halloween-dark:#050308;--halloween-panel:rgba(10,7,14,.78)}
+
+html.halloween-theme,html.halloween-theme body{background:#050308!important}
+html.halloween-theme{background-image:url('./site-background.jpg')!important;background-size:cover!important;background-position:center!important;background-attachment:fixed!important}
+body.halloween-theme{position:relative;background:transparent!important;color:#fff!important;overflow-x:hidden}
+body.halloween-theme:after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(rgba(0,0,0,.60),rgba(0,0,0,.72)),radial-gradient(circle at 50% 15%,rgba(245,124,0,.10),transparent 38%)}
+body.halloween-theme>*{position:relative;z-index:1}
+
+/* TODOS OS BOTÕES / LINKS QUE FUNCIONAM COMO BOTÕES */
+body.halloween-theme button,
+body.halloween-theme input[type=button],body.halloween-theme input[type=submit],body.halloween-theme input[type=reset],
+body.halloween-theme .btn,body.halloween-theme .button,body.halloween-theme .filter,body.halloween-theme .period-btn,
+body.halloween-theme .back,body.halloween-theme .news-btn,body.halloween-theme .menu a,
+body.halloween-theme .home-main-nav a,body.halloween-theme .home-quick-menu a,body.halloween-theme .home-nav-links a,
+body.halloween-theme .admin-main-nav a,body.halloween-theme [role=button]{
+  background:#f57c00!important;background-color:#f57c00!important;color:#fff!important;
+  border-color:#f57c00!important;-webkit-text-fill-color:#fff!important;
+  box-shadow:0 4px 16px rgba(245,124,0,.22)!important;transition:all .2s ease!important
+}
+body.halloween-theme button:hover,body.halloween-theme input[type=button]:hover,body.halloween-theme input[type=submit]:hover,
+body.halloween-theme .btn:hover,body.halloween-theme .button:hover,body.halloween-theme .filter:hover,
+body.halloween-theme .filter.active,body.halloween-theme .period-btn:hover,body.halloween-theme .back:hover,
+body.halloween-theme .news-btn:hover,body.halloween-theme .menu a:hover,body.halloween-theme .home-main-nav a:hover,
+body.halloween-theme .home-quick-menu a:hover,body.halloween-theme .home-nav-links a:hover,body.halloween-theme .admin-main-nav a:hover,
+body.halloween-theme [role=button]:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;color:#fff!important;border-color:#ff9d2e!important;transform:translateY(-2px)}
+
+/* CARDS E ÁREAS */
+body.halloween-theme .card,body.halloween-theme .panel,body.halloween-theme .side,body.halloween-theme .item,
+body.halloween-theme .student,body.halloween-theme .post,body.halloween-theme .group,body.halloween-theme .aff,
+body.halloween-theme .access-card,body.halloween-theme .auradon-agora-card,body.halloween-theme .info-card,
+body.halloween-theme .club-card,body.halloween-theme .subject-card,body.halloween-theme .stat,body.halloween-theme .login,
+body.halloween-theme .form-card,body.halloween-theme .admin-card,body.halloween-theme .notice-card{
+ background:rgba(8,5,12,.78)!important;color:#fff!important;border-color:rgba(245,124,0,.30)!important;
+ box-shadow:0 14px 40px rgba(0,0,0,.72),0 0 18px rgba(245,124,0,.07)!important
+}
+body.halloween-theme h1,body.halloween-theme h2,body.halloween-theme h3,body.halloween-theme h4{ text-shadow:0 3px 16px #000!important }
+body.halloween-theme a{color:#ff9d2e}
+body.halloween-theme input,body.halloween-theme select,body.halloween-theme textarea{background:rgba(0,0,0,.55)!important;color:#fff!important;border-color:rgba(245,124,0,.35)!important}
+
+/* DECORAÇÃO VISÍVEL */
+.halloween-decor{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;pointer-events:none!important;z-index:99999!important;overflow:hidden!important}
+.halloween-decor .h-bat,.halloween-decor .h-skull,.halloween-decor .h-web,.halloween-decor .h-spider{position:absolute;display:block;user-select:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.95));font-family:Arial,sans-serif}
+.h-bat{font-size:34px;animation:h-bat 5s ease-in-out infinite}
+.h-bat.b1{left:3%;top:17%}.h-bat.b2{right:4%;top:31%;font-size:28px;animation-delay:-2s}.h-bat.b3{left:8%;top:67%;font-size:25px;animation-delay:-3.5s}.h-bat.b4{right:10%;top:78%;font-size:33px;animation-delay:-1s}
+.h-skull{font-size:42px;opacity:.72}.h-skull.s1{left:2%;bottom:5%}.h-skull.s2{right:2%;top:6%;font-size:36px}
+.h-web{font-size:86px;line-height:1;opacity:.70}.h-web.w1{left:-9px;top:-8px}.h-web.w2{right:-9px;top:-8px;transform:scaleX(-1)}.h-web.w3{right:-9px;bottom:-10px;transform:rotate(180deg)}.h-web.w4{left:-9px;bottom:-10px;transform:rotate(270deg)}
+.h-spider{font-size:28px;opacity:.70}.h-spider.p1{left:12%;top:4%;animation:h-spider 4s ease-in-out infinite}.h-spider.p2{right:14%;bottom:7%;animation:h-spider 5s ease-in-out infinite reverse}
+@keyframes h-bat{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-12px) rotate(4deg)}}
+@keyframes h-spider{0%,100%{transform:translateY(0)}50%{transform:translateY(12px)}}
+
+/* Rodapé */
+body.halloween-theme footer{font-size:10px!important;color:rgba(255,255,255,.82)!important;background:rgba(3,2,6,.88)!important;border-color:rgba(245,124,0,.24)!important}
+
+@media(max-width:700px){.h-bat{font-size:24px}.h-skull{font-size:30px}.h-web{font-size:58px}.h-spider{font-size:22px}}

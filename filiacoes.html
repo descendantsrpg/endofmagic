@@ -822,6 +822,38 @@ body{
   font-weight:700 !important;
 }
 </style>
+
+<style id="rpg-logo-standard-global">
+/* ===== LOGO RPG PADRONIZADO EM TODAS AS PÁGINAS ===== */
+html body img[alt="Descendentes RPG"]{
+  width:min(330px,72vw)!important;
+  height:auto!important;
+  max-width:330px!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  display:block!important;
+}
+.site-header-fixed{
+  min-height:165px!important;
+  padding:0 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.site-header-fixed img[alt="Descendentes RPG"]{
+  width:min(330px,72vw)!important;
+  max-width:330px!important;
+}
+@media(max-width:650px){
+  html body img[alt="Descendentes RPG"]{
+    width:min(240px,76vw)!important;
+    max-width:240px!important;
+  }
+  .site-header-fixed{min-height:120px!important;padding:6px 10px!important;}
+  .site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important;}
+}
+</style>
+<style>.site-disclaimer-footer,.site-disclaimer-footer *{font-size:10px!important;line-height:1.55}</style><link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v2">
 </head>
 
 <style id="db-loading-style">
@@ -847,15 +879,21 @@ body{
 <div id="dbLoadingOverlay" class="is-loading" role="status" aria-live="polite" aria-label="Aguarde, estamos carregando o banco de dados">
   <img src="assets/db-loading.png" alt="Aguarde, estamos carregando o banco de dados">
 </div>
+<body class="halloween-theme">
+<div class="halloween-decor" aria-hidden="true">
+  <span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span>
+  <span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span>
+  <span class="h-skull s1">💀</span><span class="h-skull s2">💀</span>
+  <span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span>
+</div>
 
-<body>
 <header><div class="container brand"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></div></header>
 <main class="container">
 <section class="hero"><h1>Filiações</h1><p>As filiações representam as opções de origem e pertencimento que cada personagem pode escolher dentro do RPG. Escolha livremente a filiação que mais combina com a história e a personalidade do seu personagem e fique à vontade para seguir o caminho que deseja para sua aventura.</p></section>
 <section class="groups" id="groups"><div class="empty">Carregando filiações...</div></section>
 <a class="back" href="index.html">Voltar à página inicial</a>
 </main>
-<footer>Descendentes RPG • Auradon Prep</footer>
+
 <script type="module">
 import {dbOnValue} from "./db-loader.js";
 import{db}from"./firebase-init.js";
@@ -895,5 +933,15 @@ setTimeout(()=>{if(box.textContent.includes("Carregando filiações"))box.innerH
 </script>
 <script type="module" src="./maintenance.js">
 </script>
+
+
+<footer class="site-disclaimer-footer">
+<div class="rpg-disclaimer">
+    <p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p>
+    <p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p>
+    <p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p>
+    <p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p>
+  </div>
+</footer>
 </body>
 </html>

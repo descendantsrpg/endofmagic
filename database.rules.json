@@ -3,13 +3,38 @@
     ".read": true,
     ".write": false,
     "site": {
-      "admins": { ".read": true, ".write": true },
-      "noticias": { ".read": true, ".write": true },
-      "filiacoes": { ".read": true, ".write": true },
-      "alunos": { ".read": true, ".write": true },
-      "docentes": { ".read": true, ".write": true },
-      "manutencao": { ".read": true, ".write": true },
-      "configuracao": { ".read": true, ".write": true }
+      "admins": {
+        ".read": true,
+        ".write": true
+      },
+      "noticias": {
+        ".read": true,
+        ".write": true
+      },
+      "filiacoes": {
+        ".read": true,
+        ".write": true
+      },
+      "alunos": {
+        ".read": true,
+        ".write": true
+      },
+      "docentes": {
+        ".read": true,
+        ".write": true
+      },
+      "manutencao": {
+        ".read": true,
+        ".write": true
+      },
+      "configuracao": {
+        ".read": true,
+        ".write": true
+      },
+      "eventos": {
+        ".read": true,
+        ".write": true
+      }
     }
   }
 }

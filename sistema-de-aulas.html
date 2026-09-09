@@ -52,14 +52,54 @@ body{
 </style>
 
 <link rel="stylesheet" href="./assets/global-background.css?v=20260909-headerfix">
+
+<style id="rpg-logo-standard-global">
+/* ===== LOGO RPG PADRONIZADO EM TODAS AS PÁGINAS ===== */
+html body img[alt="Descendentes RPG"]{
+  width:min(330px,72vw)!important;
+  height:auto!important;
+  max-width:330px!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  display:block!important;
+}
+.site-header-fixed{
+  min-height:165px!important;
+  padding:0 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.site-header-fixed img[alt="Descendentes RPG"]{
+  width:min(330px,72vw)!important;
+  max-width:330px!important;
+}
+@media(max-width:650px){
+  html body img[alt="Descendentes RPG"]{
+    width:min(240px,76vw)!important;
+    max-width:240px!important;
+  }
+  .site-header-fixed{min-height:120px!important;padding:6px 10px!important;}
+  .site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important;}
+}
+</style>
+<style>.site-disclaimer-footer,.site-disclaimer-footer *{font-size:10px!important;line-height:1.55}</style><link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v2">
 </head>
-<body>
+<body class="halloween-theme">
+<div class="halloween-decor" aria-hidden="true">
+  <span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span>
+  <span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span>
+  <span class="h-skull s1">💀</span><span class="h-skull s2">💀</span>
+  <span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span>
+</div>
+
 <header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header>
 <nav class="home-main-nav" aria-label="Menu principal">
 <button class="mobile-menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
 <div class="home-nav-links">
 <button class="mobile-menu-close" type="button" aria-label="Fechar menu">×</button>
-<a href="index.html">Início</a><a href="filiacoes.html">Filiações</a><a href="explore-auradon.html">Explore Auradon</a><a href="alunos.html">Alunos</a><a href="corpo-docente.html">Corpo Docente</a><a href="noticias.html">Notícias</a><a class="active" href="sistema-de-aulas.html">Sistema de Aulas</a><a href="admin.html">CPainel</a>
+<a href="index.html">Início</a><a href="filiacoes.html">Filiações</a><a href="explore-auradon.html">Explore Auradon</a><a href="alunos.html">Alunos</a><a href="corpo-docente.html">Corpo Docente</a>
+<a class="active" href="sistema-de-aulas.html">Sistema de Aulas</a><a href="admin.html">CPainel</a>
 </div></nav>
 <main>
 <section class="hero"><h1>🏫 Sistema de Aulas</h1><p>A formação escolar da Auradon Prep reúne matérias obrigatórias, atividades práticas, avaliações e especializações. Royals e Rebels estudam juntos, com a mesma grade básica. fileciteturn7file1</p></section>
@@ -120,11 +160,21 @@ body{
 </div></section>
 <a class="back" href="index.html">← Voltar ao início</a>
 </main>
-<footer>Descendentes RPG — Auradon Prep</footer>
+
 <script>
 const buttons=[...document.querySelectorAll('.period-btn')];const panels=[...document.querySelectorAll('.period-panel')];
 buttons.forEach(btn=>btn.addEventListener('click',()=>{const id=btn.dataset.period;buttons.forEach(b=>b.classList.toggle('active',b===btn));panels.forEach(p=>p.classList.toggle('active',p.dataset.panel===id));}));
 const nav=document.querySelector('.home-main-nav'), links=document.querySelector('.home-nav-links'), openBtn=document.querySelector('.mobile-menu-toggle'), closeBtn=document.querySelector('.mobile-menu-close');
 let scrollY=0;function openMenu(){scrollY=window.scrollY;links.classList.add('open');nav.classList.add('menu-open');openBtn.setAttribute('aria-expanded','true');document.body.classList.add('home-menu-locked');document.body.style.top=`-${scrollY}px`;}function closeMenu(){links.classList.remove('open');nav.classList.remove('menu-open');openBtn.setAttribute('aria-expanded','false');document.body.classList.remove('home-menu-locked');document.body.style.top='';window.scrollTo(0,scrollY);}openBtn.addEventListener('click',openMenu);closeBtn.addEventListener('click',closeMenu);nav.addEventListener('click',e=>{if(e.target===nav)closeMenu();});links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(window.innerWidth<=650)closeMenu();}));
 </script>
+
+
+<footer class="site-disclaimer-footer">
+<div class="rpg-disclaimer">
+    <p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p>
+    <p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p>
+    <p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p>
+    <p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p>
+  </div>
+</footer>
 </body></html>

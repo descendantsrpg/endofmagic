@@ -30,4 +30,4 @@ Sem Firebase Authentication não existe uma identidade confiável para as Rules.
 
 Este projeto segue o requisito de não usar Authentication, mas isso é uma limitação estrutural do modelo. Para produção, a opção segura é colocar o cadastro/login atrás de um backend ou voltar a usar Firebase Authentication.
 
-Se as regras atuais do seu banco já possuem regras para `site/noticias`, `site/alunos`, `site/filiacoes`, `site/docentes` e `site/manutencao`, NÃO apague essas regras. Acrescente somente o bloco `admins` ao bloco `site` existente.
+Se as regras atuais do seu banco já possuem regras para `site/alunos`, `site/filiacoes`, `site/docentes` e `site/manutencao`, NÃO apague essas regras. Acrescente somente o bloco `admins` ao bloco `site` existente.

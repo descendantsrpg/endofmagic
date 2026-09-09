@@ -7,1152 +7,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Painel Admin — Descendentes RPG</title>
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
-/* IDENTIDADE VISUAL GLOBAL */
-:root{--red:#a51d36;--red-dark:#7c1226;--text:#2b171b;--muted:#6f555a;--line:rgba(165,29,54,.18)}
-*{box-sizing:border-box}
-html,body{background:#fff!important;color:var(--text)!important;font-family:"Comfortaa",sans-serif!important}
-body,button,input,textarea,select,a{font-family:"Comfortaa",sans-serif!important}
-header,.top,footer{background:#fff!important;color:var(--text)!important;border-color:var(--line)!important}
-h1,h2,h3,h4,h5,h6,.brand,.title,.type,.section-kicker{color:var(--red)!important;font-family:"Comfortaa",sans-serif!important;font-weight:300}
-p,.subtitle,.meta,.status,.label,.upload-status,.data{color:var(--muted)!important}
-.card,.side,.item,.student,.post,.group,.aff,.news-slider,.news-card{background:#fff!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:0 6px 20px rgba(124,18,38,.06)!important}
-.btn,.filter,.news-btn{background:#fff!important;color:var(--red)!important;border-color:rgba(165,29,54,.3)!important}
-.btn:hover,.filter:hover,.filter.active,.news-btn:hover,.btn.primary{background:var(--red)!important;color:#fff!important;border-color:var(--red)!important}
-input,textarea,select{background:#fff!important;color:var(--text)!important;border-color:rgba(165,29,54,.25)!important}
-input:focus,textarea:focus,select:focus{outline:2px solid rgba(165,29,54,.12)!important;border-color:var(--red)!important}
-a{color:var(--red)}
 
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
-/* DESCENDENTES RPG — IDENTIDADE VISUAL GLOBAL */
-:root{
-  --wine:#a51d36!important;
-  --wine-dark:#7c1226!important;
-  --gold:#a51d36!important;
-  --cream:#ffffff!important;
-  --text:#2b171b!important;
-  --muted:#6f555a!important;
-  --line:rgba(165,29,54,.22)!important;
-  --danger:#a51d36!important;
-}
-html,body{
-  background:#fff!important;
-  color:#2b171b!important;
-}
-body{
-  font-family:"Comfortaa",sans-serif!important;
-}
-header,.top,footer{
-  background:#fff!important;
-  color:#2b171b!important;
-  border-color:rgba(165,29,54,.18)!important;
-}
-h1,h2,h3,h4,h5,h6,.brand,.title,.type,.section-kicker,
-button,input,textarea,select,a{
-  font-family:"Comfortaa",sans-serif!important;
-}
-h1,h2,h3,h4,h5,h6,.title,.type,.brand{
-  color:#a51d36!important;
-}
-p,.subtitle,.meta,.status,.label,.intro,.data,.upload-status{
-  color:#6f555a!important;
-}
-a{color:#a51d36}
-.card,.side,.item,.student,.post,.group,.aff,.news-slider,.news-card{
-  background:#fff!important;
-  color:#2b171b!important;
-  border-color:rgba(165,29,54,.18)!important;
-  box-shadow:0 6px 20px rgba(124,18,38,.06)!important;
-}
-.btn,.filter,.news-btn{
-  background:#fff!important;
-  color:#a51d36!important;
-  border-color:rgba(165,29,54,.3)!important;
-}
-.btn:hover,.filter:hover,.filter.active,.news-btn:hover{
-  background:#a51d36!important;
-  color:#fff!important;
-  border-color:#a51d36!important;
-}
-.btn.primary{
-  background:#a51d36!important;
-  color:#fff!important;
-  border-color:#a51d36!important;
-}
-input,textarea,select{
-  background:#fff!important;
-  color:#2b171b!important;
-  border-color:rgba(165,29,54,.25)!important;
-}
-input:focus,textarea:focus,select:focus{
-  outline:2px solid rgba(165,29,54,.12)!important;
-  border-color:#a51d36!important;
-}
-.menu a{
-  background:#fff!important;
-  color:#a51d36!important;
-  border-color:rgba(165,29,54,.22)!important;
-}
-.menu a:hover{
-  background:#a51d36!important;
-  color:#fff!important;
-  border-color:#a51d36!important;
-}
-.back{
-  color:#a51d36!important;
-  border-color:#a51d36!important;
-}
-.news-tag,.news-number,.news-more{
-  color:#a51d36!important;
-}
-.news-dot{background:rgba(165,29,54,.25)!important}
-.news-dot.active{background:#a51d36!important}
-
-
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
-*{font-family:"Comfortaa",sans-serif!important}
-body,button,input,textarea,select{font-family:"Comfortaa",sans-serif!important;font-weight:300}
-h1,h2,h3,.brand,.title,.type,.section-kicker{font-family:"Comfortaa",sans-serif!important;font-weight:300}
-
-:root{--bg:#0d080a;--panel:#171013;--panel2:#20161a;--gold:#d5ad5a;--cream:#fff8e8;--muted:#b9aaad;--line:rgba(213,173,90,.2);--danger:#c96b6b;--ok:#83bd91}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#0d080a,#281018);color:var(--cream);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
-button,input,textarea,select{font:inherit}.hidden{display:none!important}
-.container{width:min(1180px,calc(100% - 30px));margin:auto}
-.top{border-bottom:1px solid var(--line);padding:18px 0;background:rgba(10,5,7,.8);position:sticky;top:0;z-index:5}
-.topin{display:flex;justify-content:space-between;align-items:center;gap:15px}.brand{letter-spacing:.08em}.brand-logo{display:flex;align-items:center;gap:12px}.brand-logo img{width:170px;height:auto;display:block}.brand-logo span{color:var(--wine);font-size:.75rem}
-.btn{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--panel2);color:var(--cream);cursor:pointer}.btn:hover{border-color:var(--gold)}
-.primary{background:var(--gold);color:#21120d;border-color:var(--gold);font-weight:700}.danger{border-color:rgba(201,107,107,.5);color:#e99b9b}
-main{padding:35px 0 70px}.grid{display:grid;grid-template-columns:240px 1fr;gap:20px}.side,.card{border:1px solid var(--line);background:rgba(255,248,232,.045);border-radius:16px}
-.side{padding:12px;height:max-content}.side button{display:block;width:100%;text-align:left;border:0;background:none;color:var(--muted);padding:13px;border-radius:9px;cursor:pointer}.side button.active,.side button:hover{background:rgba(213,173,90,.1);color:var(--gold)}
-.content{min-width:0}.page{display:none}.page.active{display:block}.title{margin:0 0 7px;font-size:28px}.subtitle{color:var(--muted);margin:0 0 24px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{padding:20px}.stat b{display:block;font-size:28px;color:var(--gold);margin-top:8px}.label{color:var(--muted);font-size:13px}
-.card{padding:20px;margin-bottom:16px}.card h3{margin:0 0 15px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}
-label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}input,textarea,select{width:100%;border:1px solid var(--line);background:#100a0d;color:var(--cream);border-radius:9px;padding:11px}textarea{min-height:120px;resize:vertical}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.list{display:grid;gap:10px}.item{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:15px;background:rgba(255,255,255,.035);border:1px solid rgba(213,173,90,.12);border-radius:10px}.item strong{display:block}.meta{color:var(--muted);font-size:12px;margin-top:4px}.login{max-width:440px;margin:80px auto}.status{margin-top:10px;color:var(--muted);font-size:13px}.login-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:rgba(255,255,255,.55);font-size:12px;text-transform:uppercase;letter-spacing:.12em}.login-divider:before,.login-divider:after{content:"";height:1px;flex:1;background:rgba(255,255,255,.15)}.google-login-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff!important;color:#202124!important;border:1px solid rgba(255,255,255,.35)!important;box-shadow:0 8px 24px rgba(0,0,0,.18)}.google-login-btn:hover{background:#f4f4f4!important;color:#111!important}.google-icon{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-weight:800;font-family:Arial,sans-serif;font-size:17px;color:#4285f4;background:#fff}
-.image-preview{margin-top:10px;border:1px solid var(--line);border-radius:10px;overflow:hidden;max-width:360px}
-.image-preview img{display:block;width:100%;height:auto;max-height:220px;object-fit:cover}.student-thumb{width:64px;height:64px;object-fit:cover;border-radius:9px;border:1px solid var(--line);margin-right:12px;vertical-align:middle}.affiliation-group{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}.affiliation-story{margin-left:14px;padding:10px 0 2px;border-top:1px solid rgba(213,173,90,.10)}.affiliation-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0}.count{color:var(--gold);font-size:12px;white-space:nowrap}
-.upload-status{color:var(--muted);font-size:12px;margin-top:7px}
-@media(max-width:760px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.side{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.side button{text-align:center;font-size:12px}.item{align-items:flex-start;flex-direction:column}.topin{align-items:flex-start;flex-direction:column}}
-h1,h2,h3,.brand,.title,.type,.section-kicker{
-  font-family:"Comfortaa",sans-serif;
-}
-body,button,input,textarea,select{
-  font-family:"Comfortaa",sans-serif;
-}
-
-/* ===== PALETA DESCENDENTES RPG — BRANCO + VERMELHO ===== */
-:root{
-  --wine:#9b1c31;
-  --wine-dark:#650d1d;
-  --gold:#b21f35;
-  --cream:#ffffff;
-  --text:#2a1115;
-  --muted:#6f555a;
-  --line:rgba(155,28,49,.22);
-  --danger:#b21f35;
-  --ok:#2d7a4b;
-}
-body{
-  color:var(--text)!important;
-  background:#fff!important;
-}
-header,.top{
-  background:#fff!important;
-  border-bottom:1px solid var(--line)!important;
-}
-.brand{
-  color:var(--wine)!important;
-}
-footer{
-  color:#765f63!important;
-  background:#fff!important;
-  border-top:1px solid var(--line)!important;
-}
-.card,.side,.menu a,.student,.post,.news-slider{
-  background:#fff!important;
-  border-color:var(--line)!important;
-  box-shadow:0 5px 18px rgba(101,13,29,.07);
-}
-.menu a{
-  color:var(--wine)!important;
-}
-.menu a:hover{
-  background:var(--wine)!important;
-  color:#fff!important;
-  border-color:var(--wine)!important;
-}
-h1,h2,h3,.title,.section-kicker,.type{
-  color:var(--wine);
-}
-.intro p,.subtitle,.news-slide p,.post-excerpt,.post-content,.data,.status,.label,.meta{
-  color:var(--muted)!important;
-}
-.btn{
-  background:#fff!important;
-  color:var(--wine)!important;
-  border-color:var(--line)!important;
-}
-.btn:hover{
-  border-color:var(--wine)!important;
-}
-.btn.primary{
-  background:var(--wine)!important;
-  color:#fff!important;
-  border-color:var(--wine)!important;
-}
-.btn.danger{
-  color:var(--danger)!important;
-  border-color:rgba(178,31,53,.35)!important;
-}
-input,textarea,select{
-  background:#fff!important;
-  color:var(--text)!important;
-  border-color:var(--line)!important;
-}
-input:focus,textarea:focus,select:focus{
-  outline:2px solid rgba(155,28,49,.15);
-  border-color:var(--wine)!important;
-}
-.news-tag,.news-number,.news-more,.back{
-  color:var(--wine)!important;
-}
-.news-btn,.filter{
-  background:#fff!important;
-  color:var(--wine)!important;
-  border-color:var(--line)!important;
-}
-.news-btn:hover,.filter:hover,.filter.active{
-  background:var(--wine)!important;
-  color:#fff!important;
-  border-color:var(--wine)!important;
-}
-.news-dot{background:rgba(155,28,49,.25)!important}
-.news-dot.active{background:var(--wine)!important}
-.back{
-  border-color:var(--wine)!important;
-}
-.image-preview,.student-thumb{
-  border-color:var(--line)!important;
-}
-
-.admin-welcome{width:min(1100px,calc(100% - 32px));margin:22px auto 0;text-align:center;color:#a51d36;font-family:"Comfortaa",sans-serif;font-size:1.45rem;font-weight:400}.admin-welcome span{color:#2b171b;font-weight:300}
-
-.admin-top-welcome{
-  width:100%;
-  background:#fff;
-  border-bottom:1px solid rgba(165,29,54,.18);
-  padding:18px 16px;
-  margin:0 0 22px;
-  text-align:center;
-  position:relative;
-  z-index:2;
-}
-.admin-welcome{
-  display:block!important;
-  visibility:visible!important;
-  opacity:1!important;
-  color:#a51d36!important;
-  font-family:"Comfortaa",sans-serif!important;
-  font-size:1.45rem!important;
-  line-height:1.4;
-  font-weight:400!important;
-  text-align:center!important;
-  margin:0 auto!important;
-}
-.admin-welcome span{
-  color:#2b171b!important;
-  font-weight:500!important;
-}
-
-/* TIPOGRAFIA PADRÃO DO SITE */
-body{
-  font-size:14px!important;
-}
-h1,h2,h3,h4,h5,h6,
-.title,.section-title,.brand{
-  font-size:20px!important;
-}
-p,li,td,th,label,.subtitle,.meta,.status,.description,.excerpt,.content,
-.empty,.empty-news,.data,.subject,.role,.date,.category{
-  font-size:14px!important;
-}
-
-/* ===== FUNDO GLOBAL AURADON ===== */
-html,body{
-  min-height:100%;
-}
-body{
-  background:#13051d!important;
-  color:#f8eefb!important;
-  position:relative;
-}
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background:
-    linear-gradient(rgba(12,4,22,.42),rgba(12,4,22,.42)),
-    url("./assets/auradon-bg.jpg") center center / cover no-repeat;
-  opacity:.58;
-  pointer-events:none;
-}
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  background:rgba(255,255,255,.10);
-  pointer-events:none;
-}
-header{
-  background:rgba(12,4,22,.72)!important;
-  backdrop-filter:blur(12px);
-  border-color:rgba(226,171,255,.20)!important;
-}
-footer{
-  background:rgba(12,4,22,.70)!important;
-  color:#eadcf0!important;
-  border-color:rgba(226,171,255,.18)!important;
-}
-h1,h2,h3,h4,h5,h6,.title,.section-title,.brand{
-  color:#fff!important;
-  text-shadow:0 2px 12px rgba(0,0,0,.35);
-}
-p,.subtitle,.meta,.description,.excerpt,.content,.empty,.empty-news,
-label,.subject,.role,.date,.category{
-  color:#f0e5f4!important;
-}
-.card,.group,.aff,.post,.student,.person{
-  background:rgba(18,7,29,.68)!important;
-  border-color:rgba(226,171,255,.24)!important;
-  box-shadow:0 12px 32px rgba(0,0,0,.20)!important;
-  backdrop-filter:blur(7px);
-}
-.menu a{
-  background:rgba(18,7,29,.60)!important;
-  color:#fff!important;
-  border-color:rgba(226,171,255,.30)!important;
-}
-.menu a:hover{
-  background:rgba(151,34,117,.72)!important;
-  color:#fff!important;
-  border-color:#e5b7ff!important;
-}
-a{color:#f2cfff}
-.back{
-  color:#fff!important;
-  border-color:#e5b7ff!important;
-  background:rgba(18,7,29,.48);
-}
-.back:hover{
-  background:#8c2b79!important;
-  color:#fff!important;
-}
-.section-divider{
-  background:linear-gradient(90deg,transparent,rgba(226,171,255,.48),transparent)!important;
-}
-.empty-news,.empty{
-  background:rgba(18,7,29,.48)!important;
-  border-color:rgba(226,171,255,.30)!important;
-}
-input,select,textarea{
-  background:rgba(255,255,255,.94)!important;
-  color:#241329!important;
-}
-
-/* ===== IDENTIDADE TIPOGRÁFICA GLOBAL ===== */
-:root{
-  --site-text:#f3eaf6;
-  --site-muted:#d9c9df;
-  --site-title:#ffffff;
-  --site-accent:#e4b8f4;
-}
-html,body{
-  font-family:"Comfortaa",sans-serif!important;
-  font-size:14px!important;
-}
-body{
-  color:var(--site-text)!important;
-}
-h1,h2,h3,h4,h5,h6,
-.title,.section-title,.school-title h1,.city-title h1,
-.floor-heading h2,.hero h1{
-  font-family:"Comfortaa",sans-serif!important;
-  font-size:20px!important;
-  line-height:1.35!important;
-  font-weight:500!important;
-  color:var(--site-title)!important;
-}
-p,li,td,th,small,
-.subtitle,.description,.excerpt,.content,.meta,.date,.category,
-.subject,.role,.empty,.empty-news,
-label,button,a,.menu a,.back{
-  font-family:"Comfortaa",sans-serif!important;
-  font-size:14px!important;
-  line-height:1.7!important;
-}
-.card h3,.person .name,.student .name,
-.post h2,.group h3{
-  font-family:"Comfortaa",sans-serif!important;
-  font-size:20px!important;
-  line-height:1.35!important;
-  font-weight:500!important;
-  color:var(--site-title)!important;
-}
-/* Contraste para o fundo roxo/azul */
-p,li,td,th,.subtitle,.description,.excerpt,.content,.meta,.date,
-.subject,.role,.empty,.empty-news,label{
-  color:var(--site-muted)!important;
-}
-a,.back,.menu a{
-  color:var(--site-title)!important;
-}
-a:hover,.back:hover,.menu a:hover{
-  color:#fff!important;
-}
-/* Campos administrativos permanecem claros para facilitar a edição */
-input,select,textarea{
-  font-family:"Comfortaa",sans-serif!important;
-  font-size:14px!important;
-  line-height:1.5!important;
-}
-input,select,textarea{
-  color:#241329!important;
-}
-button{
-  font-family:"Comfortaa",sans-serif!important;
-}
-@media(max-width:650px){
-  html,body{font-size:14px!important}
-  h1,h2,h3,h4,h5,h6,.title,.section-title,
-  .school-title h1,.city-title h1,.floor-heading h2,.hero h1,
-  .card h3,.person .name,.student .name,.post h2,.group h3{
-    font-size:20px!important;
-  }
-  p,li,td,th,small,.subtitle,.description,.excerpt,.content,
-  .meta,.date,.category,.subject,.role,.empty,.empty-news,
-  label,button,a,.menu a,.back{
-    font-size:14px!important;
-  }
-}
-
-/* ===== TEXTO GLOBAL CLARO ===== */
-body,body *{
-  color:#f4edf7!important;
-}
-h1,h2,h3,h4,h5,h6,
-.title,.section-title,.school-title h1,.city-title h1,
-.floor-heading h2,.hero h1,
-.card h3,.person .name,.student .name,.post h2,.group h3{
-  color:#ffffff!important;
-}
-p,li,td,th,small,
-.subtitle,.description,.excerpt,.content,.meta,.date,.category,
-.subject,.role,.empty,.empty-news,
-.data,.info,.details,.label{
-  color:#f4edf7!important;
-}
-a,.back,.menu a{
-  color:#ffffff!important;
-}
-a:hover,.back:hover,.menu a:hover{
-  color:#ffffff!important;
-}
-/* Campos de edição continuam com contraste apropriado */
-input,select,textarea{
-  color:#241329!important;
-  background:#fff!important;
-}
-input::placeholder,textarea::placeholder{
-  color:#6f5a72!important;
-}
-/* Ícones e elementos decorativos não recebem cores escuras */
-svg{color:#fff!important}
-
-/* ===== PAINEL ADMINISTRATIVO — FUNDO UNIFORME ===== */
-html,body{
-  min-height:100%!important;
-  background:#12051d!important;
-}
-body{
-  background:
-    linear-gradient(rgba(10,3,18,.48),rgba(10,3,18,.48)),
-    url("./assets/auradon-bg.jpg") center center / cover fixed no-repeat!important;
-  color:#f4edf7!important;
-}
-body::before,body::after{
-  display:none!important;
-}
-header,.admin-header,.topbar,.sidebar,.main,.content,.panel,.dashboard,
-main,section,footer{
-  background:transparent!important;
-}
-.card,.box,.stat,.panel-card,.admin-card{
-  background:rgba(18,7,29,.62)!important;
-  border-color:rgba(226,190,245,.20)!important;
-  color:#f4edf7!important;
-  backdrop-filter:blur(8px);
-}
-h1,h2,h3,h4,h5,h6,
-.title,.subtitle,.admin-welcome,.section-title,
-label,.description,.help,.meta,.status,
-p,li,span,div{
-  color:#f4edf7!important;
-}
-.admin-welcome{
-  color:#fff!important;
-}
-.admin-welcome span{
-  color:#fff!important;
-}
-button,.btn{
-  color:#fff!important;
-}
-input,select,textarea{
-  background:rgba(255,255,255,.94)!important;
-  color:#241329!important;
-  border-color:rgba(226,190,245,.35)!important;
-}
-input::placeholder,textarea::placeholder{
-  color:#6f5a72!important;
-}
-table{
-  background:transparent!important;
-  color:#f4edf7!important;
-}
-th,td{
-  color:#f4edf7!important;
-  border-color:rgba(226,190,245,.18)!important;
-}
-a{
-  color:#fff!important;
-}
-
-/* ===== ADMIN: TEMA ÚNICO E UNIFORME ===== */
-html{
-  background:#12051d!important;
-}
-body{
-  margin:0!important;
-  min-height:100vh!important;
-  background:#12051d url("./assets/auradon-bg.jpg") center center / cover fixed no-repeat!important;
-  color:#fff!important;
-}
-body::before,body::after{display:none!important}
-
-/* Every layout container shares the same transparent surface. */
-header,nav,aside,main,section,footer,
-.container,.content,.dashboard,.page,.topbar,.sidebar,
-.admin-shell,.admin-content,.main-content,.wrapper,.layout{
-  background:transparent!important;
-  background-image:none!important;
-}
-
-/* Dashboard and content cards use one identical translucent treatment. */
-.card,.box,.panel,.panel-card,.admin-card,.stat,.stat-card,
-.form-card,.list-card,.table-card,.news-card,.item,.user-card{
-  background:rgba(13,5,23,.68)!important;
-  background-image:none!important;
-  border:1px solid rgba(226,190,245,.20)!important;
-  color:#fff!important;
-  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-}
-
-/* Typography */
-body,body *{
-  font-family:"Comfortaa",sans-serif!important;
-}
-h1,h2,h3,h4,h5,h6,.title,.section-title,.admin-welcome{
-  color:#fff!important;
-}
-p,span,div,li,td,th,label,.subtitle,.meta,.status,.description,.help{
-  color:#f4edf7!important;
-}
-a{color:#fff!important}
-
-/* Inputs are the only intentionally light surfaces. */
-input,select,textarea{
-  background:#fff!important;
-  background-image:none!important;
-  color:#241329!important;
-  border:1px solid rgba(226,190,245,.35)!important;
-}
-input::placeholder,textarea::placeholder{color:#6f5a72!important}
-
-/* Buttons */
-button,.btn{
-  color:#fff!important;
-  background:rgba(133,35,119,.72)!important;
-  border-color:rgba(226,190,245,.32)!important;
-}
-button:hover,.btn:hover{
-  background:#9b3b8d!important;
-  color:#fff!important;
-}
-
-/* Tables/lists */
-table,thead,tbody,tr{
-  background:transparent!important;
-}
-th,td{
-  background:transparent!important;
-  color:#f4edf7!important;
-  border-color:rgba(226,190,245,.18)!important;
-}
-
-/* Welcome title stays above Dashboard and uses the same surface. */
-.admin-top-welcome{
-  background:rgba(13,5,23,.68)!important;
-  border:1px solid rgba(226,190,245,.20)!important;
-  border-radius:16px!important;
-  color:#fff!important;
-}
-.admin-welcome,.admin-welcome span{
-  color:#fff!important;
-}
-
-/* ===== TOPO DO ADMIN COM O MESMO FUNDO ===== */
-html,body{
-  background:#12051d!important;
-}
-body{
-  background-image:url("./assets/auradon-bg.jpg")!important;
-  background-position:center top!important;
-  background-size:cover!important;
-  background-attachment:fixed!important;
-  background-repeat:no-repeat!important;
-}
-header,.admin-header,.topbar,.header,.navbar,.nav,.admin-top-welcome{
-  background:rgba(13,5,23,.68)!important;
-  background-image:none!important;
-  color:#fff!important;
-  border-color:rgba(226,190,245,.20)!important;
-  backdrop-filter:blur(8px)!important;
-  -webkit-backdrop-filter:blur(8px)!important;
-}
-header::before,header::after,.admin-header::before,.admin-header::after,
-.topbar::before,.topbar::after{
-  background:transparent!important;
-}
-
-/* ===== TEMA UNIFORME: FUNDO DO SITE + TEXTO BRANCO ===== */
-html,body{
-  background:#12051d!important;
-  color:#f4edf7!important;
-}
-body{
-  background-image:url("./assets/auradon-bg.jpg")!important;
-  background-position:center center!important;
-  background-size:cover!important;
-  background-attachment:fixed!important;
-  background-repeat:no-repeat!important;
-}
-body::before,body::after{display:none!important}
-
-/* Remove superfícies brancas dos blocos de conteúdo */
-main,section,article,header,footer,nav,aside,
-.container,.content,.wrapper,.page,.group,.list,.grid,
-.panel,.dashboard,.topbar,.navbar,.sidebar{
-  background:transparent!important;
-  background-image:none!important;
-}
-
-/* Cards mantêm transparência, mas nunca ficam brancos */
-.card,.aff,.post,.student,.person,.item,.box,.panel-card,.stat,
-.form-card,.list-card,.table-card,.news-card,.group-card{
-  background:rgba(13,5,23,.68)!important;
-  color:#f4edf7!important;
-  border-color:rgba(226,190,245,.20)!important;
-  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
-  backdrop-filter:blur(8px)!important;
-  -webkit-backdrop-filter:blur(8px)!important;
-}
-
-/* Tipografia branca em todas as páginas públicas e admin */
-body *{
-  font-family:"Comfortaa",sans-serif!important;
-}
-h1,h2,h3,h4,h5,h6,
-.title,.section-title,.school-title h1,.city-title h1,
-.floor-heading h2,.hero h1,.card h3,
-.student .name,.person .name,.post h2,.group h3,
-.admin-welcome,.admin-welcome span{
-  color:#fff!important;
-}
-p,li,td,th,span,label,
-.subtitle,.description,.excerpt,.content,.meta,.date,.category,
-.subject,.role,.empty,.empty-news,.details,.data,.info{
-  color:#f4edf7!important;
-}
-a,.back,.menu a{
-  color:#fff!important;
-}
-a:hover,.back:hover,.menu a:hover{
-  color:#fff!important;
-}
-
-/* Filiações: remove o vermelho antigo dos textos e contadores.
-   O contador cheio continua podendo usar vermelho como indicador de lotação. */
-.count{
-  color:#fff!important;
-}
-.count.full{
-  color:#ff8fa4!important;
-}
-
-/* Notícias */
-.news-section,.news-list,.post{
-  color:#f4edf7!important;
-}
-.news-section h1,.news-section h2,.news-section h3,
-.news-list h1,.news-list h2,.news-list h3{
-  color:#fff!important;
-}
-
-/* Explore Auradon */
-.floor-heading h2,.school-title h1,.city-title h1{
-  color:#fff!important;
-}
-
-/* Admin: tudo branco/transparente; só campos de edição ficam claros */
-.admin-top-welcome,header,.admin-header,.topbar{
-  background:rgba(13,5,23,.68)!important;
-  color:#fff!important;
-  border-color:rgba(226,190,245,.20)!important;
-}
-input,select,textarea{
-  background:#fff!important;
-  color:#241329!important;
-}
-input::placeholder,textarea::placeholder{
-  color:#6f5a72!important;
-}
-table,thead,tbody,tr{
-  background:transparent!important;
-}
-button,.btn{
-  color:#fff!important;
-}
-
-/* ===== ADMIN — BOTÕES INTEGRADOS AO FUNDO ===== */
-:root{
-  --admin-glass:rgba(13,5,23,.62);
-  --admin-glass-hover:rgba(28,10,40,.76);
-  --admin-border:rgba(226,190,245,.20);
-  --admin-text:#fff;
-  --admin-muted:#eadcf0;
-}
-
-/* Todos os botões seguem o mesmo acabamento do site */
-button,
-.btn,
-.filter,
-.news-btn,
-.actions button,
-.side button,
-.menu button,
-button[type="button"],
-button[type="submit"]{
-  appearance:none!important;
-  -webkit-appearance:none!important;
-  font-family:"Comfortaa",sans-serif!important;
-  font-size:14px!important;
-  font-weight:500!important;
-  letter-spacing:.01em!important;
-  color:var(--admin-text)!important;
-  background:rgba(13,5,23,.58)!important;
-  background-image:none!important;
-  border:1px solid var(--admin-border)!important;
-  border-radius:12px!important;
-  box-shadow:0 6px 18px rgba(0,0,0,.16)!important;
-  padding:11px 16px!important;
-  min-height:42px;
-  cursor:pointer!important;
-  transition:background .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease!important;
-}
-
-button:hover,
-.btn:hover,
-.filter:hover,
-.news-btn:hover,
-.actions button:hover,
-.side button:hover,
-.menu button:hover{
-  color:#fff!important;
-  background:rgba(48,18,61,.72)!important;
-  border-color:rgba(226,190,245,.42)!important;
-  box-shadow:0 9px 22px rgba(0,0,0,.24)!important;
-  transform:translateY(-1px)!important;
-}
-
-/* Botão selecionado: apenas um leve destaque, sem bloco roxo forte */
-button.active,
-.btn.active,
-.filter.active,
-.side button.active,
-.menu button.active{
-  color:#fff!important;
-  background:rgba(93,38,104,.58)!important;
-  border-color:rgba(226,190,245,.48)!important;
-  box-shadow:0 8px 22px rgba(0,0,0,.22)!important;
-}
-
-/* Ações principais seguem o mesmo vidro, apenas um pouco mais destacadas */
-button.primary,
-.btn.primary,
-button[type="submit"]{
-  color:#fff!important;
-  background:rgba(93,38,104,.55)!important;
-  border-color:rgba(226,190,245,.36)!important;
-}
-button.primary:hover,
-.btn.primary:hover,
-button[type="submit"]:hover{
-  background:rgba(110,47,120,.68)!important;
-  border-color:rgba(226,190,245,.52)!important;
-}
-
-/* Exclusão: vermelho discreto, sem destoar do fundo */
-button.danger,
-.btn.danger{
-  color:#ffdfe5!important;
-  background:rgba(91,24,43,.38)!important;
-  border-color:rgba(255,143,164,.30)!important;
-}
-button.danger:hover,
-.btn.danger:hover{
-  color:#fff!important;
-  background:rgba(122,29,53,.58)!important;
-  border-color:rgba(255,143,164,.46)!important;
-}
-
-/* Botões pequenos de controles */
-.news-btn{
-  min-width:42px!important;
-  width:42px!important;
-  padding:8px!important;
-  border-radius:11px!important;
-}
-
-/* Menu lateral/topo com a mesma linguagem visual */
-.side button,
-.menu button{
-  width:100%!important;
-  text-align:left!important;
-  justify-content:flex-start!important;
-  background:rgba(13,5,23,.48)!important;
-}
-.side button:hover,
-.menu button:hover{
-  background:rgba(48,18,61,.68)!important;
-}
-
-/* Grupos de ações ficam alinhados e consistentes */
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  align-items:center;
-}
-.actions button{
-  margin:0!important;
-}
-
-/* No celular, botões continuam confortáveis */
-@media(max-width:650px){
-  button,
-  .btn,
-  .filter,
-  .actions button,
-  .side button,
-  .menu button{
-    min-height:44px!important;
-    padding:11px 14px!important;
-    font-size:14px!important;
-  }
-}
-
-/* ===== ADMINISTRATIVO — TEMA ORIGINAL ===== */
-html,body{
-  min-height:100%!important;
-  background:#fff!important;
-  color:#7f182c!important;
-}
-body{
-  background:#fff!important;
-  background-image:none!important;
-  font-family:"Comfortaa",sans-serif!important;
-}
-body::before,body::after{
-  display:none!important;
-}
-
-/* Estrutura */
-header,nav,aside,main,section,footer,
-.container,.content,.dashboard,.page,.topbar,.sidebar,
-.admin-shell,.admin-content,.main-content,.wrapper,.layout{
-  background:#fff!important;
-  background-image:none!important;
-}
-
-/* Cards e blocos */
-.card,.box,.panel,.panel-card,.admin-card,.stat,.stat-card,
-.form-card,.list-card,.table-card,.news-card,.item,.user-card,
-.post,.student,.person,.group,.aff{
-  background:#fff!important;
-  background-image:none!important;
-  color:#7f182c!important;
-  border:1px solid rgba(165,29,54,.18)!important;
-  box-shadow:0 6px 20px rgba(124,18,38,.06)!important;
-  backdrop-filter:none!important;
-}
-
-/* Tipografia */
-body *{
-  color:#7f182c!important;
-}
-h1,h2,h3,h4,h5,h6,
-.title,.section-title,.admin-welcome,
-.admin-welcome span{
-  color:#a51d36!important;
-}
-p,span,div,li,td,th,label,
-.subtitle,.meta,.status,.description,.help{
-  color:#7f182c!important;
-}
-a{
-  color:#a51d36!important;
-}
-a:hover{
-  color:#7f182c!important;
-}
-
-/* Menu / botões */
-button,.btn,.filter,.news-btn,
-.actions button,.side button,.menu button,
-button[type="button"],button[type="submit"]{
-  color:#a51d36!important;
-  background:#fff!important;
-  background-image:none!important;
-  border:1px solid rgba(165,29,54,.30)!important;
-  border-radius:10px!important;
-  box-shadow:0 4px 12px rgba(124,18,38,.05)!important;
-}
-button:hover,.btn:hover,.filter:hover,.news-btn:hover,
-.actions button:hover,.side button:hover,.menu button:hover{
-  color:#fff!important;
-  background:#a51d36!important;
-  border-color:#a51d36!important;
-}
-button.active,.btn.active,.filter.active,
-.side button.active,.menu button.active,
-button.primary,.btn.primary,button[type="submit"]{
-  color:#fff!important;
-  background:#a51d36!important;
-  border-color:#a51d36!important;
-}
-button.danger,.btn.danger{
-  color:#a51d36!important;
-  background:#fff!important;
-  border-color:rgba(165,29,54,.35)!important;
-}
-button.danger:hover,.btn.danger:hover{
-  color:#fff!important;
-  background:#a51d36!important;
-}
-
-/* Campos */
-input,select,textarea{
-  background:#fff!important;
-  color:#2b171b!important;
-  border:1px solid rgba(165,29,54,.25)!important;
-}
-input::placeholder,textarea::placeholder{
-  color:#8b7075!important;
-}
-
-/* Tabelas */
-table,thead,tbody,tr{
-  background:#fff!important;
-}
-th,td{
-  background:#fff!important;
-  color:#7f182c!important;
-  border-color:rgba(165,29,54,.15)!important;
-}
-
-/* Área de boas-vindas */
-.admin-top-welcome{
-  background:#fff!important;
-  color:#a51d36!important;
-  border:1px solid rgba(165,29,54,.18)!important;
-  box-shadow:0 6px 20px rgba(124,18,38,.06)!important;
-}
-
-/* ===== RPG — ESQUEMA DE CORES DE TEXTO ===== */
-:root{
-  --rpg-red:#a51d36;
-  --rpg-white:#ffffff;
-}
-
-/* Superfícies brancas/claras */
-body,
-.card,
-.card *,
-section.card,
-.panel,
-.panel *,
-.form-card,
-.form-card *,
-table,
-thead,
-tbody,
-tr,
-td,
-th,
-input,
-select,
-textarea,
-label,
-.modal,
-.modal *,
-.admin-card,
-.admin-card *,
-.notice-card,
-.notice-card *{
-  color:var(--rpg-red);
-  -webkit-text-fill-color:var(--rpg-red);
-}
-
-/* Fundo roxo/escuro */
-.hero,
-.hero *,
-header.dark,
-.dark-section,
-.purple-section,
-.purple-bg,
-.site-purple,
-footer,
-footer *{
-  color:var(--rpg-white);
-  -webkit-text-fill-color:var(--rpg-white);
-}
-
-/* Navegação sobre fundo roxo */
-header,
-header nav,
-header nav *,
-.main-nav,
-.main-nav *,
-.home-main-nav,
-.home-main-nav *{
-  color:var(--rpg-white);
-  -webkit-text-fill-color:var(--rpg-white);
-}
-
-/* Links em áreas brancas */
-.card a,
-.panel a,
-section.card a,
-main a{
-  color:var(--rpg-red);
-  -webkit-text-fill-color:var(--rpg-red);
-}
-
-/* Placeholders permanecem legíveis */
-input::placeholder,
-textarea::placeholder{
-  color:var(--rpg-red);
-  -webkit-text-fill-color:var(--rpg-red);
-  opacity:.65;
-}
-
-/* Botões: texto vermelho no botão claro */
-button,
-.btn{
-  color:var(--rpg-red);
-  -webkit-text-fill-color:var(--rpg-red);
-}
-
-/* Botões que já usam fundo roxo/escuro */
-.btn-primary,
-.btn-dark,
-button.primary,
-button.dark,
-button[class*="purple"]{
-  color:var(--rpg-white);
-  -webkit-text-fill-color:var(--rpg-white);
-}
-
-/* Exceções para estados de hover que usam fundo vermelho/roxo */
-button:hover,
-.btn:hover{
-  color:var(--rpg-white);
-  -webkit-text-fill-color:var(--rpg-white);
-}
-
-
-/* ===== ADMIN — LOGIN / AVISO ===== */
-.admin-auth-info-card,
-.admin-exclusive-card{
-  width:min(560px,calc(100% - 32px));
-  margin:12px auto;
-  padding:15px 18px;
-  box-sizing:border-box;
-  text-align:center;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#fff;
-  color:var(--wine)!important;
-}
-.admin-auth-info-card{
-  font-size:12px;
-  line-height:1.6;
-}
-.admin-auth-info-card strong{
-  color:var(--wine)!important;
-}
-.admin-exclusive-card{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-  font-size:13px;
-}
-.admin-exclusive-card strong,
-.admin-exclusive-card span{
-  color:var(--wine)!important;
-}
-.return-site-notice{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  margin-top:8px;
-  min-height:42px;
-  padding:8px 16px;
-  box-sizing:border-box;
-  border:1px solid rgba(155,28,49,.28);
-  border-radius:10px;
-  background:#fff;
-  color:var(--wine)!important;
-  text-decoration:none!important;
-}
-.return-site-notice:hover{
-  background:var(--wine)!important;
-  color:#fff!important;
-}
-
-.news-editor-toolbar{display:flex;gap:8px;margin:8px 0 0;padding:8px;background:rgba(0,0,0,.18);border:1px solid var(--line);border-bottom:0;border-radius:10px 10px 0 0}
-.news-format-btn{min-width:42px!important;padding:8px 12px!important;border-radius:8px!important;background:#b30000!important;color:#fff!important;border:1px solid #b30000!important;cursor:pointer}
-.news-format-btn:hover{background:#7f0000!important;border-color:#7f0000!important}
-.news-content-editor{min-height:180px;padding:13px;border:1px solid var(--line);border-radius:0 0 10px 10px;background:#100a0d;color:#fff;outline:none;line-height:1.65;white-space:pre-wrap}
-.news-content-editor:focus{border-color:#b30000;box-shadow:0 0 0 1px #b30000}
-.news-content-editor:empty:before{content:attr(data-placeholder);color:rgba(255,255,255,.45);pointer-events:none}
-</style>
 <style>
 header img{
   filter:none!important;
@@ -1669,6 +524,41 @@ html,body{background:transparent !important;}
 html{background-color:#020406 !important;background-image:linear-gradient(rgba(0,0,0,.24),rgba(0,0,0,.24)),url("./assets/site-background.jpg") !important;background-position:center center !important;background-repeat:no-repeat !important;background-size:cover !important;background-attachment:fixed !important;}
 @media(max-width:700px){html{background-attachment:scroll !important;}}
 </style>
+
+<style id="rpg-logo-standard-global">
+/* ===== LOGO RPG PADRONIZADO EM TODAS AS PÁGINAS ===== */
+html body img[alt="Descendentes RPG"]{
+  width:min(330px,72vw)!important;
+  height:auto!important;
+  max-width:330px!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  display:block!important;
+}
+.site-header-fixed{
+  min-height:165px!important;
+  padding:0 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.site-header-fixed img[alt="Descendentes RPG"]{
+  width:min(330px,72vw)!important;
+  max-width:330px!important;
+}
+@media(max-width:650px){
+  html body img[alt="Descendentes RPG"]{
+    width:min(240px,76vw)!important;
+    max-width:240px!important;
+  }
+  .site-header-fixed{min-height:120px!important;padding:6px 10px!important;}
+  .site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important;}
+}
+</style>
+<style id="rpg-events-admin-style">
+#adminView .page{display:none!important}#adminView .page.active{display:block!important}.event-admin-item{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:12px;margin-bottom:10px}.event-admin-item .meta{margin-top:5px;font-size:.78rem}.event-admin-item p{margin:7px 0 0;font-size:.82rem}.event-admin-item .actions{display:flex;gap:7px;flex-wrap:wrap}.event-admin-item .actions .btn{margin:0!important}
+</style>
+<link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v2">
 </head>
 
 <style id="db-loading-style">
@@ -1694,8 +584,14 @@ html{background-color:#020406 !important;background-image:linear-gradient(rgba(0
 <div id="dbLoadingOverlay" class="is-loading" role="status" aria-live="polite" aria-label="Aguarde, estamos carregando o banco de dados">
   <img src="assets/db-loading.png" alt="Aguarde, estamos carregando o banco de dados">
 </div>
+<body class="halloween-theme">
+<div class="halloween-decor" aria-hidden="true">
+  <span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span>
+  <span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span>
+  <span class="h-skull s1">💀</span><span class="h-skull s2">💀</span>
+  <span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span>
+</div>
 
-<body>
 <header class="top"><div class="container topin"><div class="brand brand-logo"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"><span>ADMIN</span></div><div class="admin-top-actions"><button id="logout" class="btn hidden">Sair</button></div></div></header>
 
 <main class="container">
@@ -1710,25 +606,18 @@ html{background-color:#020406 !important;background-image:linear-gradient(rgba(0
 </form>
 </section>
 <section id="adminView" class="hidden">
+<div id="adminSidebar" class="admin-sidebar" aria-label="Menu administrativo">
+  <button type="button" data-page="manutencao">Manutenção</button>
+  <button type="button" data-page="filiacoes">Filiações</button>
+  <button type="button" data-page="alunos">Alunos</button>
+  <button type="button" data-page="docentes">Corpo Docente</button>
+  <button type="button" data-page="eventos">Eventos do RPG</button>
+  <button type="button" data-page="usuario">Meu Usuário</button>
+</div>
 <div class="grid">
 <div class="content">
-<section id="dashboard" class="page active">
-<div class="admin-top-welcome"><div id="adminWelcome" class="admin-welcome"></div></div><h1 class="title">Dashboard</h1><p class="subtitle">Visão geral do conteúdo administrado.</p>
-<div class="stats">
-<div class="card stat"><span class="label">Notícias</span><b id="statNews">0</b></div><div class="card stat"><span class="label">Filiações</span><b id="statAffiliations">0</b></div>
-<div class="card stat"><span class="label">Alunos</span><b id="statStudents">0</b></div><div class="card stat"><span class="label">Corpo Docente</span><b id="statDocentes">0</b></div>
-<div class="card stat"><span class="label">Status Firebase</span><b id="statFirebase">OK</b></div>
-</div>
-<aside class="side" id="adminSidebar">
 
-<button class="active" data-page="dashboard">Dashboard</button>
-<button data-page="noticias">Postar Notícias</button>
-<button data-page="filiacoes">Cadastrar/Remover Filiações</button>
-<button data-page="alunos">Cadastrar/Remover Alunos</button>
-<button data-page="docentes">Cadastrar/Remover Corpo Docente</button>
-<button data-page="usuario">Configuração de Usuário</button><button data-page="manutencao">Iniciar/Interromper Manutenção</button>
-</aside>
-</section>
+
 
 
 
@@ -1753,43 +642,8 @@ html{background-color:#020406 !important;background-image:linear-gradient(rgba(0
 </div>
 </section>
 
-<section id="noticias" class="page">
-<h1 class="title">Notícias</h1><p class="subtitle">Cadastre as notícias que poderão ser exibidas posteriormente na página inicial.</p>
-<div class="card">
-<h3>Nova notícia</h3>
-<form id="newsForm"><input id="newsId" type="hidden">
-<div class="formgrid">
-<div><label>Título</label><input id="newsTitle" required></div>
-<div><label>Categoria</label><input id="newsCategory" placeholder="Ex.: AURADON PREP" required></div>
-<div><label>Data</label><input id="newsDate" placeholder="Ex.: 24 de agosto" required></div>
-<div class="full">
-<label>Foto da notícia</label>
-<input id="newsImage" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
-<div class="upload-status">A imagem será redimensionada e comprimida no navegador antes de ser salva no Realtime Database. Limite final: 350 KB.</div>
-<div id="imagePreview" class="image-preview hidden"></div>
-</div>
-<div><label>Ordem de exibição</label><input id="newsOrder" type="number" min="1" value="1" required></div>
-<div class="full"><label>Resumo</label><textarea id="newsExcerpt" required></textarea></div>
-<div class="full">
-<label>Conteúdo</label>
-<div class="news-format-card">
-  <div class="news-format-card-title">Formatação de texto</div>
-  <div class="news-editor-toolbar" role="toolbar" aria-label="Formatação do conteúdo">
-    <button type="button" class="news-format-btn" data-format="bold" title="Negrito" aria-label="Negrito"><strong>B</strong></button>
-    <button type="button" class="news-format-btn" data-format="italic" title="Itálico" aria-label="Itálico"><em>I</em></button>
-  </div>
-  <div class="news-format-help">Selecione um trecho do texto e clique em <strong>B</strong> para negrito ou <em>I</em> para itálico.</div>
-</div>
-<div id="newsContentEditor" class="news-content-editor" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Escreva o conteúdo da notícia..."></div>
-<textarea id="newsContent" class="hidden" aria-hidden="true"></textarea>
-</div>
-</div>
-<div class="actions"><button class="btn primary" type="submit">Salvar notícia</button><button class="btn" type="button" id="clearNews">Limpar</button></div>
-<div id="newsStatus" class="status"></div>
-</form>
-</div>
-<div class="card"><h3>Notícias cadastradas</h3><div id="newsList" class="list"></div></div>
-</section>
+
+
 
 
 
@@ -1906,6 +760,28 @@ A foto será automaticamente recortada para formato quadrado, redimensionada par
 
 
 
+
+<section id="eventos" class="page">
+<h1 class="title">Eventos do RPG</h1>
+<p class="subtitle">Cadastre os principais acontecimentos do calendário de Auradon. Para eventos de mais de um dia, informe a data inicial e a data final.</p>
+<div class="card">
+<h3>Adicionar evento</h3>
+<form id="eventForm">
+<input id="eventId" type="hidden">
+<div class="formgrid">
+<div class="full"><label>Nome do evento</label><input id="eventTitle" maxlength="120" placeholder="Ex.: Início do ano letivo" required></div>
+<div><label>Data de início</label><input id="eventStartDate" type="date" required></div>
+<div><label>Data de término</label><input id="eventEndDate" type="date" required></div>
+<div class="full"><label>Legenda do evento</label><input id="eventCategory" maxlength="80" placeholder="Ex.: Início do ano letivo" required></div>
+<div class="full"><label>Descrição (opcional)</label><textarea id="eventDescription" maxlength="500" placeholder="Detalhes sobre o evento..."></textarea></div>
+</div>
+<div class="actions"><button class="btn primary" type="submit">Salvar evento</button><button class="btn" type="button" id="clearEvent">Limpar</button></div>
+<div id="eventStatus" class="status"></div>
+</form>
+</div>
+<div class="card"><h3>Eventos cadastrados</h3><div id="eventList" class="list"></div></div>
+</section>
+
 <section id="usuario" class="page">
 <h1 class="title">Meu Usuário</h1>
 <p class="subtitle">Edite os dados do administrador atualmente conectado.</p>
@@ -1985,7 +861,6 @@ import { ref, push, set, update, remove, onValue, get, runTransaction } from "ht
 
 const $ = id => document.getElementById(id);
 const loginView=$('loginView'), adminView=$('adminView'), logout=$('logout');
-const newsRef=ref(db,'site/noticias'), facultyRef=ref(db,'site/docentes');
 const maintenanceRef=ref(db,'site/manutencao/ativo');
 const ADMINS_PATH='site/admins';
 const SESSION_KEY='descendentes_admin_session';
@@ -2033,8 +908,7 @@ function showLoggedState(logged){
   updateAdminWelcome(currentAdmin);
   if(!logged){ hideDbLoading(); return; }
   fillProfile(currentAdmin);
-  loadNews();
-  loadFaculty();
+loadFaculty();
 }
 async function restoreSession(){
   const key=localStorage.getItem(SESSION_KEY);
@@ -2120,11 +994,30 @@ $('userEditorForm').addEventListener('submit',async e=>{
  }catch(err){status.textContent=err.message||'Não foi possível salvar as alterações.';}
 });
 
-document.querySelectorAll(".side button").forEach(btn=>btn.addEventListener("click",()=>{
- document.querySelectorAll(".side button").forEach(b=>b.classList.remove("active"));
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- btn.classList.add("active");$(btn.dataset.page).classList.add("active");
+document.querySelectorAll("#adminSidebar button[data-page]").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll("#adminSidebar button[data-page]").forEach(b=>b.classList.remove("active"));
+ document.querySelectorAll("#adminView .page").forEach(p=>p.classList.remove("active"));
+ btn.classList.add("active"); const target=$(btn.dataset.page); if(target)target.classList.add("active");
 }));
+(function initAdminPages(){
+ document.querySelectorAll("#adminView .page").forEach(p=>p.classList.remove("active"));
+ const first=document.querySelector('#adminSidebar button[data-page="manutencao"]');
+ if(first){first.classList.add("active");$("manutencao")?.classList.add("active");}
+})();
+
+const eventsRef=ref(db,"site/eventos");
+function escapeEventHtml(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;"}[c]));}
+function renderEventList(data){
+ const box=$("eventList"); if(!box)return; const arr=Object.entries(data||{}).map(([key,e])=>({key,...e})).sort((a,b)=>String(a.startDate||"").localeCompare(String(b.startDate||"")));
+ if(!arr.length){box.innerHTML='<p class="status">Nenhum evento cadastrado.</p>';return;}
+ box.innerHTML=arr.map(e=>`<div class="item event-admin-item"><div><strong>${escapeEventHtml(e.title)}</strong><div class="meta">${escapeEventHtml(e.startDate)}${e.endDate&&e.endDate!==e.startDate?` até ${escapeEventHtml(e.endDate)}`:""} • ${escapeEventHtml(e.category||"")}</div>${e.description?`<p>${escapeEventHtml(e.description)}</p>`:""}</div><div class="actions"><button class="btn" type="button" data-edit-event="${e.key}">Editar</button><button class="btn" type="button" data-delete-event="${e.key}">Excluir</button></div></div>`).join("");
+ box.querySelectorAll("[data-edit-event]").forEach(b=>b.onclick=()=>{const e=arr.find(x=>x.key===b.dataset.editEvent);if(!e)return;$("eventId").value=e.key;$("eventTitle").value=e.title||"";$("eventStartDate").value=e.startDate||"";$("eventEndDate").value=e.endDate||e.startDate||"";$("eventCategory").value=e.category||"";$("eventDescription").value=e.description||"";document.querySelector('#adminSidebar button[data-page="eventos"]')?.click();window.scrollTo({top:0,behavior:"smooth"});});
+ box.querySelectorAll("[data-delete-event]").forEach(b=>b.onclick=async()=>{if(!confirm("Excluir este evento do calendário?"))return;try{await remove(ref(db,"site/eventos/"+b.dataset.deleteEvent));}catch(err){alert("Não foi possível excluir o evento.");console.error(err);}});
+}
+onValue(eventsRef,snap=>renderEventList(snap.val()||{}));
+$("eventStartDate")?.addEventListener("change",()=>{if(!$("eventEndDate").value)$("eventEndDate").value=$("eventStartDate").value;});
+$("clearEvent")?.addEventListener("click",()=>{$("eventForm").reset();$("eventId").value="";$("eventStatus").textContent="";});
+$("eventForm")?.addEventListener("submit",async e=>{e.preventDefault();const status=$("eventStatus");const id=$("eventId").value.trim();const title=$("eventTitle").value.trim(),start=$("eventStartDate").value,end=$("eventEndDate").value,category=$("eventCategory").value.trim(),description=$("eventDescription").value.trim();if(!title||!start||!end||!category){status.textContent="Preencha os campos obrigatórios.";return;}if(end<start){status.textContent="A data de término não pode ser anterior à data de início.";return;}status.textContent="Salvando evento...";try{const payload={title,startDate:start,endDate:end,category,description,updatedAt:Date.now()};if(id)await update(ref(db,"site/eventos/"+id),payload);else await set(push(eventsRef),{...payload,createdAt:Date.now()});status.textContent="Evento salvo no calendário.";$("eventForm").reset();$("eventId").value="";}catch(err){console.error("Evento:",err);status.textContent="Não foi possível salvar o evento.";}});
 
 $("maintenanceToggle")?.addEventListener("click",async()=>{
  const btn=$("maintenanceToggle"), msg=$("maintenanceAdminMessage");
@@ -2158,156 +1051,7 @@ function safeImageUrl(value){
   return "";
 }
 
-function loadNews(){
- dbOnValue(onValue,newsRef,snap=>{
-  const data=snap.val()||{}, entries=Object.entries(data).map(([key,v])=>({...v,key})).sort((a,b)=>{
-    const ta=Number(a.createdAt||a.updatedAt||0);
-    const tb=Number(b.createdAt||b.updatedAt||0);
-    if(tb!==ta) return tb-ta;
-    return Number(a.order||999999)-Number(b.order||999999);
-  });
-  $("statNews").textContent=entries.length;
-  $("newsList").innerHTML=entries.map(n=>`<div class="item"><div>${safeImageUrl(n.imageUrl)?`<img src="${escapeHtml(safeImageUrl(n.imageUrl))}" alt="" style="width:64px;height:42px;object-fit:cover;border-radius:6px;margin-right:10px;vertical-align:middle">`:""}<strong>${escapeHtml(n.title||"Sem título")}</strong><div class="meta">${escapeHtml(n.category||"")} • ${escapeHtml(n.date||"")}</div></div><div class="actions"><button class="btn" data-edit="${n.key}">Editar</button><button class="btn danger" data-delete="${n.key}">Excluir</button></div></div>`).join("")||'<div class="meta">Nenhuma notícia cadastrada.</div>';
-  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editNews(b.dataset.edit,entries));
-  document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteNews(b.dataset.delete));
- },()=>{$("statFirebase").textContent="ERRO"});
-}
 
-function editNews(key,entries){
- const n=entries.find(x=>x.key===key);if(!n)return;
- $("newsId").value=key;$("newsTitle").value=n.title||"";$("newsCategory").value=n.category||"";$("newsDate").value=n.date||"";
- $("newsOrder").value=n.order||1;$("newsExcerpt").value=n.excerpt||"";$("newsContentEditor").innerHTML=n.content||"";$("newsContent").value=$("newsContentEditor").innerHTML;newsEditorRange=null;
- if(safeImageUrl(n.imageUrl)){$("imagePreview").classList.remove("hidden");$("imagePreview").innerHTML=`<img src="${escapeHtml(safeImageUrl(n.imageUrl))}" alt="Foto atual da notícia">`;}else{$("imagePreview").classList.add("hidden");$("imagePreview").innerHTML="";}
- window.scrollTo({top:0,behavior:"smooth"});
-}
-async function deleteNews(key){
-  if(!confirm("Excluir esta notícia?")) return;
-  try{
-    await remove(ref(db,"site/noticias/"+key));
-  }catch(err){alert("Erro ao excluir a notícia.");}
-}
-let newsEditorRange=null;
-const newsEditor=$("newsContentEditor");
-function syncNewsEditor(){
-  $("newsContent").value=newsEditor.innerHTML;
-}
-function saveNewsEditorSelection(){
-  const sel=window.getSelection();
-  if(!sel || !sel.rangeCount || !newsEditor.contains(sel.anchorNode)) return;
-  newsEditorRange=sel.getRangeAt(0).cloneRange();
-}
-function restoreNewsEditorSelection(){
-  if(!newsEditorRange) return;
-  const sel=window.getSelection();
-  sel.removeAllRanges();
-  sel.addRange(newsEditorRange);
-}
-function applyNewsFormat(format){
-  newsEditor.focus();
-  restoreNewsEditorSelection();
-  document.execCommand(format,false,null);
-  syncNewsEditor();
-  saveNewsEditorSelection();
-}
-newsEditor.addEventListener("mouseup",saveNewsEditorSelection);
-newsEditor.addEventListener("keyup",saveNewsEditorSelection);
-newsEditor.addEventListener("input",()=>{syncNewsEditor();saveNewsEditorSelection();});
-newsEditor.addEventListener("blur",saveNewsEditorSelection);
-document.querySelectorAll(".news-format-btn").forEach(btn=>{
-  btn.addEventListener("mousedown",e=>{e.preventDefault();saveNewsEditorSelection();});
-  btn.addEventListener("click",()=>applyNewsFormat(btn.dataset.format));
-});
-$("clearNews").onclick=()=>{$("newsForm").reset();$("newsId").value="";$("newsOrder").value=1;newsEditor.innerHTML="";$("newsContent").value="";newsEditorRange=null;$("imagePreview").classList.add("hidden");$("imagePreview").innerHTML=""};
-
-
-$("newsImage").addEventListener("change",()=>{
-  const file=$("newsImage").files[0];
-  const preview=$("imagePreview");
-  if(!file){preview.classList.add("hidden");preview.innerHTML="";return;}
-  if(file.size>8*1024*1024){
-    $("newsStatus").textContent="A imagem original deve ter no máximo 8 MB.";
-    $("newsImage").value="";
-    preview.classList.add("hidden");
-    return;
-  }
-  const url=URL.createObjectURL(file);
-  preview.classList.remove("hidden");
-  preview.innerHTML=`<img src="${url}" alt="Prévia da notícia">`;
-});
-
-async function prepareNewsImage(file){
-  if(!file) return null;
-  if(file.size>8*1024*1024) throw new Error("A imagem original deve ter no máximo 8 MB.");
-
-  const loadImage=()=>new Promise((resolve,reject)=>{
-    const url=URL.createObjectURL(file);
-    const img=new Image();
-    img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};
-    img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error("Não foi possível ler a imagem."))};
-    img.src=url;
-  });
-
-  const img=await loadImage();
-  const maxWidth=1000;
-  const scale=Math.min(1,maxWidth/img.naturalWidth);
-  const width=Math.max(1,Math.round(img.naturalWidth*scale));
-  const height=Math.max(1,Math.round(img.naturalHeight*scale));
-  const canvas=document.createElement("canvas");
-  canvas.width=width; canvas.height=height;
-  const ctx=canvas.getContext("2d",{alpha:false});
-  ctx.imageSmoothingEnabled=true;
-  ctx.imageSmoothingQuality="high";
-  ctx.fillStyle="#fff";
-  ctx.fillRect(0,0,width,height);
-  ctx.drawImage(img,0,0,width,height);
-
-  let quality=.78;
-  let dataUrl=canvas.toDataURL("image/jpeg",quality);
-  for(let i=0;i<7 && dataUrl.length>300*1024*1.37;i++){
-    quality-=.07;
-    dataUrl=canvas.toDataURL("image/jpeg",Math.max(.38,quality));
-  }
-  if(dataUrl.length>350*1024*1.37) throw new Error("A imagem ainda está muito grande. Escolha uma imagem menor.");
-  return dataUrl;
-}
-
-$("newsForm").addEventListener("submit",async e=>{
- e.preventDefault();$("newsStatus").textContent="Salvando...";
- const key=$("newsId").value||push(newsRef).key;
- try{
-  const currentSnap=await get(ref(db,"site/noticias/"+key));
-  const current=currentSnap.val()||{};
-  let imageUrl=current.imageUrl||null;
-  const now=Date.now();
-  const file=$("newsImage").files[0];
-
-  if(file){
-    $("newsStatus").textContent="Processando e comprimindo imagem...";
-    imageUrl=await prepareNewsImage(file);
-  }
-
-  await set(ref(db,"site/noticias/"+key),{
-    title:$("newsTitle").value,
-    category:$("newsCategory").value,
-    date:$("newsDate").value,
-    order:Number($("newsOrder").value),
-    excerpt:$("newsExcerpt").value,
-    content:$("newsContentEditor").innerHTML,
-    imageUrl:imageUrl,
-    createdAt:current.createdAt||now,
-    updatedAt:now
-  });
-
-  $("newsStatus").textContent="Notícia salva.";
-  $("newsForm").reset();
-  $("newsOrder").value=1;
-  $("newsId").value="";
-  $("imagePreview").classList.add("hidden");
-  $("imagePreview").innerHTML="";
-}catch(err){
-  console.error(err);
-  $("newsStatus").textContent="Erro ao salvar notícia: "+(err.message||err.code||"erro desconhecido");
-}});
 
 
 
@@ -2921,108 +1665,31 @@ restoreSession();
 </style>
 
 
-<style id="news-editor-final-visibility">
-/* ===== EDITOR VISUAL DE NOTÍCIAS ===== */
-#newsContentEditor{
-  display:block!important;
-  visibility:visible!important;
-  opacity:1!important;
-  width:100%!important;
-  min-height:220px!important;
-  padding:14px!important;
-  background:rgba(8,5,12,.88)!important;
-  color:#fff!important;
-  border:1px solid rgba(255,255,255,.20)!important;
-  border-radius:0 10px 10px 10px!important;
-  box-sizing:border-box!important;
-  outline:none!important;
-  line-height:1.65!important;
-  white-space:pre-wrap!important;
-  overflow:auto!important;
+
+
+<footer class="site-disclaimer-footer">
+  <p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p>
+  <p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p>
+  <p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p>
+  <p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p>
+</footer>
+
+<style>
+.site-disclaimer-footer{
+  width:calc(100% - 32px);
+  max-width:1100px;
+  margin:48px auto 20px;
+  padding:20px 24px;
+  box-sizing:border-box;
+  text-align:center;
+  font-family:Comfortaa, sans-serif;
+  font-size:12px;
+  line-height:1.7;
+  opacity:.9;
+  border-top:1px solid rgba(255,255,255,.18);
 }
-#newsContentEditor:empty::before{
-  content:attr(data-placeholder);
-  color:rgba(255,255,255,.55);
-  pointer-events:none;
-}
-#newsContentEditor strong,#newsContentEditor b{font-weight:700!important;color:inherit!important}
-#newsContentEditor em,#newsContentEditor i{font-style:italic!important;color:inherit!important}
-.news-editor-toolbar button:focus{outline:2px solid rgba(255,255,255,.8)!important;outline-offset:2px}
-.news-editor-toolbar{
-  display:flex!important;
-  visibility:visible!important;
-  opacity:1!important;
-  gap:8px!important;
-  padding:8px!important;
-  background:rgba(8,5,12,.88)!important;
-  border:1px solid rgba(255,255,255,.20)!important;
-  border-bottom:0!important;
-  border-radius:10px 10px 0 0!important;
-}
-.news-format-btn{
-  display:inline-flex!important;
-  visibility:visible!important;
-  opacity:1!important;
-  min-width:42px!important;
-  min-height:38px!important;
-  align-items:center!important;
-  justify-content:center!important;
-  background:#b30000!important;
-  color:#fff!important;
-  border:1px solid #b30000!important;
-}
+.site-disclaimer-footer p{margin:5px 0;}
+@media(max-width:600px){.site-disclaimer-footer{font-size:10px;padding:16px 12px;margin-top:32px;}}
 </style>
-
-
-<style id="news-format-card-final">
-.news-format-card{
-  display:block!important;
-  width:100%!important;
-  box-sizing:border-box!important;
-  margin:8px 0 0!important;
-  padding:12px!important;
-  background:rgba(179,0,0,.10)!important;
-  border:1px solid rgba(179,0,0,.55)!important;
-  border-radius:12px!important;
-  visibility:visible!important;
-  opacity:1!important;
-}
-.news-format-card-title{
-  display:block!important;
-  margin:0 0 8px!important;
-  color:#fff!important;
-  font-size:14px!important;
-  font-weight:700!important;
-}
-.news-format-help{
-  display:block!important;
-  margin-top:8px!important;
-  color:rgba(255,255,255,.72)!important;
-  font-size:12px!important;
-  line-height:1.5!important;
-}
-.news-format-card .news-editor-toolbar{
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  background:transparent!important;
-}
-.news-format-card .news-format-btn{
-  display:inline-flex!important;
-  width:44px!important;
-  height:40px!important;
-  min-width:44px!important;
-  min-height:40px!important;
-  padding:0!important;
-  align-items:center!important;
-  justify-content:center!important;
-  font-size:18px!important;
-  background:#b30000!important;
-  color:#fff!important;
-  border:1px solid #b30000!important;
-  border-radius:8px!important;
-}
-</style>
-
 </body>
 </html>

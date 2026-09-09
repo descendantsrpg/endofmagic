@@ -466,16 +466,6 @@ a:hover,.back:hover,.menu a:hover{
 .count.full{
   color:#ff8fa4!important;
 }
-
-/* Notícias */
-.news-section,.news-list,.post{
-  color:#f4edf7!important;
-}
-.news-section h1,.news-section h2,.news-section h3,
-.news-list h1,.news-list h2,.news-list h3{
-  color:#fff!important;
-}
-
 /* Explore Auradon */
 .floor-heading h2,.school-title h1,.city-title h1{
   color:#fff!important;
@@ -512,94 +502,6 @@ button,.btn{
 @media(max-width:650px){
   .news-home-image{max-height:210px}
 }
-
-/* ===== ÚLTIMAS NOTÍCIAS — CARD CENTRALIZADO ===== */
-.news-section{
-  width:min(820px,calc(100% - 28px))!important;
-  margin:55px auto 45px!important;
-  padding:30px!important;
-  text-align:center!important;
-  background:rgba(13,5,23,.66)!important;
-  border:1px solid rgba(226,190,245,.22)!important;
-  border-radius:20px!important;
-  box-shadow:0 14px 36px rgba(0,0,0,.24)!important;
-  backdrop-filter:blur(10px)!important;
-  -webkit-backdrop-filter:blur(10px)!important;
-}
-.news-header{
-  justify-content:center!important;
-  align-items:center!important;
-  margin-bottom:22px!important;
-}
-.news-header h2{
-  text-align:center!important;
-  color:#fff!important;
-  margin:0!important;
-}
-.news-controls{
-  display:none!important;
-}
-.news-slider{
-  width:100%!important;
-  margin:0 auto!important;
-  background:rgba(255,255,255,.045)!important;
-  border:1px solid rgba(226,190,245,.18)!important;
-  border-radius:16px!important;
-  text-align:center!important;
-}
-.news-slide{
-  grid-template-columns:1fr!important;
-  justify-items:center!important;
-  text-align:center!important;
-  padding:26px!important;
-}
-.news-slide img,
-.news-home-image{
-  width:100%!important;
-  max-width:620px!important;
-  max-height:280px!important;
-  object-fit:cover!important;
-  border-radius:13px!important;
-  margin:0 auto 18px!important;
-  display:block!important;
-}
-.news-slide h3{
-  text-align:center!important;
-  color:#fff!important;
-  margin:8px auto 10px!important;
-}
-.news-slide p{
-  max-width:650px!important;
-  margin:0 auto!important;
-  text-align:center!important;
-  color:#f4edf7!important;
-}
-.news-dots{
-  justify-content:center!important;
-}
-.news-more{
-  margin:18px auto 0!important;
-  color:#fff!important;
-}
-@media(max-width:650px){
-  .news-section{
-    width:calc(100% - 24px)!important;
-    padding:22px 16px!important;
-    margin-top:38px!important;
-    border-radius:17px!important;
-  }
-  .news-slide{
-    padding:20px 12px!important;
-  }
-  .news-slide img,
-  .news-home-image{
-    max-height:210px!important;
-  }
-}
-
-.news-home-image{width:100%;max-width:620px;max-height:280px;object-fit:cover;display:block;margin:0 auto 18px;border-radius:13px}
-@media(max-width:650px){.news-home-image{max-height:210px}}
-
 /* ===== MENU PRINCIPAL — ABAIXO DO LOGO ===== */
 .home-main-nav{
   width:min(1100px,calc(100% - 32px));
@@ -1306,7 +1208,7 @@ body{
   z-index:9999 !important;
   box-sizing:border-box !important;
 }
-body{padding-top:var(--home-header-space,120px) !important;}
+body{padding-top:var(--home-header-space,185px) !important;}
 .site-header-fixed img{
   display:block !important;
   margin:0 auto !important;
@@ -1322,15 +1224,230 @@ body{padding-top:var(--home-header-space,120px) !important;}
   body{padding-top:98px !important;}
 }
 </style>
-</head>
 
-<body>
+<style id="auradon-agora-style">
+.auradon-agora-card{
+  width:min(900px,calc(100% - 28px));
+  margin:22px auto 22px;
+  padding:26px;
+  box-sizing:border-box;
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(8,14,22,.94),rgba(4,20,18,.88));
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 18px 45px rgba(0,0,0,.42);
+  color:#fff;
+  overflow:hidden;
+}
+.auradon-agora-head{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  text-align:center;
+  margin-bottom:22px;
+}
+.auradon-agora-icon{
+  font-size:36px;
+  line-height:1;
+}
+.auradon-agora-label{
+  font-family:"Trajan Pro Bold",Trajan,serif;
+  font-size:clamp(18px,2.5vw,26px);
+  letter-spacing:.07em;
+  color:#fff;
+  margin-bottom:7px;
+}
+.auradon-agora-content p{
+  margin:0;
+  font-family:"Comfortaa",sans-serif;
+  font-weight:300;
+  font-size:clamp(12px,1.7vw,15px);
+  color:#f4f4f4;
+}
+.auradon-weather{
+  position:relative;
+  border-radius:17px;
+  padding:20px 18px 18px;
+  background:
+    radial-gradient(circle at 75% 10%,rgba(55,126,182,.22),transparent 38%),
+    linear-gradient(145deg,rgba(18,47,65,.78),rgba(7,25,25,.92));
+  border:1px solid rgba(255,255,255,.14);
+}
+.auradon-weather-brand{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:10px;
+  font-family:"Trajan Pro Bold",Trajan,serif;
+  font-size:15px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.auradon-weather-brand img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.4));
+}
+.auradon-weather-current{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  text-align:left;
+  min-height:135px;
+}
+.auradon-weather-icon{
+  font-size:72px;
+  line-height:1;
+  filter:drop-shadow(0 5px 12px rgba(0,0,0,.3));
+}
+.auradon-weather-temp{
+  font-family:"Trajan Pro Bold",Trajan,serif;
+  font-size:clamp(42px,7vw,68px);
+  line-height:1;
+}
+.auradon-weather-desc{
+  margin-top:8px;
+  font-family:"Comfortaa",sans-serif;
+  font-weight:300;
+  font-size:14px;
+  color:#e7eef0;
+}
+.auradon-weather-location{
+  margin-top:6px;
+  font-family:"Comfortaa",sans-serif;
+  font-size:11px;
+  opacity:.7;
+}
+.auradon-week-title{
+  margin:18px 0 10px;
+  text-align:center;
+  font-family:"Comfortaa",sans-serif;
+  font-weight:300;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  opacity:.8;
+}
+.auradon-week{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:8px;
+}
+.auradon-day{
+  min-width:0;
+  padding:10px 5px;
+  text-align:center;
+  border-radius:12px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.08);
+}
+.auradon-day-name{
+  font-family:"Comfortaa",sans-serif;
+  font-size:10px;
+  opacity:.82;
+  text-transform:uppercase;
+}
+.auradon-day-icon{
+  font-size:24px;
+  margin:6px 0;
+}
+.auradon-day-temp{
+  font-family:"Comfortaa",sans-serif;
+  font-size:11px;
+}
+.auradon-day-temp strong{font-weight:700}
+.auradon-weather-loading{
+  text-align:center;
+  padding:32px 10px;
+  font-family:"Comfortaa",sans-serif;
+  font-size:13px;
+  opacity:.82;
+}
+.auradon-weather-error{
+  text-align:center;
+  padding:28px 10px;
+  font-family:"Comfortaa",sans-serif;
+  font-size:13px;
+  opacity:.82;
+}
+@media(max-width:700px){
+  .auradon-agora-card{padding:18px 12px}
+  .auradon-agora-head{gap:10px;margin-bottom:16px}
+  .auradon-agora-icon{font-size:28px}
+  .auradon-agora-label{font-size:16px;letter-spacing:.04em}
+  .auradon-agora-content p{font-size:11px}
+  .auradon-weather{padding:16px 10px 12px}
+  .auradon-weather-current{gap:12px;min-height:115px}
+  .auradon-weather-icon{font-size:54px}
+  .auradon-weather-temp{font-size:44px}
+  .auradon-weather-desc{font-size:11px}
+  .auradon-weather-brand{font-size:12px}
+  .auradon-weather-brand img{width:38px;height:38px}
+  .auradon-week{gap:4px}
+  .auradon-day{padding:8px 2px}
+  .auradon-day-icon{font-size:20px}
+  .auradon-day-name{font-size:8px}
+  .auradon-day-temp{font-size:9px}
+}
+</style>
+
+<style id="rpg-logo-standard-global">
+/* ===== LOGO RPG PADRONIZADO EM TODAS AS PÁGINAS ===== */
+html body img[alt="Descendentes RPG"]{
+  width:min(330px,72vw)!important;
+  height:auto!important;
+  max-width:330px!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  display:block!important;
+}
+.site-header-fixed{
+  min-height:165px!important;
+  padding:0 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.site-header-fixed img[alt="Descendentes RPG"]{
+  width:min(330px,72vw)!important;
+  max-width:330px!important;
+}
+@media(max-width:650px){
+  html body img[alt="Descendentes RPG"]{
+    width:min(240px,76vw)!important;
+    max-width:240px!important;
+  }
+  .site-header-fixed{min-height:120px!important;padding:6px 10px!important;}
+  .site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important;}
+}
+</style>
+<style id="rpg-calendar-style">
+.rpg-calendar{width:min(900px,calc(100% - 28px));margin:22px auto 26px;padding:24px 22px 20px;box-sizing:border-box;background:linear-gradient(145deg,rgba(8,14,22,.94),rgba(4,20,18,.88));border:1px solid rgba(255,255,255,.16);box-shadow:0 18px 45px rgba(0,0,0,.42);border-radius:20px;color:#fff;font-family:"Comfortaa",sans-serif}
+.rpg-calendar-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:16px}
+.rpg-calendar-brand{display:flex;align-items:center;gap:12px;min-width:0}.rpg-calendar-brand img{width:44px;height:44px;object-fit:contain;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4))}.rpg-calendar-head h2{margin:0;color:#fff!important;font-family:"Trajan Pro Bold",Trajan,serif;font-size:clamp(17px,2.3vw,23px);letter-spacing:.05em}.rpg-calendar-head p{margin:4px 0 0;color:rgba(255,255,255,.72)!important;font-size:14px;font-weight:300}.rpg-calendar-nav{display:flex;align-items:center;gap:8px}.rpg-calendar-nav strong{min-width:150px;text-align:center;color:#fff;font-family:"Trajan Pro Bold",Trajan,serif;font-size:15px}.rpg-calendar-nav button{width:34px;height:34px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(165,29,54,.85);color:#fff;cursor:pointer;font-size:20px;line-height:1}.rpg-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-left:1px solid rgba(255,255,255,.18);border-top:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.03)}.calendar-weekday{font-size:14px;font-weight:700;color:#fff;text-align:center;padding:10px 4px;background:linear-gradient(180deg,rgba(165,29,54,.88),rgba(101,20,35,.88));border-right:1px solid rgba(255,255,255,.18);border-bottom:1px solid rgba(255,255,255,.18)}.calendar-day{min-height:92px;padding:8px;border-right:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.025);overflow:hidden}.calendar-day.muted{opacity:.28}.calendar-day.today{background:rgba(165,29,54,.16);box-shadow:inset 0 0 0 2px rgba(214,170,75,.7)}.calendar-date{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px}.calendar-event{display:block;margin-top:4px;padding:4px 6px;border-radius:5px;background:rgba(165,29,54,.84);color:#fff!important;font-size:13px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.calendar-event-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#d6aa4b;margin-right:5px}.rpg-calendar-legend-title{margin:16px 0 9px;font-size:14px;font-weight:700;color:#fff}.rpg-calendar-legend{display:flex;flex-wrap:wrap;gap:8px 16px}.calendar-legend-item{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:rgba(255,255,255,.88)}.calendar-empty{font-size:13px;color:rgba(255,255,255,.62);padding:10px}.site-disclaimer-footer{font-size:10px!important;line-height:1.55}.rpg-disclaimer p{font-size:10px!important;margin:5px 0}
+@media(max-width:700px){.rpg-calendar{width:calc(100% - 24px);padding:18px 10px 15px;border-radius:16px}.rpg-calendar-head{align-items:flex-start;flex-direction:column;gap:12px}.rpg-calendar-nav{width:100%;justify-content:space-between}.rpg-calendar-nav strong{flex:1;font-size:14px}.rpg-calendar-brand img{width:38px;height:38px}.rpg-calendar-head h2{font-size:17px}.rpg-calendar-head p{font-size:12px}.calendar-weekday{font-size:11px;padding:8px 2px}.calendar-day{min-height:70px;padding:5px}.calendar-date{font-size:12px}.calendar-event{font-size:10px;padding:3px 4px}.calendar-legend-item{font-size:11px}}
+</style>
+<link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v2">
+</head>
+<body class="halloween-theme">
+<div class="halloween-decor" aria-hidden="true">
+  <span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span>
+  <span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span>
+  <span class="h-skull s1">💀</span><span class="h-skull s2">💀</span>
+  <span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span>
+</div>
+
 <header class="site-header-fixed"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header><main>
 <section class="hero">
 <h1>Sua Aventura irá Começar</h1>
 <img class="auradon-crest" src="./assets/auradon-prep.png" alt="Brasão da Auradon Prep">
 <p>Três anos após a formatura de Ben e Mal na Auradon Prep, uma nova geração ocupa os corredores da escola. Auradon parece viver uma era de estabilidade, mas conflitos políticos, rivalidades entre famílias e a tensão entre Royals e Rebels começam a crescer. Ao mesmo tempo, uma organização secreta chamada Seita atua dentro da escola, a barreira da Ilha dos Perdidos começa a falhar e Malévola procura a Adaga do Fim, um artefato capaz de reescrever a realidade.</p>
 </section>
+
+
 <section class="home-quick-menu" aria-label="Navegação principal">
   <div class="home-quick-menu-title"><h2>Menu de Navegação</h2></div>
   <div class="home-quick-menu-grid">
@@ -1338,125 +1455,281 @@ body{padding-top:var(--home-header-space,120px) !important;}
     <a href="explore-auradon.html"><span>Explore Auradon</span></a>
     <a href="alunos.html"><span>Alunos</span></a>
     <a href="corpo-docente.html"><span>Corpo Docente</span></a>
-    <a href="noticias.html"><span>Notícias</span></a>
-    <a href="sistema-de-aulas.html"><span>Sistema de Aulas</span></a>
+<a href="sistema-de-aulas.html"><span>Sistema de Aulas</span></a>
     <a href="guia-para-novos-usuarios.html"><span>Guia para Novos Usuários</span></a>
     <a href="admin-acesso.html"><span class="menu-icon">⚙️</span><span>Painel Administrativo</span></a>
   </div>
 </section>
-<div class="section-divider" aria-hidden="true"></div>
+
+<section class="auradon-agora-card" aria-live="polite">
+  <div class="auradon-agora-head">
+    <div class="auradon-agora-icon" id="auradonAgoraIcon">☀️</div>
+    <div class="auradon-agora-content">
+      <div class="auradon-agora-label" id="auradonAgoraTitle">BOM DIA, AURADON</div>
+      <p id="auradonAgoraMessage">As aulas estão começando.</p>
+    </div>
+  </div>
+
+  <div class="auradon-weather" id="auradonWeather">
+    <div class="auradon-weather-loading">Consultando os céus de Auradon...</div>
+  </div>
+</section>
+
+<section class="rpg-calendar" aria-label="Calendário de eventos do RPG">
+  <div class="rpg-calendar-head">
+    <div class="rpg-calendar-brand">
+      <img src="./assets/auradon-prep.png" alt="Auradon Prep">
+      <div>
+        <h2>Calendário de Auradon</h2>
+        <p>Eventos principais do RPG</p>
+      </div>
+    </div>
+    <div class="rpg-calendar-nav">
+      <button type="button" id="calendarPrev" aria-label="Mês anterior">‹</button>
+      <strong id="calendarMonthLabel">Calendário</strong>
+      <button type="button" id="calendarNext" aria-label="Próximo mês">›</button>
+    </div>
+  </div>
+  <div class="rpg-calendar-grid-wrap">
+    <div id="rpgCalendarGrid" class="rpg-calendar-grid"><div class="calendar-empty">Carregando calendário...</div></div>
+  </div>
+  <div class="rpg-calendar-legend-title">Legenda dos eventos</div>
+  <div id="rpgCalendarLegend" class="rpg-calendar-legend"><span class="calendar-empty">Nenhum evento cadastrado.</span></div>
+</section>
 
 <div class="section-divider" aria-hidden="true"></div>
-<section class="news-section">
-<h2 class="section-title">Últimas notícias</h2>
-<div id="newsArea"><div class="empty-news">Nenhuma notícia publicada.</div></div>
-</section>
 </main>
 
-<footer>Descendentes RPG • Auradon Prep</footer>
-<script type="module">
-import { db } from "./firebase-init.js?v=20260909-news-final";
-import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
-const area=document.getElementById("newsArea");
-let homeNews=[];
-let homeNewsIndex=0;
-let connected=false;
-let retryTimer=null;
 
-const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-
-function normalizeNews(data){
-  if(!data || typeof data!=="object") return [];
-  return Object.entries(data)
-    .map(([key,n])=>({key,...(n && typeof n==="object"?n:{})}))
-    .filter(n=>Boolean(n.title||n.excerpt||n.content))
-    .sort((a,b)=>{
-      const ca=Number(a.createdAt||0), cb=Number(b.createdAt||0);
-      if(cb!==ca)return cb-ca;
-      const ua=Number(a.updatedAt||0), ub=Number(b.updatedAt||0);
-      if(ub!==ua)return ub-ua;
-      return String(b.key).localeCompare(String(a.key));
-    })
-    .slice(0,3);
-}
-
-function renderNews(data){
-  homeNews=normalizeNews(data);
-  homeNewsIndex=0;
-
-  if(!area)return;
-
-  if(homeNews.length===0){
-    area.innerHTML='<div class="empty-news"><h3>Nenhuma notícia publicada.</h3><p>As novidades da Auradon Prep aparecerão aqui.</p></div>';
-    return;
-  }
-
-  area.innerHTML=homeNews.map((n,i)=>`
-    <article class="news-slide ${i===0?"active":""}" data-news-index="${i}">
-      <div>
-        ${n.imageUrl?`<img class="news-home-image" src="${esc(n.imageUrl)}" alt="${esc(n.title||"Imagem da notícia")}">`:""}
-      </div>
-      <div>
-        <div class="news-tag">${esc(n.category||"NOTÍCIA")}</div>
-        <h3>${esc(n.title||"Sem título")}</h3>
-        ${n.excerpt?`<p>${esc(n.excerpt)}</p>`:""}
-        <a class="news-read-more" href="noticias.html#noticia-${encodeURIComponent(n.key)}">Ir para notícia</a>
-      </div>
-    </article>
-  `).join("")+
-  `<div class="news-dots" aria-label="Navegação das notícias">
-    ${homeNews.map((_,i)=>`<button class="news-dot ${i===0?"active":""}" data-news-dot="${i}" aria-label="Notícia ${i+1}"></button>`).join("")}
-  </div>`;
-
-  area.querySelectorAll(".news-dot").forEach(btn=>{
-    btn.addEventListener("click",()=>showNews(Number(btn.dataset.newsDot)));
-  });
-}
-
-function showNews(index){
-  const slides=area?.querySelectorAll(".news-slide")||[];
-  const dots=area?.querySelectorAll(".news-dot")||[];
-  if(!slides.length)return;
-  homeNewsIndex=((index%slides.length)+slides.length)%slides.length;
-  slides.forEach((el,i)=>{
-    el.style.display=i===homeNewsIndex?"grid":"none";
-    el.classList.toggle("active",i===homeNewsIndex);
-  });
-  dots.forEach((el,i)=>el.classList.toggle("active",i===homeNewsIndex));
-}
-
-function connectNews(){
-  if(retryTimer)clearTimeout(retryTimer);
-  const newsRef=ref(db,"site/noticias");
-
-  onValue(newsRef,
-    snapshot=>{
-      connected=true;
-      console.log("[Descendentes] site/noticias sincronizado:",snapshot.exists(),snapshot.numChildren());
-      renderNews(snapshot.val());
-    },
-    error=>{
-      connected=false;
-      console.error("[Descendentes] Erro REALTIME em site/noticias:",error);
-
-      // Do not overwrite a previously loaded news list because of a temporary
-      // connection interruption. Retry automatically.
-      if(!homeNews.length && area){
-        area.innerHTML='<div class="empty-news"><h3>Conectando às notícias...</h3><p>Aguardando resposta do Firebase.</p></div>';
-      }
-      retryTimer=setTimeout(connectNews,5000);
-    }
-  );
-}
-
-connectNews();
-window.showNews=showNews;
-window.nextHomeNews=()=>{if(homeNews.length>1)showNews(homeNewsIndex+1);};
-setInterval(()=>{if(homeNews.length>1)showNews(homeNewsIndex+1);},8000);
-</script>
 
 
 <script type="module" src="./maintenance.js"></script>
+
+
+<script>
+(function(){
+  const icon=document.getElementById("auradonAgoraIcon");
+  const title=document.getElementById("auradonAgoraTitle");
+  const message=document.getElementById("auradonAgoraMessage");
+  const weather=document.getElementById("auradonWeather");
+  if(!icon||!title||!message||!weather)return;
+
+  /* O clima de Auradon é gerado pelo próprio site e renovado semanalmente. */
+  const messages={
+    morning:[
+      "As aulas estão começando. Auradon desperta para mais um dia de aventuras.",
+      "Os portões da escola estão se abrindo. Que os bons encantamentos acompanhem sua manhã.",
+      "O sol chegou aos corredores. É hora de descobrir o que Auradon preparou para hoje."
+    ],
+    afternoon:[
+      "A rotina de Auradon está a todo vapor. Ainda há muito para acontecer hoje.",
+      "Os corredores estão cheios de histórias. A tarde em Auradon promete.",
+      "O dia continua e as portas de Auradon permanecem abertas para novas aventuras."
+    ],
+    night:[
+      "Os corredores estão silenciosos... talvez silenciosos demais.",
+      "A noite caiu sobre Auradon. Algumas histórias só começam depois que o sol desaparece.",
+      "As luzes da escola diminuíram. Mas em Auradon, silêncio nunca significa que nada está acontecendo."
+    ]
+  };
+
+  const weatherTypes=[
+    {code:0,icon:"☀️",text:"Céu limpo"},
+    {code:1,icon:"🌤️",text:"Principalmente limpo"},
+    {code:2,icon:"⛅",text:"Parcialmente nublado"},
+    {code:3,icon:"☁️",text:"Nublado"},
+    {code:45,icon:"🌫️",text:"Névoa"},
+    {code:51,icon:"🌦️",text:"Garoa"},
+    {code:63,icon:"🌧️",text:"Chuva"},
+    {code:80,icon:"🌧️",text:"Pancadas de chuva"},
+    {code:95,icon:"⛈️",text:"Tempestade"}
+  ];
+
+  function dateKey(date){
+    return new Date(date.getFullYear(),date.getMonth(),date.getDate()).getTime();
+  }
+
+  function daySeed(date){
+    return Math.floor(dateKey(date)/86400000);
+  }
+
+  /* Número pseudoaleatório estável para a semana atual. */
+  function startOfWeek(date){
+    const d=new Date(date.getFullYear(),date.getMonth(),date.getDate());
+    const day=d.getDay();
+    const diff=day===0 ? -6 : 1-day; // Semana de segunda a domingo
+    d.setDate(d.getDate()+diff);
+    return d;
+  }
+
+  function weeklySeed(date){
+    const weekStart=startOfWeek(date);
+    const weekNumber=Math.floor(dateKey(weekStart)/86400000);
+    let seed=(weekStart.getFullYear()*100000)+weekNumber;
+    seed=((seed^0x9e3779b9)>>>0);
+    seed=Math.imul(seed^ (seed>>>16),0x45d9f3b);
+    seed=Math.imul(seed^ (seed>>>16),0x45d9f3b);
+    return (seed^(seed>>>16))>>>0;
+  }
+
+  function seededRandom(seed){
+    let value=seed>>>0;
+    return function(){
+      value=(value+0x6D2B79F5)>>>0;
+      let t=value;
+      t=Math.imul(t^(t>>>15),t|1);
+      t^=t+Math.imul(t^(t>>>7),t|61);
+      return ((t^(t>>>14))>>>0)/4294967296;
+    };
+  }
+
+  function generateFictionalWeek(today){
+    const random=seededRandom(weeklySeed(today));
+    const weekStart=startOfWeek(today);
+    const days=[];
+    let baseTemp=21+Math.round(random()*8); // 21°C a 29°C
+    let weatherIndex=Math.floor(random()*weatherTypes.length);
+
+    for(let i=0;i<7;i++){
+      if(i>0){
+        /* Pequena variação para que a semana pareça uma previsão real. */
+        baseTemp=Math.max(17,Math.min(31,baseTemp+Math.round(random()*6)-3));
+        const roll=random();
+        if(roll<0.28) weatherIndex=(weatherIndex+1)%weatherTypes.length;
+        else if(roll>0.82) weatherIndex=(weatherIndex+weatherTypes.length-1)%weatherTypes.length;
+      }
+
+      const type=weatherTypes[weatherIndex];
+      const max=Math.max(19,Math.min(34,baseTemp+Math.round(random()*3)));
+      const min=Math.max(14,Math.min(max-2,baseTemp-Math.round(random()*4)-2));
+      days.push({date:new Date(weekStart.getFullYear(),weekStart.getMonth(),weekStart.getDate()+i),type,max,min});
+    }
+
+    return days;
+  }
+
+  function updateAuradonMessage(weatherType){
+    const now=new Date();
+    const hour=now.getHours();
+    let period="night", emoji="🌙", label="BOA NOITE, AURADON";
+    if(hour>=5 && hour<12){period="morning";emoji="☀️";label="BOM DIA, AURADON";}
+    else if(hour>=12 && hour<18){period="afternoon";emoji="☀️";label="BOA TARDE, AURADON";}
+
+    icon.textContent=emoji;
+    title.textContent=label;
+
+    if(hour>=22){
+      message.textContent="Toque de Recolher em andamento...você deveria estar na cama 👀";
+      return;
+    }
+
+    const list=messages[period];
+    let extra="";
+    if(weatherType){
+      if(weatherType.code===95) extra=" Tempestades se aproximam; talvez seja melhor evitar feitiços ao ar livre.";
+      else if([63,80].includes(weatherType.code)) extra=" As nuvens trouxeram chuva para os arredores de Auradon.";
+      else if(weatherType.code===51) extra=" Uma garoa paira sobre os jardins.";
+      else if([1,2,3].includes(weatherType.code)) extra=" O céu está mudando, e as nuvens acompanham o ritmo da escola.";
+      else if(weatherType.code===0) extra=" O céu está limpo sobre Auradon.";
+    }
+    message.textContent=list[(daySeed(now)+hour)%list.length]+extra;
+  }
+
+  const weekdayNames=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+
+  function dayName(date,isToday){
+    return isToday ? "Hoje" : weekdayNames[date.getDay()];
+  }
+
+  function renderWeather(){
+    const today=new Date();
+    const days=generateFictionalWeek(today);
+    const todayIndex=today.getDay()===0 ? 6 : today.getDay()-1;
+    const current=days[todayIndex];
+    const todayDate=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+
+    // Mostra sempre 7 dias a partir de hoje, sem repetir nomes.
+    const cards=Array.from({length:7},(_,i)=>{
+      const dayOffset=(todayIndex+i)%7;
+      const source=days[dayOffset];
+      const date=new Date(todayDate);
+      date.setDate(date.getDate()+i);
+      return `
+        <div class="auradon-day">
+          <div class="auradon-day-name">${dayName(date,i===0)}</div>
+          <div class="auradon-day-icon">${source.type.icon}</div>
+          <div class="auradon-day-temp"><strong>${source.max}°</strong> / ${source.min}°</div>
+        </div>
+      `;
+    }).join("");
+
+    weather.innerHTML=`
+      <div class="auradon-weather-brand">
+        <img src="./assets/auradon-prep.png" alt="Auradon Prep">
+        <span>Clima de Auradon</span>
+      </div>
+      <div class="auradon-weather-current">
+        <div class="auradon-weather-icon">${current.type.icon}</div>
+        <div>
+          <div class="auradon-weather-temp">${current.max}°C</div>
+          <div class="auradon-weather-desc">${current.type.text}</div>
+        </div>
+      </div>
+      <div class="auradon-week-title">Previsão dos próximos 7 dias</div>
+      <div class="auradon-week">${cards}</div>
+    `;
+
+    updateAuradonMessage(current.type);
+  }
+
+  renderWeather();
+
+  /* Recalcula sozinho ao virar o dia e também verifica a troca de semana. */
+  setInterval(renderWeather,60*1000);
+})();
+</script>
+
+
+
+<script type="module" id="rpg-calendar-script">
+import { db } from "./firebase-init.js";
+import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+(()=>{
+ const grid=document.getElementById("rpgCalendarGrid"), legend=document.getElementById("rpgCalendarLegend"), label=document.getElementById("calendarMonthLabel");
+ if(!grid||!legend||!label)return;
+ const monthNames=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"], weekdays=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+ let view=new Date(); view.setDate(1); let events=[];
+ const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;"}[c]));
+ const parseDate=s=>{const m=String(s||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);return m?new Date(+m[1],+m[2]-1,+m[3]):null};
+ const key=d=>{const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");return `${y}-${m}-${day}`};
+ function render(){
+  const y=view.getFullYear(),m=view.getMonth(); label.textContent=`${monthNames[m]} ${y}`;
+  const first=new Date(y,m,1), start=first.getDay(), days=new Date(y,m+1,0).getDate(), prevDays=new Date(y,m,0).getDate();
+  let html=weekdays.map(x=>`<div class="calendar-weekday">${x}</div>`).join("");
+  for(let i=0;i<42;i++){
+   const n=i-start+1, date=new Date(y,m,n), inMonth=n>=1&&n<=days, num=inMonth?n:(n<1?prevDays+n:new Date(y,m+1,n-days).getDate());
+   const dayEvents=events.filter(e=>{const a=parseDate(e.startDate),b=parseDate(e.endDate||e.startDate);return a&&b&&date>=a&&date<=b;});
+   const today=new Date(); const todayClass=inMonth&&date.toDateString()===today.toDateString()?" today":"";
+   html+=`<div class="calendar-day${inMonth?"":" muted"}${todayClass}"><div class="calendar-date">${num}</div>${dayEvents.slice(0,3).map(e=>`<span class="calendar-event" title="${esc(e.title)}">${esc(e.title)}</span>`).join("")}${dayEvents.length>3?`<span class="calendar-event">+${dayEvents.length-3} eventos</span>`:""}</div>`;
+  }
+  grid.innerHTML=html;
+  const cats=[...new Map(events.map(e=>[String(e.category||e.title),e])).values()];
+  legend.innerHTML=cats.length?cats.map(e=>`<span class="calendar-legend-item"><span class="calendar-event-dot"></span>${esc(e.category||e.title)}</span>`).join(""):"<span class="calendar-empty">Nenhum evento cadastrado.</span>";
+ }
+ onValue(ref(db,"site/eventos"),snap=>{const data=snap.val()||{};events=Object.entries(data).map(([id,e])=>({id,...e})).filter(e=>e.startDate&&e.title).sort((a,b)=>String(a.startDate).localeCompare(String(b.startDate)));render();},err=>{console.error("Calendário:",err);grid.innerHTML='<div class="calendar-empty">Não foi possível carregar o calendário.</div>';});
+ document.getElementById("calendarPrev")?.addEventListener("click",()=>{view.setMonth(view.getMonth()-1);render();}); document.getElementById("calendarNext")?.addEventListener("click",()=>{view.setMonth(view.getMonth()+1);render();});
+ render();
+})();
+</script>
+<footer class="site-disclaimer-footer">
+<div class="rpg-disclaimer">
+    <p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p>
+    <p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p>
+    <p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p>
+    <p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p>
+  </div>
+</footer>
+
 </body>
 </html>
