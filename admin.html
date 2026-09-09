@@ -1,631 +1,116 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Painel Admin — Descendentes RPG</title>
-
+<title>CPainel — Descendentes RPG</title>
+<link rel="stylesheet" href="./assets/halloween.css?v=20260909-cpanel-rebuild2">
 <style>
-header img{
-  filter:none!important;
-  image-rendering:auto!important;
-  opacity:1!important;
-  mix-blend-mode:normal!important;
-}
-</style><style>
-header img{
-  height:auto!important;
-  max-width:100%!important;
-  filter:none!important;
-  image-rendering:auto!important;
-  mix-blend-mode:normal!important;
-  opacity:1!important;
-}
-</style>
-<style id="rpg-background-override">
-/* ===== FUNDO OFICIAL DO RPG + TIPOGRAFIA BRANCA ===== */
-html{
-  min-height:100%;
-  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
-}
-body{
-  min-height:100vh!important;
-  background:transparent!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
 
-/* Todo texto do site */
-body *,
-body h1,body h2,body h3,body h4,body h5,body h6,
-body p,body span,body strong,body b,body small,body label,
-body a,body a:visited,body li,body td,body th,
-body .title,body .subtitle,body .label,body .meta,
-body .brand,body .section-kicker,body .type,body .status{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-/* Cabeçalho e navegação deixam o fundo aparecer */
-header,.top,.home-main-nav,.admin-main-nav,footer{
-  background:rgba(5,3,10,.34)!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.18)!important;
-}
-
-/* Cards, painéis e áreas de conteúdo: translúcidos para manter o fundo uniforme */
-.card,.panel,.side,.form-card,.admin-card,.notice-card,
-.modal,.item,.stat,.login,
-.admin-auth-info-card,.admin-exclusive-card{
-  background:rgba(8,5,14,.62)!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.20)!important;
-}
-
-/* Campos */
-input,select,textarea{
-  background:rgba(0,0,0,.38)!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.28)!important;
-}
-input::placeholder,textarea::placeholder{
-  color:rgba(255,255,255,.72)!important;
-  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
-}
-
-/* Botões */
-button,.btn{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.28)!important;
-}
-button:hover,.btn:hover,
-button.active,.btn.active,
-button.primary,.btn.primary{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-/* Links */
-a,a:visited,a:hover{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-/* Menu mobile/lateral */
-.mobile-menu,.mobile-menu-links,.home-nav-links,
-.admin-sidebar,.admin-sidebar-nav{
-  background:rgba(7,4,14,.94)!important;
-}
-.mobile-menu button,.mobile-menu a,
-.home-nav-links button,.home-nav-links a,
-.admin-sidebar button,.admin-sidebar a{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-/* Remove regras antigas que tentavam pintar texto de vermelho/dourado. */
 :root{
-  --rpg-red:#fff!important;
-  --rpg-white:#fff!important;
-  --wine:#fff!important;
-  --wine-dark:#fff!important;
-  --gold:#fff!important;
-  --cream:#fff!important;
-  --text:#fff!important;
-  --muted:rgba(255,255,255,.78)!important;
-  --line:rgba(255,255,255,.20)!important;
+  --h-orange:#f57c00;
+  --h-orange-bright:#ff9d2e;
+  --h-black:#050308;
+  --h-panel:rgba(10,7,14,.88);
+  --h-panel-2:rgba(5,3,9,.94);
+  --h-border:rgba(245,124,0,.38);
+  --h-text:#fff;
+  --h-muted:rgba(255,255,255,.76);
 }
-
-/* Loading continua legível sobre o novo fundo */
-#dbLoadingOverlay{
-  background:rgba(4,2,8,.84)!important;
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0}
+html{background:var(--h-black) url('./assets/site-background.jpg') center/cover fixed no-repeat}
+body.halloween-theme{
+  min-height:100vh; position:relative; overflow-x:hidden; color:var(--h-text);
+  font-family:Comfortaa,Arial,sans-serif;
+  background:linear-gradient(rgba(0,0,0,.74),rgba(0,0,0,.82)),url('./assets/site-background.jpg') center/cover fixed no-repeat;
 }
-</style>
-
-<style id="cpanel-theme-final">
-/* ===== CPAINEL — FUNDO E TIPOGRAFIA UNIFORMES ===== */
-html{
-  min-height:100%!important;
-  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
-}
-body{
-  min-height:100vh!important;
-  margin:0!important;
-  background:transparent!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-body::before,
-body::after{
-  background:transparent!important;
-}
-
-/* Todas as áreas do CPainel deixam o fundo oficial aparecer */
-header,
-.admin-shell,
-.admin-layout,
-.admin-content,
-#adminView,
-main,
-section,
-article{
-  background:transparent!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-/* Texto branco em absolutamente todos os elementos do painel */
-#adminView *,
-#loginView *,
-header *{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-/* Cards escuros translúcidos, sem blocos brancos quebrando o fundo */
-#adminView .card,
-#adminView .panel,
-#adminView .side,
-#adminView .form-card,
-#adminView .admin-card,
-#adminView .notice-card,
-#adminView .stat,
-#adminView .login,
-#adminView table,
-#adminView .admin-auth-info-card,
-#adminView .admin-exclusive-card{
-  background:rgba(7,4,14,.62)!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.22)!important;
-}
-
-/* Formulários */
-#adminView input,
-#adminView select,
-#adminView textarea,
-#loginView input,
-#loginView select,
-#loginView textarea{
-  background:rgba(0,0,0,.42)!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.28)!important;
-}
-#adminView input::placeholder,
-#adminView textarea::placeholder,
-#loginView input::placeholder,
-#loginView textarea::placeholder{
-  color:rgba(255,255,255,.72)!important;
-  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
-}
-
-/* Botões e menu */
-#adminView button,
-#adminView .btn,
-#loginView button,
-#loginView .btn{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.28)!important;
-}
-#adminView button:hover,
-#adminView .btn:hover,
-#adminView button.active,
-#adminView .btn.active{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-/* Links */
-#adminView a,
-#adminView a:visited,
-#loginView a,
-#loginView a:visited{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-/* Menu lateral, se presente */
-.admin-sidebar,
-.admin-sidebar-nav{
-  background:rgba(7,4,14,.94)!important;
-}
-.admin-sidebar *,
-.admin-sidebar-nav *{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-/* Avisos */
-.admin-auth-info-card,
-.admin-exclusive-card{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-.return-site-notice{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  background:rgba(7,4,14,.70)!important;
-  border-color:rgba(255,255,255,.28)!important;
-}
-
-/* Tabelas */
-#adminView th,
-#adminView td{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.18)!important;
-}
-
-/* Variáveis antigas não podem voltar a pintar o painel */
-#adminView{
-  --wine:#fff!important;
-  --wine-dark:#fff!important;
-  --gold:#fff!important;
-  --cream:#fff!important;
-  --text:#fff!important;
-  --muted:rgba(255,255,255,.78)!important;
-  --line:rgba(255,255,255,.20)!important;
-}
-</style>
-
-<style id="maintenance-admin-style">
-.maintenance-admin-card{padding:24px}
+body.halloween-theme::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(circle at 50% 8%,rgba(245,124,0,.08),transparent 35%)}
+body.halloween-theme>*{position:relative;z-index:1}
+.hidden{display:none!important}
+.container{width:min(1180px,calc(100% - 32px));margin:0 auto}
+.top{padding:18px 0 14px;background:rgba(3,2,7,.82);border-bottom:1px solid rgba(245,124,0,.28);backdrop-filter:blur(6px)}
+.topin{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:82px}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}
+.brand-logo img{display:block;width:min(260px,42vw);max-width:260px;height:auto;object-fit:contain}
+.brand-logo span{font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--h-orange-bright)}
+.admin-top-actions{display:flex;align-items:center;gap:12px}
+.admin-welcome{font-size:13px;color:var(--h-muted);text-align:right;max-width:300px}
+.admin-welcome span{color:var(--h-orange-bright)}
+main.container{padding:28px 0 0}
+#loginView{width:min(560px,100%);margin:22px auto 0;padding:34px;border-radius:20px;background:var(--h-panel);border:1px solid var(--h-border);box-shadow:0 20px 70px rgba(0,0,0,.7),0 0 30px rgba(245,124,0,.07)}
+#loginView h2{margin:0 0 10px;font-size:30px;text-align:center;text-shadow:0 4px 20px #000}
+#loginView .subtitle{margin:0 0 24px;text-align:center;color:var(--h-muted);line-height:1.6}
+#loginForm{display:grid;gap:8px}
+label{font-size:13px;font-weight:700;color:#fff;margin-top:8px}
+input,select,textarea{width:100%;border:1px solid rgba(245,124,0,.35);border-radius:10px;background:rgba(0,0,0,.58);color:#fff;padding:12px 13px;font:inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--h-orange-bright);box-shadow:0 0 0 3px rgba(245,124,0,.13)}
+textarea{min-height:110px;resize:vertical}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.btn,button.btn,button,[role="button"]{appearance:none;border:1px solid var(--h-orange)!important;background:var(--h-orange)!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-radius:10px;padding:11px 16px;font:700 13px Comfortaa,Arial,sans-serif;cursor:pointer;box-shadow:0 6px 18px rgba(245,124,0,.2);transition:transform .16s,background .16s,box-shadow .16s}
+.btn:hover,button:hover,[role="button"]:hover{background:var(--h-orange-bright)!important;border-color:var(--h-orange-bright)!important;transform:translateY(-1px);box-shadow:0 9px 22px rgba(245,124,0,.28)}
+.btn.danger{background:#b52a20!important;border-color:#b52a20!important}
+.status{min-height:20px;margin-top:10px;color:var(--h-muted);font-size:12px;line-height:1.5}
+#adminView{width:100%;padding-bottom:10px}
+#adminView>.grid{display:block;width:100%}
+#adminView>.grid>.content{width:100%;min-width:0}
+#adminSidebar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%;margin:0 0 26px;padding:16px;border:1px solid var(--h-border);border-radius:18px;background:rgba(6,3,10,.9);box-shadow:0 16px 42px rgba(0,0,0,.55)}
+#adminSidebar button[data-page]{width:100%;min-height:58px;margin:0;padding:12px 14px;background:var(--h-orange)!important;border:1px solid var(--h-orange)!important;color:#fff!important;border-radius:11px}
+#adminSidebar button[data-page].active{background:var(--h-orange-bright)!important;border-color:#fff!important;box-shadow:0 0 0 2px rgba(245,124,0,.2),0 8px 22px rgba(245,124,0,.25)}
+#adminSidebar button[data-page]:hover{background:var(--h-orange-bright)!important;border-color:var(--h-orange-bright)!important}
+.page{display:none!important}
+.page.active{display:block!important}
+.page>.title,.page>h1.title{font-size:30px;line-height:1.2;margin:4px 0 8px;text-shadow:0 4px 20px #000}
+.page>.subtitle{margin:0 0 20px;color:var(--h-muted);line-height:1.6}
+.card{background:var(--h-panel)!important;border:1px solid var(--h-border)!important;border-radius:18px!important;padding:22px!important;margin:0 0 18px!important;box-shadow:0 16px 44px rgba(0,0,0,.58)!important;color:#fff!important}
+.card h3{margin:0 0 14px;font-size:18px;color:#fff}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.formgrid>.full{grid-column:1/-1}
+.upload-status{margin-top:6px;color:var(--h-muted);font-size:11px;line-height:1.45}
+.image-preview{margin-top:10px}
+.list{display:grid;gap:10px}
+.item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border-radius:12px;background:rgba(0,0,0,.32)!important;border:1px solid rgba(245,124,0,.22)!important}
+.item .actions{margin-top:0;justify-content:flex-end}
+.meta{color:var(--h-muted)!important;font-size:12px;line-height:1.45}
 .maintenance-status-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
 .maintenance-status-row h3{margin:0 0 6px}.maintenance-status-row p{margin:0}
-.maintenance-switch{min-width:150px;min-height:48px;border-radius:999px;border:1px solid rgba(255,255,255,.25)!important;background:rgba(255,255,255,.10)!important;color:#fff!important;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:8px 16px;cursor:pointer}
-.maintenance-switch.on{background:#9b1c31!important}.maintenance-switch-knob{width:20px;height:20px;border-radius:50%;background:#fff;display:block}
-.maintenance-help{margin-top:18px;opacity:.82}
-@media(max-width:700px){.maintenance-status-row{flex-direction:column;align-items:stretch}.maintenance-switch{width:100%}}
-<style id="cpanel-uniform-background-final">
-/* ===== CPAINEL: FUNDO 100% UNIFORME COM O RESTANTE DO SITE ===== */
-html, body{
-  background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;
-}
-body{
-  background-color:transparent!important;
-  background-image:url("./assets/site-background.jpg")!important;
-}
-body::before, body::after{
-  content:none!important;
-  display:none!important;
-  background:transparent!important;
-}
-#loginView, #adminView, #adminView > *, #loginView > *,
-.admin-shell, .admin-layout, .admin-content, .main-content,
-.container, .content, .dashboard, .page, .layout, main, section, article{
-  background-color:transparent!important;
-  background-image:none!important;
-}
-.admin-top-welcome{
-  background:rgba(7,4,14,.62)!important;
-  color:#fff!important;
-  border-color:rgba(255,255,255,.20)!important;
-  box-shadow:0 10px 28px rgba(0,0,0,.20)!important;
-}
-/* Nenhum bloco branco opaco no CPainel */
-#adminView .card, #adminView .box, #adminView .panel,
-#adminView .panel-card, #adminView .admin-card, #adminView .stat,
-#adminView .stat-card, #adminView .form-card, #adminView .list-card,
-#adminView .table-card, #adminView .news-card, #adminView .item,
-#adminView .user-card, #adminView .post, #adminView .student,
-#adminView .person, #adminView .group, #adminView .aff,
-#adminView table, #adminView th, #adminView td,
-#loginView .card, #loginView .box, #loginView .panel, #loginView .login{
-  background-color:rgba(7,4,14,.62)!important;
-  background-image:none!important;
-}
-</style>
-<style id="bugfix-final-theme">
-/* ===== CORREÇÃO FINAL DO CPAINEL ===== */
-html,body{background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;}
-body{background-attachment:fixed!important;}
+.maintenance-switch{min-width:210px}
+#dbLoadingOverlay{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;background:rgba(2,1,5,.88);backdrop-filter:blur(5px);opacity:1;visibility:visible;transition:opacity .18s,visibility .18s}
+#dbLoadingOverlay:not(.is-loading){opacity:0;visibility:hidden;pointer-events:none}
+#dbLoadingOverlay img{width:min(330px,70vw);height:auto}
+.site-disclaimer-footer{width:min(1100px,calc(100% - 32px));margin:30px auto 18px;padding:18px 20px;text-align:center;background:rgba(3,2,6,.9);border:1px solid rgba(245,124,0,.2);border-radius:14px;color:rgba(255,255,255,.82);font:10px/1.55 Comfortaa,Arial,sans-serif}
+.site-disclaimer-footer p{margin:4px 0}
+.halloween-decor{position:fixed!important;inset:0!important;width:100vw;height:100vh;pointer-events:none!important;z-index:999998!important;overflow:hidden}
+.halloween-decor span{position:absolute;display:block;user-select:none;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.95));opacity:.78}
+.halloween-decor .web{font-size:82px}.halloween-decor .web.w1{left:-8px;top:-8px}.halloween-decor .web.w2{right:-8px;top:-8px;transform:scaleX(-1)}.halloween-decor .web.w3{right:-8px;bottom:-8px;transform:rotate(180deg)}
+.halloween-decor .bat{font-size:31px;animation:cpBat 5s ease-in-out infinite}.halloween-decor .bat.b1{left:4%;top:17%}.halloween-decor .bat.b2{right:5%;top:30%;animation-delay:-2s}.halloween-decor .bat.b3{left:8%;top:67%;font-size:25px;animation-delay:-3s}.halloween-decor .bat.b4{right:10%;top:78%;font-size:32px;animation-delay:-1s}
+.halloween-decor .skull{font-size:38px}.halloween-decor .skull.s1{left:2%;bottom:5%}.halloween-decor .skull.s2{right:2%;top:6%;font-size:34px}
+@keyframes cpBat{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-11px) rotate(4deg)}}
+@media(max-width:800px){#adminSidebar{grid-template-columns:repeat(2,minmax(0,1fr))}.formgrid{grid-template-columns:1fr}.formgrid>.full{grid-column:auto}.maintenance-status-row{flex-direction:column;align-items:stretch}.maintenance-switch{width:100%}.brand-logo img{width:min(220px,58vw)}}
+@media(max-width:520px){.container{width:min(100% - 20px,1180px)}.topin{min-height:68px}.brand-logo img{width:190px}.brand-logo span{font-size:10px}.admin-welcome{display:none}#loginView{padding:24px 18px;margin-top:10px}#loginView h2{font-size:25px}#adminSidebar{grid-template-columns:1fr;padding:12px;gap:9px}.page>.title,.page>h1.title{font-size:24px}.card{padding:16px!important}.actions{flex-direction:column}.actions .btn,.actions a.btn{width:100%;text-align:center}.halloween-decor .web{font-size:56px}.halloween-decor .bat{font-size:23px}.halloween-decor .skull{font-size:28px}}
 
 
-/* Centralização correta do bloco de login. */
-#loginView{width:min(520px,calc(100% - 28px))!important;margin:56px auto 18px!important;}
-
-/* Botões padrão do CPainel: vermelho + texto branco. */
-#loginView button,
-#loginView .btn,
-#adminView button,
-#adminView .btn,
-#adminView a.btn,
-.actions button,
-.actions .btn,
-button[type="button"],button[type="submit"],
-button.primary,.btn.primary,
-.return-site-notice{
-  background:#a51d36!important;
-  background-image:none!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border:1px solid #a51d36!important;
-  box-shadow:0 5px 14px rgba(0,0,0,.18)!important;
-}
-#loginView button:hover,
-#loginView .btn:hover,
-#adminView button:hover,
-#adminView .btn:hover,
-.actions button:hover,
-.actions .btn:hover,
-button[type="button"]:hover,button[type="submit"]:hover,
-button.primary:hover,.btn.primary:hover,
-.return-site-notice:hover{
-  background:#c12645!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:#c12645!important;
-}
-#loginView button:disabled,#adminView button:disabled{opacity:.55;cursor:not-allowed;}
-
-/* Menus continuam organizados, mas seguem o mesmo padrão visual. */
-#adminView .side button{
-  background:#a51d36!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border:1px solid rgba(255,255,255,.12)!important;
-  margin-bottom:6px!important;
-  text-align:left!important;
-}
-#adminView .side button:hover,#adminView .side button.active{
-  background:#c12645!important;
-  color:#fff!important;
-}
-
-/* Google: também segue o padrão visual solicitado. */
-#loginView .google-login-btn{
-  background:#a51d36!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:#a51d36!important;
-}
-#loginView .google-login-btn:hover{background:#c12645!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
-#loginView .google-icon{background:#fff!important;color:#4285f4!important;-webkit-text-fill-color:#4285f4!important;}
-
-/* Cards e estrutura sem fundos brancos. */
-#loginView,.admin-auth-info-card,.admin-exclusive-card,
-#adminView .card,#adminView .side,#adminView .item,#adminView .panel,
-#adminView .admin-card,#adminView .form-card,#adminView .notice-card,
-#adminView .stat,#adminView table{
-  background:rgba(8,5,14,.68)!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.20)!important;
-}
-
-/* Mobile: não deixar o login/avisos quebrados. */
-@media(max-width:650px){
-  #loginView{margin:28px auto 14px!important;width:min(100% - 20px,520px)!important;padding:18px!important;}
-  #loginView .actions{flex-direction:column!important;}
-  #loginView .actions .btn,#loginView .actions button{width:100%!important;}
-  
-}
-
-/* ===== MENU MOBILE LATERAL DO CPAINEL ===== */
-.admin-top-actions{display:flex;align-items:center;gap:8px}
-@media(max-width:700px){
-  body.admin-menu-locked{overflow:hidden!important;position:fixed!important;width:100%!important}
-  .admin-top-actions{margin-left:auto}
-  #adminView .grid{display:block!important}
-  #adminSidebar{
-    position:fixed!important;top:0;left:0;bottom:0;width:min(310px,86vw);height:100dvh!important;
-    margin:0!important;padding:76px 14px 22px!important;z-index:12000!important;
-    overflow-y:auto!important;transform:translateX(-105%);transition:transform .25s ease;
-    border-radius:0 18px 18px 0!important;background:rgba(7,4,14,.98)!important;
-    box-shadow:10px 0 35px rgba(0,0,0,.45)!important;
-  }
-  #adminSidebar.mobile-open{transform:translateX(0)}
-  #adminView .content{width:100%!important}
-}
-
-</style>
-
-<style id="global-button-standard">
-
-/* ===== PADRÃO GLOBAL DE BOTÕES: VERMELHO + TEXTO BRANCO ===== */
-button,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-.btn,
-.button,
-.btn-primary,
-.btn-secondary,
-.btn-danger,
-.btn-success,
-.btn-warning,
-.btn-outline,
-[role="button"] {
-  background: #b30000 !important;
-  background-color: #b30000 !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-  border-color: #b30000 !important;
-  box-shadow: none;
-}
-
-button:hover,
-input[type="button"]:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-.btn:hover,
-.button:hover,
-.btn-primary:hover,
-.btn-secondary:hover,
-.btn-danger:hover,
-.btn-success:hover,
-.btn-warning:hover,
-.btn-outline:hover,
-[role="button"]:hover {
-  background: #8f0000 !important;
-  background-color: #8f0000 !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-  border-color: #8f0000 !important;
-}
-
-button:focus-visible,
-input[type="button"]:focus-visible,
-input[type="submit"]:focus-visible,
-input[type="reset"]:focus-visible,
-.btn:focus-visible,
-.button:focus-visible,
-[role="button"]:focus-visible {
-  outline: 2px solid #fff !important;
-  outline-offset: 2px;
-}
-
-button:disabled,
-input[type="button"]:disabled,
-input[type="submit"]:disabled,
-input[type="reset"]:disabled,
-.btn:disabled,
-.button:disabled {
-  background: #b30000 !important;
-  background-color: #b30000 !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-  opacity: .55;
-}
-</style>
-
-<style id="site-editor-style">
-.site-editor-card{margin-bottom:20px}.site-editor-card h3{color:#fff!important}.site-editor-help{color:rgba(255,255,255,.75)!important;line-height:1.6}.site-editor-card input[type="color"]{height:48px;padding:4px}.site-editor-card input[type="range"]{width:100%;accent-color:#b30000}.site-editor-card label{display:block}.site-editor-card textarea{min-height:120px;resize:vertical}
-</style>
-
-<style id="dark-background-focus">
-html{
-  background-color:#020608 !important;
-  background-image:
-    linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
-    url("./assets/site-background.jpg") !important;
-  background-position:center center !important;
-  background-size:cover !important;
-  background-repeat:no-repeat !important;
-  background-attachment:fixed !important;
-}
-body{
-  background:transparent !important;
-}
-</style>
-
-<link rel="stylesheet" href="./assets/global-background.css?v=20260909-headerfix">
-<style id="cpanel-global-background">
-html,body{background:transparent !important;}
-html{background-color:#020406 !important;background-image:linear-gradient(rgba(0,0,0,.24),rgba(0,0,0,.24)),url("./assets/site-background.jpg") !important;background-position:center center !important;background-repeat:no-repeat !important;background-size:cover !important;background-attachment:fixed !important;}
-@media(max-width:700px){html{background-attachment:scroll !important;}}
-</style>
-
-<style id="rpg-logo-standard-global">
-/* ===== LOGO RPG PADRONIZADO EM TODAS AS PÁGINAS ===== */
-html body img[alt="Descendentes RPG"]{
-  width:min(330px,72vw)!important;
-  height:auto!important;
-  max-width:330px!important;
-  max-height:none!important;
-  object-fit:contain!important;
-  display:block!important;
-}
-.site-header-fixed{
-  min-height:165px!important;
-  padding:0 12px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-.site-header-fixed img[alt="Descendentes RPG"]{
-  width:min(330px,72vw)!important;
-  max-width:330px!important;
-}
-@media(max-width:650px){
-  html body img[alt="Descendentes RPG"]{
-    width:min(240px,76vw)!important;
-    max-width:240px!important;
-  }
-  .site-header-fixed{min-height:120px!important;padding:6px 10px!important;}
-  .site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important;}
-}
-</style>
-<style id="rpg-events-admin-style">
-#adminView .page{display:none!important}#adminView .page.active{display:block!important}.event-admin-item{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:12px;margin-bottom:10px}.event-admin-item .meta{margin-top:5px;font-size:.78rem}.event-admin-item p{margin:7px 0 0;font-size:.82rem}.event-admin-item .actions{display:flex;gap:7px;flex-wrap:wrap}.event-admin-item .actions .btn{margin:0!important}
-</style>
-<link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v3">
-
-<style id="cpanel-structure-fix-20260909">
-/* ===== ESTRUTURA CORRIGIDA DO CPAINEL ===== */
-html,body{min-height:100%;margin:0;}
-body.halloween-theme{min-height:100vh;overflow-x:hidden;}
-body.halloween-theme .container{width:min(1180px,calc(100% - 32px))!important;max-width:1180px!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important;}
-body.halloween-theme header.top{width:100%!important;min-height:118px!important;box-sizing:border-box!important;}
-body.halloween-theme header.top .topin{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important;padding:16px 0!important;}
-body.halloween-theme header.top .brand{display:flex!important;align-items:center!important;gap:14px!important;min-width:0!important;}
-body.halloween-theme header.top .brand img{width:220px!important;max-width:220px!important;height:auto!important;display:block!important;}
-body.halloween-theme header.top .brand span{font-size:14px!important;font-weight:700!important;color:#fff!important;}
-body.halloween-theme main.container{padding:24px 0 30px!important;}
-#loginView{width:min(560px,100%)!important;margin:25px auto 28px!important;box-sizing:border-box!important;padding:30px!important;}
-#loginView .actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;}
-#loginView .actions .btn{min-height:48px!important;margin:0!important;}
-#adminView{width:100%!important;}
-#adminView > .admin-sidebar{position:relative!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;width:100%!important;height:auto!important;margin:0 0 24px!important;padding:16px!important;box-sizing:border-box!important;background:rgba(7,4,14,.84)!important;border:1px solid rgba(245,124,0,.32)!important;border-radius:16px!important;overflow:visible!important;transform:none!important;inset:auto!important;}
-#adminView > .admin-sidebar > button[data-page]{width:100%!important;min-height:56px!important;margin:0!important;padding:12px!important;display:flex!important;align-items:center!important;justify-content:center!important;border-radius:11px!important;background:#f57c00!important;background-color:#f57c00!important;border:1px solid #f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;font-family:"Comfortaa",sans-serif!important;font-weight:700!important;cursor:pointer!important;box-sizing:border-box!important;}
-#adminView > .admin-sidebar > button[data-page]:hover,#adminView > .admin-sidebar > button[data-page].active{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
-#adminView > .grid{display:block!important;width:100%!important;}
-#adminView > .grid > .content{display:block!important;width:100%!important;min-width:0!important;}
-#adminView .page{width:100%!important;box-sizing:border-box!important;}
-#adminView .card{width:100%;box-sizing:border-box;}
-#adminView .actions{display:flex;flex-wrap:wrap;gap:10px;}
-#adminView .actions .btn,#adminView button,#adminView input[type=submit],#adminView input[type=button]{background:#f57c00!important;background-color:#f57c00!important;border-color:#f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
-#adminView .actions .btn:hover,#adminView button:hover,#adminView input[type=submit]:hover,#adminView input[type=button]:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;}
-#logout{background:#f57c00!important;background-color:#f57c00!important;border-color:#f57c00!important;color:#fff!important;}
-#logout:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;}
-body.halloween-theme .site-disclaimer-footer{width:min(1100px,calc(100% - 32px))!important;margin:28px auto 0!important;position:relative!important;box-sizing:border-box!important;font-size:10px!important;}
-@media(max-width:900px){#adminView > .admin-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important;}#loginView .actions{grid-template-columns:1fr!important;}body.halloween-theme header.top .brand img{width:190px!important;max-width:190px!important;}}
-@media(max-width:520px){body.halloween-theme .container{width:calc(100% - 20px)!important;}body.halloween-theme header.top{min-height:94px!important;}body.halloween-theme header.top .topin{padding:10px 0!important;}body.halloween-theme header.top .brand img{width:165px!important;max-width:165px!important;}#adminView > .admin-sidebar{grid-template-columns:1fr!important;padding:12px!important;}#adminView > .admin-sidebar > button[data-page]{min-height:52px!important;}#loginView{padding:20px!important;}}
+.dashboard-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 16px;padding:4px 2px}
+.dashboard-kicker{font-size:11px;letter-spacing:.2em;color:var(--h-orange-bright);font-weight:700;margin-bottom:5px}
+.dashboard-heading h1{margin:0;font-size:32px;line-height:1.15;text-shadow:0 4px 20px #000}
+.dashboard-heading p{margin:7px 0 0;color:var(--h-muted);font-size:13px}
+.admin-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 18px}
+.admin-stat{padding:16px 18px;border:1px solid rgba(245,124,0,.28);border-radius:14px;background:rgba(7,4,12,.82);box-shadow:0 10px 28px rgba(0,0,0,.42)}
+.admin-stat strong{display:block;font-size:24px;color:var(--h-orange-bright);line-height:1.1}.admin-stat span{display:block;margin-top:4px;color:var(--h-muted);font-size:11px}
+@media(max-width:520px){.dashboard-heading h1{font-size:26px}.admin-stats{grid-template-columns:1fr 1fr}.admin-stat:last-child{grid-column:1/-1}}
 </style>
 </head>
-
-<style id="db-loading-style">
-#dbLoadingOverlay{
-  position:fixed;inset:0;z-index:99999;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(8,4,18,.82);
-  backdrop-filter:blur(4px);
-  opacity:1;visibility:visible;
-  transition:opacity .18s ease,visibility .18s ease;
-}
-#dbLoadingOverlay:not(.is-loading){
-  opacity:0;visibility:hidden;pointer-events:none;
-}
-#dbLoadingOverlay img{
-  display:block;width:min(360px,78vw);height:auto;
-  max-height:78vh;object-fit:contain;
-}
-@media(max-width:600px){
-  #dbLoadingOverlay img{width:min(310px,82vw);}
-}
-</style>
 <body class="halloween-theme">
-<div id="dbLoadingOverlay" class="is-loading" role="status" aria-live="polite" aria-label="Aguarde, estamos carregando o banco de dados">
-  <img src="assets/db-loading.png" alt="Aguarde, estamos carregando o banco de dados">
-</div>
+<div id="dbLoadingOverlay" class="is-loading" role="status" aria-live="polite" aria-label="Aguarde, estamos carregando o banco de dados"><img src="assets/db-loading.png" alt="Aguarde, estamos carregando o banco de dados"></div>
 <div class="halloween-decor" aria-hidden="true">
-  <span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span>
-  <span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span>
-  <span class="h-skull s1">💀</span><span class="h-skull s2">💀</span>
-  <span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span>
+  <span class="web w1">🕸️</span><span class="web w2">🕸️</span><span class="web w3">🕸️</span>
+  <span class="bat b1">🦇</span><span class="bat b2">🦇</span><span class="bat b3">🦇</span><span class="bat b4">🦇</span>
+  <span class="skull s1">💀</span><span class="skull s2">💀</span>
 </div>
-
-<header class="top"><div class="container topin"><div class="brand brand-logo"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"><span>ADMIN</span></div><div class="admin-top-actions"><button id="logout" class="btn hidden">Sair</button></div></div></header>
-
+<header class="top"><div class="container topin"><div class="brand brand-logo"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"><span>CPAINEL</span></div><div class="admin-top-actions"><div id="adminWelcome" class="admin-welcome" aria-live="polite"></div><button id="logout" class="btn hidden" type="button">Sair</button></div></div></header>
 <main class="container">
 <section id="loginView" class="login card">
 <h2>Acesso administrativo</h2>
@@ -638,6 +123,18 @@ body.halloween-theme .site-disclaimer-footer{width:min(1100px,calc(100% - 32px))
 </form>
 </section>
 <section id="adminView" class="hidden">
+<div class="dashboard-heading">
+  <div>
+    <div class="dashboard-kicker">DESCENDENTES RPG</div>
+    <h1>Painel Administrativo</h1>
+    <p>Gerencie o conteúdo de Auradon em um único lugar.</p>
+  </div>
+</div>
+<div class="admin-stats" aria-label="Resumo do CPainel">
+  <div class="admin-stat"><strong id="statAffiliations">0</strong><span>Filiações</span></div>
+  <div class="admin-stat"><strong id="statStudents">0</strong><span>Alunos</span></div>
+  <div class="admin-stat"><strong id="statDocentes">0</strong><span>Docentes</span></div>
+</div>
 <div id="adminSidebar" class="admin-sidebar" aria-label="Menu administrativo">
   <button type="button" data-page="manutencao">Manutenção</button>
   <button type="button" data-page="filiacoes">Filiações</button>
@@ -885,7 +382,12 @@ A foto será automaticamente recortada para formato quadrado, redimensionada par
 </div>
 </section>
 </main>
-
+<footer class="site-disclaimer-footer">
+  <p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p>
+  <p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p>
+  <p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p>
+  <p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p>
+</footer>
 <script type="module">
 import {dbOnValue,hideDbLoading} from "./db-loader.js";
 import { db } from "./firebase-init.js";
@@ -1574,236 +1076,5 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":
 
 restoreSession();
 </script>
-
-
-
-
-
-
-
-<style id="dashboard-menu-below-final">
-/* MENU DO DASHBOARD: SEMPRE VISÍVEL E LOGO ABAIXO DO TÍTULO DASHBOARD */
-#adminView{
-  width:100%!important;
-}
-#adminView > .grid{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:stretch!important;
-  gap:20px!important;
-  width:100%!important;
-}
-#adminSidebar{
-  order:0!important;
-  position:relative!important;
-  display:grid!important;
-  visibility:visible!important;
-  opacity:1!important;
-  transform:none!important;
-  inset:auto!important;
-  width:100%!important;
-  height:auto!important;
-  min-height:0!important;
-  max-height:none!important;
-  overflow:visible!important;
-  margin:0!important;
-  padding:18px!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:12px!important;
-  background:rgba(13,5,23,.78)!important;
-  border:1px solid rgba(255,255,255,.18)!important;
-  border-radius:18px!important;
-  box-shadow:0 10px 28px rgba(0,0,0,.22)!important;
-  z-index:2!important;
-}
-#adminSidebar button{
-  display:flex!important;
-  visibility:visible!important;
-  opacity:1!important;
-  width:100%!important;
-  min-height:58px!important;
-  align-items:center!important;
-  justify-content:center!important;
-  margin:0!important;
-  padding:13px 12px!important;
-  border-radius:11px!important;
-  background:#b30000!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  border:1px solid #b30000!important;
-  font-family:"Comfortaa",sans-serif!important;
-  font-weight:600!important;
-  line-height:1.3!important;
-}
-#adminSidebar button:hover,
-#adminSidebar button.active{
-  background:#7f0000!important;
-  border-color:#7f0000!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-#adminView .content{
-  order:1!important;
-  width:100%!important;
-  min-width:0!important;
-}
-@media(max-width:900px){
-  #adminSidebar{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  }
-}
-@media(max-width:520px){
-  #adminSidebar{
-    grid-template-columns:1fr!important;
-    padding:14px!important;
-  }
-  #adminSidebar button{
-    min-height:54px!important;
-  }
-}
-</style>
-
-
-
-
-
-
-
-
-<style id="dashboard-card-menu-final">
-/* ===== CPAINEL: ÚNICO MENU EM CARDS ===== */
-#adminView > .grid{display:block!important;width:100%!important}
-#adminView > .grid > .content{display:block!important;width:100%!important;min-width:0!important}
-#dashboard{display:block!important;width:100%!important}
-#adminSidebar{
-  position:relative!important;inset:auto!important;display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;
-  width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;
-  margin:20px 0 24px!important;padding:18px!important;overflow:visible!important;
-  transform:none!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
-  background:rgba(13,5,23,.72)!important;border:1px solid rgba(255,255,255,.18)!important;
-  border-radius:18px!important;box-shadow:0 10px 28px rgba(0,0,0,.22)!important;
-  box-sizing:border-box!important;
-}
-#adminSidebar > button[data-page]{
-  display:flex!important;width:100%!important;min-height:58px!important;margin:0!important;padding:12px 14px!important;
-  align-items:center!important;justify-content:center!important;text-align:center!important;
-  border-radius:11px!important;background:#b30000!important;border:1px solid #b30000!important;
-  color:#fff!important;-webkit-text-fill-color:#fff!important;font-family:"Comfortaa",sans-serif!important;
-  font-weight:600!important;line-height:1.3!important;cursor:pointer!important;
-}
-#adminSidebar > button[data-page]:hover{background:#7f0000!important;border-color:#7f0000!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
-#adminSidebar > button[data-page].active{background:#7f0000!important;border-color:#fff!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
-@media(max-width:900px){#adminSidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media(max-width:520px){#adminSidebar{grid-template-columns:1fr!important;gap:10px!important;padding:14px!important}#adminSidebar > button[data-page]{min-height:54px!important}}
-</style>
-
-<style id="cpanel-halloween-final-v3">
-/* ===== CPAINEL — HALLOWEEN FINAL ===== */
-body.halloween-theme #adminSidebar,
-body.halloween-theme #adminSidebar > button[data-page]{
-  background:#f57c00!important;
-  background-color:#f57c00!important;
-  border-color:#f57c00!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  box-shadow:0 5px 18px rgba(245,124,0,.28)!important;
-}
-body.halloween-theme #adminSidebar > button[data-page]:hover,
-body.halloween-theme #adminSidebar > button[data-page].active{
-  background:#ff9d2e!important;
-  background-color:#ff9d2e!important;
-  border-color:#ff9d2e!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-body.halloween-theme #adminView button,
-body.halloween-theme #adminView .btn,
-body.halloween-theme #loginView button,
-body.halloween-theme #loginView .btn,
-body.halloween-theme #logout,
-body.halloween-theme .actions button,
-body.halloween-theme .actions .btn{
-  background:#f57c00!important;
-  background-color:#f57c00!important;
-  border-color:#f57c00!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-body.halloween-theme #adminView button:hover,
-body.halloween-theme #adminView .btn:hover,
-body.halloween-theme #loginView button:hover,
-body.halloween-theme #loginView .btn:hover,
-body.halloween-theme #logout:hover,
-body.halloween-theme .actions button:hover,
-body.halloween-theme .actions .btn:hover{
-  background:#ff9d2e!important;
-  background-color:#ff9d2e!important;
-  border-color:#ff9d2e!important;
-}
-body.halloween-theme .maintenance-switch{
-  background:#f57c00!important;
-  border-color:#f57c00!important;
-}
-body.halloween-theme footer.site-disclaimer-footer{font-size:10px!important}
-</style>
-
-<footer class="site-disclaimer-footer">
-  <p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p>
-  <p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p>
-  <p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p>
-  <p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p>
-</footer>
-
-<style>
-.site-disclaimer-footer{
-  width:calc(100% - 32px);
-  max-width:1100px;
-  margin:48px auto 20px;
-  padding:20px 24px;
-  box-sizing:border-box;
-  text-align:center;
-  font-family:Comfortaa, sans-serif;
-  font-size:12px;
-  line-height:1.7;
-  opacity:.9;
-  border-top:1px solid rgba(255,255,255,.18);
-}
-.site-disclaimer-footer p{margin:5px 0;}
-@media(max-width:600px){.site-disclaimer-footer{font-size:10px;padding:16px 12px;margin-top:32px;}}
-</style>
-
-<style id="cpanel-structure-fix-20260909">
-/* ===== ESTRUTURA CORRIGIDA DO CPAINEL ===== */
-html,body{min-height:100%;margin:0;}
-body.halloween-theme{min-height:100vh;overflow-x:hidden;}
-body.halloween-theme .container{width:min(1180px,calc(100% - 32px))!important;max-width:1180px!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important;}
-body.halloween-theme header.top{width:100%!important;min-height:118px!important;box-sizing:border-box!important;}
-body.halloween-theme header.top .topin{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important;padding:16px 0!important;}
-body.halloween-theme header.top .brand{display:flex!important;align-items:center!important;gap:14px!important;min-width:0!important;}
-body.halloween-theme header.top .brand img{width:220px!important;max-width:220px!important;height:auto!important;display:block!important;}
-body.halloween-theme header.top .brand span{font-size:14px!important;font-weight:700!important;color:#fff!important;}
-body.halloween-theme main.container{padding:24px 0 30px!important;}
-#loginView{width:min(560px,100%)!important;margin:25px auto 28px!important;box-sizing:border-box!important;padding:30px!important;}
-#loginView .actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;}
-#loginView .actions .btn{min-height:48px!important;margin:0!important;}
-#adminView{width:100%!important;}
-#adminView > .admin-sidebar{position:relative!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;width:100%!important;height:auto!important;margin:0 0 24px!important;padding:16px!important;box-sizing:border-box!important;background:rgba(7,4,14,.84)!important;border:1px solid rgba(245,124,0,.32)!important;border-radius:16px!important;overflow:visible!important;transform:none!important;inset:auto!important;}
-#adminView > .admin-sidebar > button[data-page]{width:100%!important;min-height:56px!important;margin:0!important;padding:12px!important;display:flex!important;align-items:center!important;justify-content:center!important;border-radius:11px!important;background:#f57c00!important;background-color:#f57c00!important;border:1px solid #f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;font-family:"Comfortaa",sans-serif!important;font-weight:700!important;cursor:pointer!important;box-sizing:border-box!important;}
-#adminView > .admin-sidebar > button[data-page]:hover,#adminView > .admin-sidebar > button[data-page].active{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
-#adminView > .grid{display:block!important;width:100%!important;}
-#adminView > .grid > .content{display:block!important;width:100%!important;min-width:0!important;}
-#adminView .page{width:100%!important;box-sizing:border-box!important;}
-#adminView .card{width:100%;box-sizing:border-box;}
-#adminView .actions{display:flex;flex-wrap:wrap;gap:10px;}
-#adminView .actions .btn,#adminView button,#adminView input[type=submit],#adminView input[type=button]{background:#f57c00!important;background-color:#f57c00!important;border-color:#f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
-#adminView .actions .btn:hover,#adminView button:hover,#adminView input[type=submit]:hover,#adminView input[type=button]:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;}
-#logout{background:#f57c00!important;background-color:#f57c00!important;border-color:#f57c00!important;color:#fff!important;}
-#logout:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;}
-body.halloween-theme .site-disclaimer-footer{width:min(1100px,calc(100% - 32px))!important;margin:28px auto 0!important;position:relative!important;box-sizing:border-box!important;font-size:10px!important;}
-@media(max-width:900px){#adminView > .admin-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important;}#loginView .actions{grid-template-columns:1fr!important;}body.halloween-theme header.top .brand img{width:190px!important;max-width:190px!important;}}
-@media(max-width:520px){body.halloween-theme .container{width:calc(100% - 20px)!important;}body.halloween-theme header.top{min-height:94px!important;}body.halloween-theme header.top .topin{padding:10px 0!important;}body.halloween-theme header.top .brand img{width:165px!important;max-width:165px!important;}#adminView > .admin-sidebar{grid-template-columns:1fr!important;padding:12px!important;}#adminView > .admin-sidebar > button[data-page]{min-height:52px!important;}#loginView{padding:20px!important;}}
-</style>
-
 </body>
 </html>
