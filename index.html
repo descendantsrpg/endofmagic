@@ -1700,7 +1700,7 @@ import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebas
  if(!grid||!legend||!label)return;
  const monthNames=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"], weekdays=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
  let view=new Date(); view.setDate(1); let events=[];
- const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;"}[c]));
+ const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]||c));
  const parseDate=s=>{const m=String(s||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);return m?new Date(+m[1],+m[2]-1,+m[3]):null};
  const key=d=>{const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");return `${y}-${m}-${day}`};
  function render(){
@@ -1717,7 +1717,9 @@ import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebas
   const cats=[...new Map(events.map(e=>[String(e.category||e.title),e])).values()];
   legend.innerHTML=cats.length?cats.map(e=>`<span class="calendar-legend-item"><span class="calendar-event-dot"></span>${esc(e.category||e.title)}</span>`).join(""):"<span class="calendar-empty">Nenhum evento cadastrado.</span>";
  }
- onValue(ref(db,"site/eventos"),snap=>{const data=snap.val()||{};events=Object.entries(data).map(([id,e])=>({id,...e})).filter(e=>e.startDate&&e.title).sort((a,b)=>String(a.startDate).localeCompare(String(b.startDate)));render();},err=>{console.error("Calendário:",err);grid.innerHTML='<div class="calendar-empty">Não foi possível carregar o calendário.</div>';});
+ let calendarResolved=false;
+ const stop=onValue(ref(db,"site/eventos"),snap=>{calendarResolved=true;const data=snap.val()||{};events=Object.entries(data).map(([id,e])=>({id,...e})).filter(e=>e&&e.startDate&&e.title).sort((a,b)=>String(a.startDate).localeCompare(String(b.startDate)));render();},err=>{calendarResolved=true;console.error("Calendário:",err);events=[];render();grid.insertAdjacentHTML("beforeend",'<div class="calendar-empty" style="grid-column:1/-1">Não foi possível sincronizar os eventos agora.</div>');});
+ setTimeout(()=>{if(!calendarResolved){events=[];render();legend.innerHTML="<span class=\"calendar-empty\">Nenhum evento cadastrado.</span>";}},8000);
  document.getElementById("calendarPrev")?.addEventListener("click",()=>{view.setMonth(view.getMonth()-1);render();}); document.getElementById("calendarNext")?.addEventListener("click",()=>{view.setMonth(view.getMonth()+1);render();});
  render();
 })();

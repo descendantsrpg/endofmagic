@@ -33,8 +33,7 @@ export function hideDbLoading(){
   if(el) el.classList.remove("is-loading");
 }
 export async function dbOnValue(onValueFn,query,callback,onError){
-  const active=await readMaintenanceState();
-  if(active)return;
+  await readMaintenanceState();
   showDbLoading();
   return onValueFn(query,value=>{
     try{callback(value);}
