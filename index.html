@@ -1355,44 +1355,45 @@ body{padding-top:var(--home-header-space,120px) !important;}
 
 <footer>Descendentes RPG • Auradon Prep</footer>
 <script type="module">
-import { db } from "./firebase-init.js?v=20260909-news";
-import { ref, onValue, get } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+import { db } from "./firebase-init.js?v=20260909-news-final";
+import { ref, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
-const area = document.getElementById("newsArea");
-const esc = v => String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-
+const area=document.getElementById("newsArea");
 let homeNews=[];
 let homeNewsIndex=0;
-let firstNewsResponse=false;
+let connected=false;
+let retryTimer=null;
+
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 
 function normalizeNews(data){
-  if(!data) return [];
+  if(!data || typeof data!=="object") return [];
   return Object.entries(data)
-    .map(([key,n])=>({key,...(n && typeof n==="object" ? n : {})}))
-    .filter(n=>n.title || n.excerpt || n.content)
+    .map(([key,n])=>({key,...(n && typeof n==="object"?n:{})}))
+    .filter(n=>Boolean(n.title||n.excerpt||n.content))
     .sort((a,b)=>{
-      const ta=Number(a.createdAt||0), tb=Number(b.createdAt||0);
-      if(tb!==ta) return tb-ta;
+      const ca=Number(a.createdAt||0), cb=Number(b.createdAt||0);
+      if(cb!==ca)return cb-ca;
       const ua=Number(a.updatedAt||0), ub=Number(b.updatedAt||0);
-      if(ub!==ua) return ub-ua;
-      const oa=Number(a.order||999999), ob=Number(b.order||999999);
-      if(oa!==ob) return oa-ob;
+      if(ub!==ua)return ub-ua;
       return String(b.key).localeCompare(String(a.key));
     })
     .slice(0,3);
 }
 
-function renderHomeNewsFromData(data){
+function renderNews(data){
   homeNews=normalizeNews(data);
-  if(!area) return;
+  homeNewsIndex=0;
 
-  if(!homeNews.length){
+  if(!area)return;
+
+  if(homeNews.length===0){
     area.innerHTML='<div class="empty-news"><h3>Nenhuma notícia publicada.</h3><p>As novidades da Auradon Prep aparecerão aqui.</p></div>';
     return;
   }
 
   area.innerHTML=homeNews.map((n,i)=>`
-    <article class="news-slide ${i===0?"active":""}" data-news-index="${i}" style="${i===0?"display:grid":"display:none"}">
+    <article class="news-slide ${i===0?"active":""}" data-news-index="${i}">
       <div>
         ${n.imageUrl?`<img class="news-home-image" src="${esc(n.imageUrl)}" alt="${esc(n.title||"Imagem da notícia")}">`:""}
       </div>
@@ -1408,7 +1409,6 @@ function renderHomeNewsFromData(data){
     ${homeNews.map((_,i)=>`<button class="news-dot ${i===0?"active":""}" data-news-dot="${i}" aria-label="Notícia ${i+1}"></button>`).join("")}
   </div>`;
 
-  homeNewsIndex=0;
   area.querySelectorAll(".news-dot").forEach(btn=>{
     btn.addEventListener("click",()=>showNews(Number(btn.dataset.newsDot)));
   });
@@ -1419,51 +1419,41 @@ function showNews(index){
   const dots=area?.querySelectorAll(".news-dot")||[];
   if(!slides.length)return;
   homeNewsIndex=((index%slides.length)+slides.length)%slides.length;
-  slides.forEach((slide,i)=>{
-    slide.style.display=i===homeNewsIndex?"grid":"none";
-    slide.classList.toggle("active",i===homeNewsIndex);
+  slides.forEach((el,i)=>{
+    el.style.display=i===homeNewsIndex?"grid":"none";
+    el.classList.toggle("active",i===homeNewsIndex);
   });
-  dots.forEach((dot,i)=>dot.classList.toggle("active",i===homeNewsIndex));
+  dots.forEach((el,i)=>el.classList.toggle("active",i===homeNewsIndex));
 }
 
-function nextHomeNews(){
-  if(homeNews.length>1) showNews(homeNewsIndex+1);
+function connectNews(){
+  if(retryTimer)clearTimeout(retryTimer);
+  const newsRef=ref(db,"site/noticias");
+
+  onValue(newsRef,
+    snapshot=>{
+      connected=true;
+      console.log("[Descendentes] site/noticias sincronizado:",snapshot.exists(),snapshot.numChildren());
+      renderNews(snapshot.val());
+    },
+    error=>{
+      connected=false;
+      console.error("[Descendentes] Erro REALTIME em site/noticias:",error);
+
+      // Do not overwrite a previously loaded news list because of a temporary
+      // connection interruption. Retry automatically.
+      if(!homeNews.length && area){
+        area.innerHTML='<div class="empty-news"><h3>Conectando às notícias...</h3><p>Aguardando resposta do Firebase.</p></div>';
+      }
+      retryTimer=setTimeout(connectNews,5000);
+    }
+  );
 }
+
+connectNews();
 window.showNews=showNews;
-window.nextHomeNews=nextHomeNews;
-
-const newsRef=ref(db,"site/noticias");
-
-/* Leitura inicial explícita: garante que o card seja preenchido mesmo
-   quando o listener demorar a iniciar. */
-get(newsRef).then(snapshot=>{
-  firstNewsResponse=true;
-  console.log("[Descendentes] Notícias iniciais:",snapshot.exists(),snapshot.numChildren());
-  renderHomeNewsFromData(snapshot.val());
-}).catch(error=>{
-  firstNewsResponse=true;
-  console.error("[Descendentes] Erro ao buscar site/noticias:",error);
-  if(area) area.innerHTML='<div class="empty-news"><h3>Não foi possível carregar as notícias.</h3><p>Verifique o acesso ao Firebase.</p></div>';
-});
-
-/* Sincronização contínua: publicar, editar ou excluir no CPainel atualiza a home. */
-onValue(newsRef,snapshot=>{
-  firstNewsResponse=true;
-  console.log("[Descendentes] Sincronização de notícias:",snapshot.exists(),snapshot.numChildren());
-  renderHomeNewsFromData(snapshot.val());
-},error=>{
-  firstNewsResponse=true;
-  console.error("[Descendentes] Listener de notícias:",error);
-});
-
-/* Evita qualquer estado de carregamento preso. */
-setTimeout(()=>{
-  if(!firstNewsResponse && area && !area.querySelector(".news-slide")){
-    area.innerHTML='<div class="empty-news"><h3>Não foi possível conectar às notícias.</h3><p>Tente atualizar a página.</p></div>';
-  }
-},8000);
-
-setInterval(nextHomeNews,8000);
+window.nextHomeNews=()=>{if(homeNews.length>1)showNews(homeNewsIndex+1);};
+setInterval(()=>{if(homeNews.length>1)showNews(homeNewsIndex+1);},8000);
 </script>
 
 
