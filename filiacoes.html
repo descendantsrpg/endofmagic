@@ -815,21 +815,11 @@ body{
 </style>
 
 <style id="filiacao-lotada-final">
-.filiacao-photo-wrap{
+.aff.filiacao-lotada{
   position:relative !important;
-  width:100% !important;
   overflow:hidden !important;
-  border-radius:inherit !important;
-  line-height:0 !important;
 }
-.filiacao-photo-wrap .filiacao-photo{
-  display:block !important;
-  width:100% !important;
-  height:auto !important;
-  max-width:100% !important;
-  object-fit:cover !important;
-}
-.filiacao-photo-wrap .filiacao-full-overlay{
+.aff.filiacao-lotada .filiacao-full-overlay{
   position:absolute !important;
   inset:0 !important;
   width:100% !important;
@@ -837,13 +827,27 @@ body{
   max-width:none !important;
   object-fit:cover !important;
   object-position:center !important;
-  z-index:5 !important;
+  z-index:8 !important;
   pointer-events:none !important;
 }
-.filiacao-vagas{
+.aff.filiacao-lotada .name{
+  position:relative !important;
+  z-index:10 !important;
+  color:transparent !important;
+  -webkit-text-fill-color:transparent !important;
+}
+.aff.filiacao-lotada .count{
+  position:relative !important;
+  z-index:11 !important;
+  display:block !important;
   color:#d00000 !important;
   -webkit-text-fill-color:#d00000 !important;
   font-weight:700 !important;
+  text-shadow:0 1px 2px rgba(255,255,255,.65) !important;
+}
+.aff.filiacao-lotada .filiacao-photo-wrap{
+  position:relative !important;
+  z-index:1 !important;
 }
 </style>
 </head>
@@ -904,8 +908,9 @@ function render(){
  box.innerHTML=Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([studio,stories])=>
  `<article class="group"><h2>${esc(studio)}</h2>${Object.entries(stories).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([story,items])=>
  `<div class="story"><h3>${esc(story)}</h3><div class="affs">${items.sort((a,b)=>a.name.localeCompare(b.name,"pt-BR",{sensitivity:"base"})).map(a=>
- `<div class="aff">
-  ${a.imageUrl?`<div class="filiacao-photo-wrap"><img class="filiacao-photo" src="${esc(a.imageUrl)}" alt="Foto de ${esc(a.name)}">${a.current >= a.maxChildren ? '<img class="filiacao-full-overlay" src="./assets/filiacao-lotada.png" alt="" aria-hidden="true">' : ''}</div>`:""}
+ `<div class="aff ${a.current >= a.maxChildren ? "filiacao-lotada" : ""}">
+  ${a.imageUrl?`<div class="filiacao-photo-wrap"><img class="filiacao-photo" src="${esc(a.imageUrl)}" alt="Foto de ${esc(a.name)}"></div>`:""}
+  ${a.current >= a.maxChildren ? '<img class="filiacao-full-overlay" src="./assets/filiacao-lotada.png" alt="" aria-hidden="true">' : ''}
   <div class="name">${esc(a.name)}</div>
   <div class="count ${a.current >= a.maxChildren ? "full filiacao-vagas" : ""}">(${String(a.current).padStart(2,"0")}/${String(a.maxChildren).padStart(2,"0")})</div>
 </div>`).join("")}</div></div>`).join("")}</article>`).join("");
