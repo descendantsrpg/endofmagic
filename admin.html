@@ -88,9 +88,21 @@ label, .menu button, nav a { font-family: "Comfortaa", Arial, sans-serif !import
   document.addEventListener('DOMContentLoaded',()=>{$('loginForm').addEventListener('submit',login)});
 })();
 </script>
-<script type="module">
-import {db} from './firebase-init.js';
-import {ref,push,set,update,remove,get,onValue,runTransaction} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js';
+<script>
+(async function(){
+let db, ref, push, set, update, remove, get, onValue;
+try {
+  const [init, rtdb] = await Promise.all([
+    import('./firebase-init.js'),
+    import('https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js')
+  ]);
+  db=init.db; ({ref,push,set,update,remove,get,onValue}=rtdb);
+} catch (err) {
+  console.error('Falha ao inicializar Firebase do CPainel:', err);
+  const status=document.getElementById('dbStatus');
+  if(status) status.textContent='Erro ao conectar ao banco de dados: '+(err.message||err);
+  return;
+}
 const $=id=>document.getElementById(id), SESSION='descendentes_admin_session', ADMIN='site/admins';
 let currentAdmin=null, maintenance=false, events={}, affiliations={}, students={}, faculty={};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -123,7 +135,17 @@ function editStudent(k){const x=students[k];if(!x)return;for(const [id,val] of [
 async function deleteStudent(k){if(!confirm('Apagar este aluno?'))return;await remove(ref(db,'site/alunos/'+k))}
 $('clearStudent').onclick=()=>{$('studentForm').reset();$('studentId').value='';$('studentImagePreview').innerHTML='';$('studentStatus').textContent=''};
 $('studentForm').onsubmit=async e=>{e.preventDefault();const st=$('studentStatus');st.textContent='Salvando...';try{const id=$('studentId').value||push(ref(db,'site/alunos')).key,old=students[id]||{};let image=old.imageUrl||null;if($('studentImage').files[0])image=await imageData($('studentImage').files[0]);await set(ref(db,'site/alunos/'+id),{name:$('studentName').value.trim(),type:$('studentType').value,age:Number($('studentAge').value),sexuality:$('studentSexuality').value.trim(),affiliationStudio:$('studentAffiliationStudio').value.trim(),affiliationStory:$('studentAffiliationStory').value.trim(),filiation:$('studentFiliation').value.trim(),fairyTale:$('studentFairyTale').value.trim(),imageUrl:image,updatedAt:Date.now()});st.textContent='Aluno salvo.';$('clearStudent').click()}catch(e){st.textContent=e.message||'Erro ao salvar.'}};
-function renderEvents(){const arr=Object.entries(events).map(([key,v])=>({key,...v})).sort((a,b)=>(a.startDate||'').localeCompare(b.startDate||''));$('eventList').innerHTML=arr.length?arr.map(x=>'<div class="item"><div><strong>'+esc(x.title)+'</strong><div class="meta">'+esc(x.startDate)+(x.endDate&&x.endDate!==x.startDate?' até '+esc(x.endDate):'')+' • <span class="pill" style="border-color:'+({red:'#d62828',blue:'#1976d2',black:'#111',purple:'#7b2cbf'}[x.color||'red']||'#d62828')+';color:'+({red:'#ff6b6b',blue:'#6fb5ff',black:'#fff',purple:'#c78cff'}[x.color||'red']||'#ff6b6b')+'">'+esc(x.category||'')+'</span>'</div>'+(x.description?'<p>'+esc(x.description)+'</p>':'')+'</div><div class="actions"><button data-edit-event="'+x.key+'">Editar</button><button data-del-event="'+x.key+'">Excluir</button></div></div>').join(''):'<div class="empty">Nenhum evento cadastrado.</div>';document.querySelectorAll('[data-edit-event]').forEach(b=>b.onclick=()=>editEvent(b.dataset.editEvent));document.querySelectorAll('[data-del-event]').forEach(b=>b.onclick=()=>deleteEvent(b.dataset.delEvent))}
+function renderEvents(){
+  const colors={red:'#d62828',blue:'#1976d2',black:'#111',purple:'#7b2cbf'};
+  const textColors={red:'#ff6b6b',blue:'#6fb5ff',black:'#fff',purple:'#c78cff'};
+  const arr=Object.entries(events).map(([key,v])=>({key,...v})).sort((a,b)=>(a.startDate||'').localeCompare(b.startDate||''));
+  $('eventList').innerHTML=arr.length?arr.map(x=>{
+    const c=x.color||'red';
+    return `<div class="item"><div><strong>${esc(x.title)}</strong><div class="meta">${esc(x.startDate)}${x.endDate&&x.endDate!==x.startDate?' até '+esc(x.endDate):''} • <span class="pill" style="border-color:${colors[c]||colors.red};color:${textColors[c]||textColors.red}">${esc(x.category||'')}</span></div>${x.description?`<p>${esc(x.description)}</p>`:''}</div><div class="actions"><button type="button" data-edit-event="${x.key}">Editar</button><button type="button" data-del-event="${x.key}">Excluir</button></div></div>`;
+  }).join(''):'<div class="empty">Nenhum evento cadastrado.</div>';
+  document.querySelectorAll('[data-edit-event]').forEach(b=>b.onclick=()=>editEvent(b.dataset.editEvent));
+  document.querySelectorAll('[data-del-event]').forEach(b=>b.onclick=()=>deleteEvent(b.dataset.delEvent));
+}
 function editEvent(k){const x=events[k];if(!x)return;$('eventId').value=k;$('eventTitle').value=x.title||'';$('eventStartDate').value=x.startDate||'';$('eventEndDate').value=x.endDate||x.startDate||'';$('eventCategory').value=x.category||'';$('eventColor').value=x.color||'red';$('eventDescription').value=x.description||'';document.querySelector('[data-page="eventos"]').click()}
 async function deleteEvent(k){if(!confirm('Excluir este evento?'))return;await remove(ref(db,'site/eventos/'+k))}
 $('eventStartDate').onchange=()=>{if(!$('eventEndDate').value)$('eventEndDate').value=$('eventStartDate').value};$('clearEvent').onclick=()=>{$('eventForm').reset();$('eventId').value='';$('eventStatus').textContent=''};$('eventForm').onsubmit=async e=>{e.preventDefault();const st=$('eventStatus'),id=$('eventId').value,start=$('eventStartDate').value,end=$('eventEndDate').value;if(end<start){st.textContent='A data final não pode ser anterior à inicial.';return}st.textContent='Salvando...';try{const p={title:$('eventTitle').value.trim(),startDate:start,endDate:end,category:$('eventCategory').value.trim(),color:$('eventColor').value,description:$('eventDescription').value.trim(),updatedAt:Date.now()};if(id)await update(ref(db,'site/eventos/'+id),p);else await set(push(ref(db,'site/eventos')),{...p,createdAt:Date.now()});st.textContent='Evento salvo e sincronizado com o calendário.';$('clearEvent').click()}catch(e){st.textContent='Erro ao salvar: '+e.message}};
@@ -134,5 +156,6 @@ async function deleteFaculty(k){if(!confirm('Apagar este docente?'))return;await
 $('clearFaculty').onclick=()=>{$('facultyForm').reset();$('facultyId').value='';$('facultyRoleManual').style.display='none';$('facultyImagePreview').innerHTML='';$('facultyStatus').textContent=''};$('facultyForm').onsubmit=async e=>{e.preventDefault();const st=$('facultyStatus');st.textContent='Salvando...';try{const r=role();if(!r)throw Error('Informe o cargo.');const id=$('facultyId').value||push(ref(db,'site/docentes')).key,old=faculty[id]||{};let image=old.imageUrl||null;if($('facultyImage').files[0])image=await imageData($('facultyImage').files[0]);await set(ref(db,'site/docentes/'+id),{name:$('facultyName').value.trim(),role:r,subject:$('facultySubject').value.trim(),imageUrl:image,updatedAt:Date.now()});st.textContent='Docente salvo.';$('clearFaculty').click()}catch(e){st.textContent='Erro: '+e.message}};
 $('userEditorForm').onsubmit=async e=>{e.preventDefault();const st=$('profileStatus');try{const name=$('profileDisplayName').value.trim(),email=$('profileEmail').value.trim();if(!name)throw Error('Informe o nome.');const p={name,email,updatedAt:Date.now()},cur=$('currentPassword').value,n=$('newPassword').value,c=$('confirmPassword').value;if(cur||n||c){if(!cur||!n||n.length<6||n!==c)throw Error('Confira as senhas.');if(await sha(cur)!==currentAdmin.passwordHash)throw Error('Senha atual incorreta.');p.passwordHash=await sha(n)}await update(ref(db,ADMIN+'/'+currentAdmin.key),p);currentAdmin={...currentAdmin,...p};localStorage.setItem(SESSION,currentAdmin.key);st.textContent='Dados atualizados.'}catch(e){st.textContent=e.message||'Erro ao salvar.'}};
 restore();
+})();
 </script>
 </body></html>
