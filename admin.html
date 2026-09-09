@@ -323,7 +323,7 @@ body::before, body::after{
   background-color:rgba(7,4,14,.62)!important;
   background-image:none!important;
 }
-</style></style>
+</style>
 <style id="bugfix-final-theme">
 /* ===== CORREÇÃO FINAL DO CPAINEL ===== */
 html,body{background:#080509 url("./assets/site-background.jpg") center center / cover fixed no-repeat!important;}
@@ -559,6 +559,38 @@ html body img[alt="Descendentes RPG"]{
 #adminView .page{display:none!important}#adminView .page.active{display:block!important}.event-admin-item{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:12px;margin-bottom:10px}.event-admin-item .meta{margin-top:5px;font-size:.78rem}.event-admin-item p{margin:7px 0 0;font-size:.82rem}.event-admin-item .actions{display:flex;gap:7px;flex-wrap:wrap}.event-admin-item .actions .btn{margin:0!important}
 </style>
 <link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v3">
+
+<style id="cpanel-structure-fix-20260909">
+/* ===== ESTRUTURA CORRIGIDA DO CPAINEL ===== */
+html,body{min-height:100%;margin:0;}
+body.halloween-theme{min-height:100vh;overflow-x:hidden;}
+body.halloween-theme .container{width:min(1180px,calc(100% - 32px))!important;max-width:1180px!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important;}
+body.halloween-theme header.top{width:100%!important;min-height:118px!important;box-sizing:border-box!important;}
+body.halloween-theme header.top .topin{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important;padding:16px 0!important;}
+body.halloween-theme header.top .brand{display:flex!important;align-items:center!important;gap:14px!important;min-width:0!important;}
+body.halloween-theme header.top .brand img{width:220px!important;max-width:220px!important;height:auto!important;display:block!important;}
+body.halloween-theme header.top .brand span{font-size:14px!important;font-weight:700!important;color:#fff!important;}
+body.halloween-theme main.container{padding:24px 0 30px!important;}
+#loginView{width:min(560px,100%)!important;margin:25px auto 28px!important;box-sizing:border-box!important;padding:30px!important;}
+#loginView .actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;}
+#loginView .actions .btn{min-height:48px!important;margin:0!important;}
+#adminView{width:100%!important;}
+#adminView > .admin-sidebar{position:relative!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;width:100%!important;height:auto!important;margin:0 0 24px!important;padding:16px!important;box-sizing:border-box!important;background:rgba(7,4,14,.84)!important;border:1px solid rgba(245,124,0,.32)!important;border-radius:16px!important;overflow:visible!important;transform:none!important;inset:auto!important;}
+#adminView > .admin-sidebar > button[data-page]{width:100%!important;min-height:56px!important;margin:0!important;padding:12px!important;display:flex!important;align-items:center!important;justify-content:center!important;border-radius:11px!important;background:#f57c00!important;background-color:#f57c00!important;border:1px solid #f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;font-family:"Comfortaa",sans-serif!important;font-weight:700!important;cursor:pointer!important;box-sizing:border-box!important;}
+#adminView > .admin-sidebar > button[data-page]:hover,#adminView > .admin-sidebar > button[data-page].active{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
+#adminView > .grid{display:block!important;width:100%!important;}
+#adminView > .grid > .content{display:block!important;width:100%!important;min-width:0!important;}
+#adminView .page{width:100%!important;box-sizing:border-box!important;}
+#adminView .card{width:100%;box-sizing:border-box;}
+#adminView .actions{display:flex;flex-wrap:wrap;gap:10px;}
+#adminView .actions .btn,#adminView button,#adminView input[type=submit],#adminView input[type=button]{background:#f57c00!important;background-color:#f57c00!important;border-color:#f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
+#adminView .actions .btn:hover,#adminView button:hover,#adminView input[type=submit]:hover,#adminView input[type=button]:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;}
+#logout{background:#f57c00!important;background-color:#f57c00!important;border-color:#f57c00!important;color:#fff!important;}
+#logout:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;}
+body.halloween-theme .site-disclaimer-footer{width:min(1100px,calc(100% - 32px))!important;margin:28px auto 0!important;position:relative!important;box-sizing:border-box!important;font-size:10px!important;}
+@media(max-width:900px){#adminView > .admin-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important;}#loginView .actions{grid-template-columns:1fr!important;}body.halloween-theme header.top .brand img{width:190px!important;max-width:190px!important;}}
+@media(max-width:520px){body.halloween-theme .container{width:calc(100% - 20px)!important;}body.halloween-theme header.top{min-height:94px!important;}body.halloween-theme header.top .topin{padding:10px 0!important;}body.halloween-theme header.top .brand img{width:165px!important;max-width:165px!important;}#adminView > .admin-sidebar{grid-template-columns:1fr!important;padding:12px!important;}#adminView > .admin-sidebar > button[data-page]{min-height:52px!important;}#loginView{padding:20px!important;}}
+</style>
 </head>
 
 <style id="db-loading-style">
@@ -581,10 +613,10 @@ html body img[alt="Descendentes RPG"]{
   #dbLoadingOverlay img{width:min(310px,82vw);}
 }
 </style>
+<body class="halloween-theme">
 <div id="dbLoadingOverlay" class="is-loading" role="status" aria-live="polite" aria-label="Aguarde, estamos carregando o banco de dados">
   <img src="assets/db-loading.png" alt="Aguarde, estamos carregando o banco de dados">
 </div>
-<body class="halloween-theme">
 <div class="halloween-decor" aria-hidden="true">
   <span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span>
   <span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span>
@@ -1740,5 +1772,38 @@ body.halloween-theme footer.site-disclaimer-footer{font-size:10px!important}
 .site-disclaimer-footer p{margin:5px 0;}
 @media(max-width:600px){.site-disclaimer-footer{font-size:10px;padding:16px 12px;margin-top:32px;}}
 </style>
+
+<style id="cpanel-structure-fix-20260909">
+/* ===== ESTRUTURA CORRIGIDA DO CPAINEL ===== */
+html,body{min-height:100%;margin:0;}
+body.halloween-theme{min-height:100vh;overflow-x:hidden;}
+body.halloween-theme .container{width:min(1180px,calc(100% - 32px))!important;max-width:1180px!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important;}
+body.halloween-theme header.top{width:100%!important;min-height:118px!important;box-sizing:border-box!important;}
+body.halloween-theme header.top .topin{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important;padding:16px 0!important;}
+body.halloween-theme header.top .brand{display:flex!important;align-items:center!important;gap:14px!important;min-width:0!important;}
+body.halloween-theme header.top .brand img{width:220px!important;max-width:220px!important;height:auto!important;display:block!important;}
+body.halloween-theme header.top .brand span{font-size:14px!important;font-weight:700!important;color:#fff!important;}
+body.halloween-theme main.container{padding:24px 0 30px!important;}
+#loginView{width:min(560px,100%)!important;margin:25px auto 28px!important;box-sizing:border-box!important;padding:30px!important;}
+#loginView .actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;}
+#loginView .actions .btn{min-height:48px!important;margin:0!important;}
+#adminView{width:100%!important;}
+#adminView > .admin-sidebar{position:relative!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;width:100%!important;height:auto!important;margin:0 0 24px!important;padding:16px!important;box-sizing:border-box!important;background:rgba(7,4,14,.84)!important;border:1px solid rgba(245,124,0,.32)!important;border-radius:16px!important;overflow:visible!important;transform:none!important;inset:auto!important;}
+#adminView > .admin-sidebar > button[data-page]{width:100%!important;min-height:56px!important;margin:0!important;padding:12px!important;display:flex!important;align-items:center!important;justify-content:center!important;border-radius:11px!important;background:#f57c00!important;background-color:#f57c00!important;border:1px solid #f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;font-family:"Comfortaa",sans-serif!important;font-weight:700!important;cursor:pointer!important;box-sizing:border-box!important;}
+#adminView > .admin-sidebar > button[data-page]:hover,#adminView > .admin-sidebar > button[data-page].active{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
+#adminView > .grid{display:block!important;width:100%!important;}
+#adminView > .grid > .content{display:block!important;width:100%!important;min-width:0!important;}
+#adminView .page{width:100%!important;box-sizing:border-box!important;}
+#adminView .card{width:100%;box-sizing:border-box;}
+#adminView .actions{display:flex;flex-wrap:wrap;gap:10px;}
+#adminView .actions .btn,#adminView button,#adminView input[type=submit],#adminView input[type=button]{background:#f57c00!important;background-color:#f57c00!important;border-color:#f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
+#adminView .actions .btn:hover,#adminView button:hover,#adminView input[type=submit]:hover,#adminView input[type=button]:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;}
+#logout{background:#f57c00!important;background-color:#f57c00!important;border-color:#f57c00!important;color:#fff!important;}
+#logout:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;}
+body.halloween-theme .site-disclaimer-footer{width:min(1100px,calc(100% - 32px))!important;margin:28px auto 0!important;position:relative!important;box-sizing:border-box!important;font-size:10px!important;}
+@media(max-width:900px){#adminView > .admin-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))!important;}#loginView .actions{grid-template-columns:1fr!important;}body.halloween-theme header.top .brand img{width:190px!important;max-width:190px!important;}}
+@media(max-width:520px){body.halloween-theme .container{width:calc(100% - 20px)!important;}body.halloween-theme header.top{min-height:94px!important;}body.halloween-theme header.top .topin{padding:10px 0!important;}body.halloween-theme header.top .brand img{width:165px!important;max-width:165px!important;}#adminView > .admin-sidebar{grid-template-columns:1fr!important;padding:12px!important;}#adminView > .admin-sidebar > button[data-page]{min-height:52px!important;}#loginView{padding:20px!important;}}
+</style>
+
 </body>
 </html>

@@ -9,7 +9,9 @@
 :root{--red:#b30000;--red-dark:#7f0000;--panel:rgba(12,10,22,.84)}
 *{box-sizing:border-box}
 html{min-height:100%;background:#0b0a18 url("./assets/site-background.jpg") center/cover fixed no-repeat}
-body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;font-family:"Comfortaa",sans-serif;color:#fff;background:transparent}
+body{margin:0;min-height:100vh;display:block;padding:24px;font-family:"Comfortaa",sans-serif;color:#fff;background:transparent}
+.access-card{margin:0 auto 28px}
+.site-disclaimer-footer{display:block;width:min(1100px,100%);margin:0 auto;box-sizing:border-box;clear:both}
 .access-card{width:min(620px,100%);padding:38px 30px;background:var(--panel);border:1px solid rgba(255,255,255,.18);border-radius:24px;box-shadow:0 16px 45px rgba(0,0,0,.35);backdrop-filter:blur(9px);text-align:center}
 .logo{display:block;width:min(300px,75vw);height:auto;margin:0 auto 25px}
 h1{font-size:clamp(1.7rem,4vw,2.4rem);margin:0 0 16px}
@@ -70,6 +72,11 @@ html body img[alt="Descendentes RPG"]{
 }
 </style>
 <style>.site-disclaimer-footer,.site-disclaimer-footer *{font-size:10px!important;line-height:1.55}</style><link rel="stylesheet" href="./assets/halloween.css?v=20260909-halloween-v2">
+<style id="access-footer-fix">
+.access-card{margin:0 auto 28px!important}
+.site-disclaimer-footer{position:relative!important;display:block!important;width:min(1100px,100%)!important;margin:0 auto!important;clear:both!important;box-sizing:border-box!important;float:none!important}
+.site-disclaimer-footer .rpg-disclaimer{width:100%!important}
+</style>
 </head>
 <body class="halloween-theme">
 <div class="halloween-decor" aria-hidden="true">
