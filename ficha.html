@@ -1,60 +1,15 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Criar Ficha • Descendentes RPG</title><link rel="stylesheet" href="./assets/site.css"><link rel="stylesheet" href="./assets/content-pages.css"></head><body class="ficha-page">
+<script>try{const s=JSON.parse(localStorage.getItem("descendentes_account_session")||"null");if(!s||!s.accountId)location.replace("cadastro.html");}catch(e){location.replace("cadastro.html")}</script>
 <main class="container ficha-flow">
-  <section id="welcome" class="ficha-screen active ficha-welcome">
-    <div class="eyebrow">AURADON PREP · END OF MAGIC</div><h1>Bem-vindo!</h1>
-    <p>É bom ter você aqui. Sua jornada mágica está prestes a começar.</p>
-    <div class="welcome-copy">Prepare-se para conhecer Auradon, criar seu personagem e escrever sua própria história dentro do Descendentes RPG.</div>
-    <div class="actions"><button class="btn" id="startBtn" type="button">Criar Personagem</button><a class="btn secondary" href="index.html">Voltar ao site</a></div>
-  </section>
-
-  <section id="formArea" class="ficha-screen">
-    <div class="hero ficha-hero"><div class="eyebrow">AURADON PREP · END OF MAGIC</div><h1>Criar sua ficha</h1><p>Vamos fazer isso passo a passo. Você poderá acompanhar e gerenciar sua ficha usando seu login.</p></div>
-    <div class="progress"><span class="progress-step active" data-step="1">I · Acesso</span><span class="progress-step" data-step="2">II · Você</span><span class="progress-step" data-step="3">III · Personagem</span></div>
-
-    <section class="ficha-card ficha-step active" data-panel="1">
-      <div class="section-title">Pra Início de Conversa...</div><h2>Crie seu Login</h2>
-      <p>Você deverá criar um login e uma senha para editar suas fichas criadas e ver o status de aprovação. Guarde esses dados: eles serão usados para acessar sua área de gerenciamento.</p>
-      <div class="notice">Se você já criou sua ficha, <a href="ficha-status.html">clique aqui</a> para ir à página de gerenciamento e consultar o status.</div>
-      <form id="accountForm"><div class="form-grid">
-        <div class="field"><label for="login">* Crie seu Login</label><input id="login" autocomplete="username" maxlength="50" required placeholder="Seu login"></div>
-        <div class="field"><label for="password">* Crie sua Senha</label><input id="password" type="password" autocomplete="new-password" minlength="6" maxlength="120" required placeholder="Mínimo de 6 caracteres"></div>
-        <div class="field"><label for="passwordConfirm">* Confirme sua Senha</label><input id="passwordConfirm" type="password" autocomplete="new-password" minlength="6" maxlength="120" required placeholder="Digite novamente"></div>
-      </div><div class="error" id="accountError"></div><div class="actions"><button class="btn" type="submit">Continuar →</button><a class="btn secondary" href="index.html">Voltar ao site</a></div></form>
-    </section>
-
-    <section class="ficha-card ficha-step" data-panel="2">
-      <div class="section-title">Queremos Te Conhecer Melhor</div><h2>Queremos saber um pouco sobre você antes de iniciarmos</h2>
-      <div class="notice age-warning"><strong>⚠️ Aviso de idade:</strong> este RPG é recomendado para maiores de 16 anos. Menores de 16 anos não poderão concluir o cadastro.</div>
-      <form id="aboutForm"><div class="form-grid">
-        <div class="field"><label for="playerName">* Seu Nome</label><input id="playerName" maxlength="100" required></div>
-        <div class="field"><label for="playerAge">* Sua Idade</label><input id="playerAge" type="number" min="1" max="120" required></div>
-        <div class="field full"><label>* Disponibilidade para Cena</label><div class="availability-grid"><label><input type="checkbox" name="availability" value="Manhã"> Manhã</label><label><input type="checkbox" name="availability" value="Tarde"> Tarde</label><label><input type="checkbox" name="availability" value="Noite"> Noite</label><label><input type="checkbox" name="availability" value="Madrugada"> Madrugada</label></div></div>
-      </div><div class="error" id="aboutError"></div><div class="actions"><button class="btn secondary" id="backTo1" type="button">← Voltar</button><button class="btn" type="submit">Continuar →</button></div></form>
-    </section>
-
-    <section class="ficha-card ficha-step" data-panel="3">
-      <div class="section-title">Chegou a Hora de Criar Seu Personagem</div>
-      <p>Agora é hora de dar vida ao seu personagem.</p>
-      <form id="characterForm"><div class="form-grid">
-        <div class="field"><label for="characterName">* Nome do Personagem</label><input id="characterName" maxlength="100" required></div>
-        <div class="field"><label for="characterAge">* Idade do Personagem</label><input id="characterAge" type="number" min="1" max="120" required></div>
-        <div class="field"><label for="sexuality">* Sexualidade</label><input id="sexuality" maxlength="100" required></div>
-
-        <div class="field"><label for="studio">* Estúdio</label><select id="studio" required><option value="">Carregando estúdios...</option></select></div>
-        <div class="field"><label for="fairyTale">* Conto de Fadas</label><select id="fairyTale" required disabled><option value="">Selecione primeiro o estúdio...</option></select></div>
-        <div class="field full"><label for="progenitor">* Progenitor</label><select id="progenitor" required disabled><option value="">Selecione primeiro o conto de fadas...</option></select><div class="help">A sequência é: Estúdio → Conto de Fadas → Progenitor. A disponibilidade de vagas é atualizada a partir do banco de dados.</div><div id="progenitorStatus" class="filiation-status wait">Aguardando seleção.</div></div>
-
-        <div class="field"><label for="royalRebel">* Royal ou Rebel</label><select id="royalRebel" required><option value="">Selecione</option><option value="Royal">Royal</option><option value="Rebel">Rebel</option></select></div>
-        <div class="field"><label for="activityPrimary">* Atividade Extracurricular — Principal</label><select id="activityPrimary" required><option value="">Selecione uma atividade</option></select></div>
-        <div class="field full"><label for="activitySecondary">Atividade Extracurricular — Secundária</label><select id="activitySecondary"><option value="">Nenhuma</option></select><div class="help">O sistema de aulas define 1 atividade principal e 1 atividade secundária.</div></div>
-
-        <div class="field full"><label for="powers">* Poderes</label><div class="notice">Você pode informar <strong>até 4 poderes</strong>. Coloque um poder por linha.</div><textarea id="powers" rows="6" placeholder="Poder 1\nPoder 2\nPoder 3\nPoder 4"></textarea><div class="counter" id="powersCount">0/4 poderes</div></div>
-        <div class="field full"><label for="history">* História</label><div class="notice">Escreva no mínimo <strong>20 linhas</strong> sobre a história do personagem.</div><textarea id="history" rows="14" required></textarea><div class="counter" id="historyCount">0/20 linhas</div></div>
-        <div class="field full"><label for="personality">* Personalidade</label><div class="notice">Escreva no mínimo <strong>20 linhas</strong> sobre a personalidade do personagem.</div><textarea id="personality" rows="14" required></textarea><div class="counter" id="personalityCount">0/20 linhas</div></div>
-        <div class="field full"><label for="avatar">* Avatar</label><input id="avatar" type="text" class="avatar-name-input" placeholder="Escreva o Nome do Seu Avatar" autocomplete="off"><div class="help">Escolha o nome do avatar que representará seu personagem.</div><input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><div id="avatarPreview" class="preview"></div></div>
-      </div><div class="error" id="characterError"></div><div class="actions"><button class="btn secondary" id="backTo2" type="button">← Voltar</button><button class="btn" type="submit">Finalizar e enviar ficha →</button></div></form>
-    </section>
-  </section>
-</main>
-<footer class="footer"><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍<br>Descendentes é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.<br>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</footer>
-<script type="module" src="./assets/ficha-cadastro.js"></script><script src="./assets/site-shell.js"></script></body></html>
+<section id="formArea" class="ficha-screen active">
+<div class="hero ficha-hero"><div class="eyebrow">AURADON PREP · END OF MAGIC</div><h1>Criar sua ficha</h1><p>Seu progresso é salvo automaticamente. Se você sair da página, poderá voltar depois e continuar de onde parou.</p></div>
+<div class="progress"><span class="progress-step active" data-step="2">II · Você</span><span class="progress-step" data-step="3">III · Personagem</span></div>
+<section class="ficha-card ficha-step active" data-panel="2" aria-hidden="false"><div class="section-title">Queremos Te Conhecer Melhor</div><h2>Queremos saber um pouco sobre você antes de iniciarmos</h2><div class="notice age-warning"><strong>⚠️ Aviso de idade:</strong> este RPG é recomendado para maiores de 16 anos. Menores de 16 anos não poderão concluir o cadastro.</div>
+<form id="aboutForm"><div class="form-grid"><div class="field full"><label for="playerName">* Seu Nome</label><input id="playerName" maxlength="100" required></div><div class="field"><label for="playerAge">* Sua Idade</label><input id="playerAge" type="number" min="1" max="120" required></div><div class="field full"><label>* Disponibilidade para Cena</label><div class="availability-grid"><label><input type="checkbox" name="availability" value="Manhã"> Manhã</label><label><input type="checkbox" name="availability" value="Tarde"> Tarde</label><label><input type="checkbox" name="availability" value="Noite"> Noite</label><label><input type="checkbox" name="availability" value="Madrugada"> Madrugada</label></div></div></div><div class="error" id="aboutError"></div><div class="actions"><button class="btn secondary" id="logoutDraft" type="button">Sair</button><button class="btn" type="submit">Continuar →</button></div></form></section>
+<section class="ficha-card ficha-step" data-panel="3" aria-hidden="true"><div class="section-title">Chegou a Hora de Criar Seu Personagem</div><p>Agora é hora de dar vida ao seu personagem. As alterações são salvas automaticamente.</p>
+<form id="characterForm"><div class="form-grid"><div class="field"><label for="characterName">* Nome do Personagem</label><input id="characterName" maxlength="100" required></div><div class="field"><label for="characterAge">* Idade do Personagem</label><input id="characterAge" type="number" min="1" max="120" required></div><div class="field"><label for="sexuality">* Sexualidade</label><input id="sexuality" maxlength="100" required></div>
+<div class="field"><label for="studio">* Estúdio</label><select id="studio" required><option value="">Carregando estúdios...</option></select></div><div class="field"><label for="fairyTale">* Conto de Fadas</label><select id="fairyTale" required disabled><option value="">Selecione primeiro o estúdio...</option></select></div><div class="field full"><label for="progenitor">* Progenitor</label><select id="progenitor" required disabled><option value="">Selecione primeiro o conto de fadas...</option></select><div class="help">Estúdio → Conto de Fadas → Progenitor. A disponibilidade de vagas é atualizada a partir do banco de dados.</div><div id="progenitorStatus" class="filiation-status wait">Aguardando seleção.</div></div>
+<div class="field"><label for="royalRebel">* Royal ou Rebel</label><select id="royalRebel" required><option value="">Selecione</option><option value="Royal">Royal</option><option value="Rebel">Rebel</option></select></div><div class="field"><label for="activityPrimary">* Atividade Extracurricular — Principal</label><select id="activityPrimary" required><option value="">Selecione uma atividade</option></select></div><div class="field full"><label for="activitySecondary">Atividade Extracurricular — Secundária</label><select id="activitySecondary"><option value="">Nenhuma</option></select></div>
+<div class="field full"><label for="powers">* Poderes</label><div class="notice">Você pode informar <strong>até 4 poderes</strong>. Coloque um poder por linha.</div><textarea id="powers" rows="6" placeholder="Poder 1\nPoder 2\nPoder 3\nPoder 4"></textarea><div class="counter" id="powersCount">0/4 poderes</div></div><div class="field full"><label for="history">* História</label><div class="notice">Escreva no mínimo <strong>20 linhas</strong> sobre a história do personagem.</div><textarea id="history" rows="14" required></textarea><div class="counter" id="historyCount">0/20 linhas</div></div><div class="field full"><label for="personality">* Personalidade</label><div class="notice">Escreva no mínimo <strong>20 linhas</strong> sobre a personalidade do personagem.</div><textarea id="personality" rows="14" required></textarea><div class="counter" id="personalityCount">0/20 linhas</div></div>
+<div class="field full"><label for="avatar">* Avatar</label><input id="avatar" type="text" class="avatar-name-input" placeholder="Escreva o Nome do Seu Avatar" autocomplete="off"><div class="help">Escolha o nome do avatar que representará seu personagem.</div><div class="avatar-upload-intro"><h3>Agora Prepare a Foto</h3><p>Escolha a foto mais bonita para seu personagem, pois ele irá pro anuário do site.</p></div><input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><div id="avatarPreview" class="preview"></div></div></div><div class="error" id="characterError"></div><div class="actions"><button class="btn secondary" id="backTo2" type="button">← Voltar</button><button class="btn" type="submit">Finalizar e enviar ficha →</button></div></form></section></section></main>
+<footer class="footer"><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍<br>Descendentes é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.<br>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</footer><script type="module" src="./assets/ficha-cadastro.js"></script><script src="./assets/site-shell.js"></script></body></html>

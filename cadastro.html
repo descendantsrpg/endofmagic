@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadastro • Descendentes RPG</title>
+<link rel="stylesheet" href="./assets/site.css">
+<link rel="stylesheet" href="./assets/content-pages.css">
+</head>
+<body class="ficha-page">
+<main class="container ficha-flow">
+  <section class="ficha-screen active">
+    <div class="hero ficha-hero">
+      <div class="eyebrow">AURADON PREP · END OF MAGIC</div>
+      <h1>É bom ter você aqui!</h1>
+      <p>Sua jornada mágica está prestes a começar. Crie sua conta para guardar seu progresso e depois criar sua ficha de personagem.</p>
+    </div>
+    <section class="ficha-card active" aria-labelledby="cadastro-title">
+      <div class="section-title" id="cadastro-title">Crie sua conta</div>
+      <h2>Antes de criar sua ficha, vamos preparar seu acesso.</h2>
+      <p>Seu usuário e senha serão usados para entrar na sua área, continuar uma ficha salva e acompanhar o status de aprovação.</p>
+      <form id="registerForm">
+        <div class="form-grid">
+          <div class="field full"><label for="name">* Nome</label><input id="name" maxlength="100" autocomplete="name" required placeholder="Digite seu nome"></div>
+          <div class="field"><label for="username">* Usuário</label><input id="username" maxlength="80" autocomplete="username" required placeholder="Crie seu usuário"></div>
+          <div class="field"><label for="email">* Email</label><input id="email" type="email" maxlength="160" autocomplete="email" required placeholder="seu@email.com"></div>
+          <div class="field"><label for="password">* Senha</label><input id="password" type="password" maxlength="120" autocomplete="new-password" required placeholder="Crie sua senha"></div>
+          <div class="field"><label for="passwordConfirm">* Confirmar senha</label><input id="passwordConfirm" type="password" maxlength="120" autocomplete="new-password" required placeholder="Repita sua senha"></div>
+        </div>
+        <div class="notice">Sua conta ficará salva no banco de dados para que você possa voltar ao site e continuar sua ficha depois.</div>
+        <div id="registerError" class="error" role="alert"></div>
+        <div class="actions">
+          <a class="btn secondary" href="index.html">Voltar ao site</a>
+          <a class="btn secondary" href="ficha-login.html">Já tenho cadastro</a>
+          <button class="btn" type="submit">Criar conta e continuar →</button>
+        </div>
+      </form>
+    </section>
+  </section>
+</main>
+<footer class="footer"><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍<br>Descendentes é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.<br>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</footer>
+<script type="module" src="./assets/cadastro.js"></script>
+<script src="./assets/site-shell.js"></script>
+</body>
+</html>
