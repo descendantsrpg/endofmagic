@@ -34,6 +34,10 @@
       "fichas": {
         ".read": true,
         ".write": true
+      },
+      "contas": {
+        ".read": true,
+        ".write": true
       }
     }
   }

@@ -8,7 +8,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
 :root{--red:#b30000;--red-dark:#7f0000;--panel:rgba(12,10,22,.82);--line:rgba(255,255,255,.15)}
 *{box-sizing:border-box}
-html{min-height:100%;background:#0b0a18 url("./site-background.jpg") center/cover fixed no-repeat}
+html{min-height:100%;background:#0b0a18 url("./assets/site-background.jpg") center/cover fixed no-repeat}
 body{margin:0;min-height:100%;font-family:"Comfortaa",sans-serif;font-weight:300;color:#fff;background:transparent}
 body,button,input,textarea,select,a{font-family:"Comfortaa",sans-serif}
 header{position:static!important;width:100%;height:auto;margin:0;padding:28px 18px 18px;text-align:center;background:transparent;border:0;box-shadow:none;backdrop-filter:none;transform:none;animation:none}
@@ -48,7 +48,7 @@ html{
   background-color:#020608 !important;
   background-image:
     linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
-    url("./site-background.jpg") !important;
+    url("./assets/site-background.jpg") !important;
   background-position:center center !important;
   background-size:cover !important;
   background-repeat:no-repeat !important;
@@ -141,6 +141,42 @@ label, .menu button, nav a { font-family: "Comfortaa", Arial, sans-serif !import
 
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8514046603358710"
      crossorigin="anonymous"></script>
+
+<style id="site-halloween-final">
+/* Tema Halloween final: fundo preto em todo o site */
+html, body { background:#000 !important; background-image:none !important; }
+body { color:#fff !important; }
+/* Menu mobile sem comportamento retrátil */
+@media (max-width:650px){
+  .mobile-menu-toggle,.mobile-menu-close,.mobile-nav-launcher,.mobile-nav-close{display:none !important;}
+  .home-main-nav{display:block !important; position:static !important; height:auto !important; padding:10px 12px !important; margin:0 !important; background:transparent !important; border:0 !important; box-shadow:none !important;}
+  .home-nav-links{position:static !important; inset:auto !important; transform:none !important; visibility:visible !important; opacity:1 !important; width:100% !important; height:auto !important; max-height:none !important; overflow:visible !important; display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:9px !important; padding:0 !important; background:transparent !important; border:0 !important; box-shadow:none !important;}
+  .home-nav-links a,.desktop-main-nav a{box-sizing:border-box !important; border:2px solid #f57c00 !important; border-radius:12px !important; background:#000 !important; color:#fff !important; box-shadow:none !important; text-decoration:none !important; padding:12px 9px !important; min-height:46px !important; display:flex !important; align-items:center !important; justify-content:center !important; text-align:center !important; font-family:Comfortaa,Arial,sans-serif !important; font-weight:700 !important;}
+  .home-nav-links a:hover,.home-nav-links a:focus{background:#f57c00 !important; border-color:#ff9d2e !important; color:#fff !important;}
+  .desktop-main-nav{display:none !important;}
+  /* O menu de navegação da home continua visível no mobile */
+  .home-quick-menu{margin-top:8px !important; background:#000 !important; border-color:rgba(245,124,0,.35) !important;}
+  .home-quick-menu-grid a{border:2px solid #f57c00 !important; background:#000 !important; color:#fff !important; box-shadow:none !important;}
+  .home-quick-menu-grid a:hover{background:#f57c00 !important; border-color:#ff9d2e !important;}
+}
+/* Remover definitivamente o efeito de gaveta do menu em páginas que ainda possuem o markup */
+.home-nav-links.open{transform:none !important; visibility:visible !important; opacity:1 !important;}
+body.halloween-theme .home-nav-links a{border-color:#f57c00 !important;}
+/* Abóboras de Halloween */
+body.halloween-theme::before, body.halloween-theme::after{
+  position:fixed !important; display:block !important; pointer-events:none !important; z-index:1 !important;
+  font-family:Arial,sans-serif !important; line-height:1 !important;
+  filter:drop-shadow(0 0 8px rgba(245,124,0,.35));
+}
+body.halloween-theme::before{content:"🎃" !important; left:14px !important; bottom:14px !important; font-size:38px !important;}
+body.halloween-theme::after{content:"🎃" !important; right:14px !important; top:120px !important; font-size:32px !important;}
+@media(max-width:650px){
+ body.halloween-theme::before{font-size:30px !important;left:7px !important;bottom:8px !important;}
+ body.halloween-theme::after{font-size:26px !important;right:7px !important;top:100px !important;}
+}
+</style>
+
+<link rel="stylesheet" href="./assets/site.css">
 </head>
 <body class="halloween-theme">
 <div class="halloween-decor" aria-hidden="true">
@@ -150,7 +186,7 @@ label, .menu button, nav a { font-family: "Comfortaa", Arial, sans-serif !import
   <span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span>
 </div>
 
-<header><img src="./logo-descendentes.png" alt="Descendentes RPG"></header>
+<header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header>
 
 <main>
 <section class="hero">
@@ -456,5 +492,6 @@ label, .menu button, nav a { font-family: "Comfortaa", Arial, sans-serif !import
     <p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p>
   </div>
 </footer>
+<script src="./assets/site-shell.js"></script>
 </body>
 </html>

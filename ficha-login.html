@@ -1,14 +1,49 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Área do Jogador • Descendentes RPG</title><link rel="stylesheet" href="./global-background.css?v=20260917-player"><link rel="stylesheet" href="./halloween.css?v=20260917-player"><style>
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
-:root{--orange:#f57c00;--orange2:#ff9d2e;--bg:rgba(7,4,12,.91);--line:rgba(245,124,0,.28);--muted:#c8bdca;--green:#79e09a;--red:#ff7070}*{box-sizing:border-box}html{min-height:100%;background:#050306 url('./site-background.jpg') center/cover fixed no-repeat}body{margin:0;min-height:100vh;background:linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.86)),url('./site-background.jpg') center/cover fixed no-repeat;color:#fff;font-family:Comfortaa,Arial,sans-serif;font-weight:300}.wrap{width:min(760px,calc(100% - 28px));margin:32px auto 40px}.card{background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 18px 55px rgba(0,0,0,.48);backdrop-filter:blur(10px)}.hero{text-align:center;padding:10px 10px 24px}.hero-icon{font-size:48px;filter:drop-shadow(0 0 16px rgba(255,157,46,.32));margin-bottom:8px}.hero h1,h2,h3{font-weight:700;margin:0 0 12px}.hero h1{font-size:30px}.lead,.help{color:var(--muted);line-height:1.7;font-size:13px}.login-box{max-width:520px;margin:auto;padding:22px;border:1px solid rgba(245,124,0,.22);border-radius:17px;background:linear-gradient(135deg,rgba(245,124,0,.09),rgba(123,44,191,.08))}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:7px}input{width:100%;padding:13px 14px;border-radius:11px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:#fff;font:400 14px Comfortaa,Arial,sans-serif;outline:none}input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(245,124,0,.11)}.btn{border:1px solid var(--orange);background:var(--orange);color:#fff;border-radius:11px;padding:12px 18px;font:700 13px Comfortaa;cursor:pointer;text-decoration:none;display:inline-flex;justify-content:center;align-items:center}.btn:hover{background:var(--orange2);border-color:var(--orange2)}.btn.secondary{background:transparent}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}.error{color:var(--red);font-size:12px;margin-top:10px}.dashboard{display:none}.topline{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:20px}.badge{padding:7px 10px;border-radius:999px;border:1px solid var(--line);font-size:11px;color:var(--orange2);white-space:nowrap}.status-card{padding:18px;border-radius:15px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.3);margin-bottom:13px}.status-card.approved{border-color:rgba(121,224,154,.3);background:rgba(121,224,154,.07)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.info{padding:14px;border-radius:12px;background:rgba(0,0,0,.27);border:1px solid rgba(255,255,255,.1)}.info span{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.info strong{font-size:13px}.avatar{width:120px;height:120px;object-fit:cover;border-radius:15px;border:1px solid var(--line);margin-top:10px}.footer{font-size:10px;color:rgba(255,255,255,.65);text-align:center;line-height:1.55;margin:25px auto;width:min(800px,calc(100% - 28px))}@media(max-width:620px){.card{padding:20px}.hero h1{font-size:25px}.grid{grid-template-columns:1fr}.topline{flex-direction:column}.badge{white-space:normal}}
-</style></head><body class="halloween-theme"><div class="halloween-decor" aria-hidden="true"><span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-skull s1">💀</span><span class="h-spider p1">🕷️</span></div><main class="wrap"><div class="card">
-<section id="loginScreen"><div class="hero"><div class="hero-icon">🗝️</div><h1>Área do Jogador</h1><p class="lead">Sua ficha foi aprovada? Entre para acompanhar suas informações no RPG.</p></div><div class="login-box"><h2>Entrar</h2><p class="help">Use <strong>exatamente o mesmo nickname</strong> que você colocou no campo “Seu Nome/Nickname” da ficha. Não é o nome do personagem.</p><form id="loginForm"><div class="field"><label for="nickname">Nickname</label><input id="nickname" autocomplete="username" maxlength="80" required placeholder="Digite seu nickname"></div><div id="loginError" class="error"></div><div class="actions"><button class="btn" type="submit">Entrar na minha ficha →</button><a class="btn secondary" href="index.html">Voltar ao site</a></div></form></div></section>
-<section id="dashboard" class="dashboard"><div class="topline"><div><h1>✨ Bem-vindo, <span id="playerName"></span>!</h1><p class="lead">Esta é sua área pessoal do Descendentes RPG.</p></div><span class="badge">Ficha aprovada</span></div><div class="status-card approved"><h2>🟢 Ficha aprovada</h2><p class="help">Sua personagem já está registrada em Auradon.</p></div><div class="grid"><div class="info"><span>PERSONAGEM</span><strong id="charName">—</strong></div><div class="info"><span>ROYAL / REBEL</span><strong id="type">—</strong></div><div class="info"><span>ESTÚDIO</span><strong id="studio">—</strong></div><div class="info"><span>CONTO DE FADA</span><strong id="story">—</strong></div><div class="info" style="grid-column:1/-1"><span>FILIAÇÃO / PROGENITORES</span><strong id="filiation">—</strong></div></div><div id="avatarBox" class="info" style="margin-top:12px;display:none"><span>AVATAR</span><br><img id="avatar" class="avatar" alt="Avatar da personagem"></div><div class="actions"><button id="logout" class="btn secondary" type="button">Sair</button><a class="btn" href="index.html">Ir para o site</a></div></section>
-</div></main><footer class="footer"><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍<br>Descendentes é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.<br>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</footer><script type="module">
-const {db}=await import('./firebase-init.js');const {ref,get}=await import('https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js');const $=id=>document.getElementById(id);const key='descendentes_player_session';const norm=v=>String(v??'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function show(x){$('loginScreen').style.display='none';$('dashboard').style.display='block';$('playerName').textContent=x.playerNickname||'';$('charName').textContent=x.name||'—';$('type').textContent=x.type||'—';$('studio').textContent=x.affiliationStudio||'—';$('story').textContent=x.fairyTale||x.affiliationStory||'—';$('filiation').textContent=x.filiation||'—';if(x.imageUrl){$('avatar').src=x.imageUrl;$('avatarBox').style.display='block'}}
-async function login(nick){const snap=await get(ref(db,'site/alunos'));const students=snap.val()||{};const found=Object.values(students).find(x=>x&&norm(x.playerNickname)===norm(nick));if(!found)throw Error('Nickname não encontrado entre os jogadores aprovados. Confira se está usando o mesmo nickname informado na ficha.');localStorage.setItem(key,JSON.stringify({playerNickname:found.playerNickname,fichaId:found.fichaId}));show(found)}
-$('loginForm').onsubmit=async e=>{e.preventDefault();$('loginError').textContent='Consultando...';try{await login($('nickname').value.trim())}catch(e){$('loginError').textContent=e.message||'Não foi possível entrar.'}};
-$('logout').onclick=()=>{localStorage.removeItem(key);location.reload()};
-try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved?.playerNickname)await login(saved.playerNickname)}catch(_){localStorage.removeItem(key)}
-</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Área do Jogador • Descendentes RPG</title>
+<link rel="stylesheet" href="./assets/site.css">
+<link rel="stylesheet" href="./assets/content-pages.css">
+</head>
+<body>
+<main class="container">
+  <div class="hero">
+    <div class="section-title">AURADON PREP · END OF MAGIC</div>
+    <h1>Área do Jogador</h1>
+    <p>Entre com o login e a senha criados durante o preenchimento da sua ficha.</p>
+  </div>
+  <div class="section card">
+    <section id="loginScreen">
+      <div class="section-title">🔐 Entrar</div>
+      <p class="lead">Seu login e sua senha permitem acessar sua área pessoal para acompanhar a ficha e gerenciar seus personagens.</p>
+      <form id="loginForm">
+        <div class="grid">
+          <div class="field"><label for="nickname">* Login / Nickname</label><input id="nickname" autocomplete="username" maxlength="80" required placeholder="Digite seu login"></div>
+          <div class="field"><label for="password">* Senha</label><input id="password" type="password" autocomplete="current-password" maxlength="120" required placeholder="Digite sua senha"></div>
+        </div>
+        <div id="loginError" class="error"></div>
+        <div class="actions"><button class="btn" type="submit">Entrar na minha ficha →</button><a class="btn secondary" href="ficha.html">Criar ficha</a><a class="btn secondary" href="index.html">Voltar ao site</a></div>
+      </form>
+    </section>
+    <section id="dashboard" class="screen">
+      <div class="section-title">✨ Minha ficha</div><p id="playerNameDisplay" class="lead"></p>
+      <div class="notice"><strong>Ficha aprovada.</strong> Esta é sua área pessoal do Descendentes RPG.</div>
+      <div class="grid">
+        <div class="info-card"><h3>Personagem</h3><p id="charName">—</p></div>
+        <div class="info-card"><h3>Royal / Rebel</h3><p id="type">—</p></div>
+        <div class="info-card"><h3>Estúdio</h3><p id="studio">—</p></div>
+        <div class="info-card"><h3>Conto de Fada</h3><p id="story">—</p></div>
+        <div class="info-card full"><h3>Filiação / Progenitores</h3><p id="filiation">—</p></div>
+      </div>
+      <div id="avatarBox" class="info-card" hidden><h3>Avatar</h3><img id="avatar" alt="Avatar da personagem"></div>
+      <div class="actions"><button id="logout" class="btn secondary" type="button">Sair</button><a class="btn" href="index.html">Ir para o site</a></div>
+    </section>
+  </div>
+</main>
+<footer class="footer"><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍<br>Descendentes é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.<br>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</footer>
+<script type="module" src="./assets/ficha-login.js"></script>
+<script src="./assets/site-shell.js"></script>
+</body>
+</html>
