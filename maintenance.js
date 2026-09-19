@@ -27,7 +27,7 @@ function ensureOverlay(){
   overlay.id="siteMaintenanceOverlay";
   overlay.setAttribute("role","alert");
   overlay.setAttribute("aria-label","Site em manutenção");
-  overlay.innerHTML='<img src="./assets/site-maintenance.png" alt="Site em manutenção">';
+  overlay.innerHTML='<img src="./site-maintenance.png" alt="Site em manutenção">';
   document.body.appendChild(overlay);
 }
 ensureOverlay();

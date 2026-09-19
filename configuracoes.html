@@ -1,0 +1,10 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Configurações da conta • Descendentes RPG</title><link rel="stylesheet" href="./assets/site.css"><link rel="stylesheet" href="./assets/player.css">
+<script>document.documentElement.classList.add('auth-pending');</script>
+  <link rel="stylesheet" href="./assets/buttons-global.css">
+</head>
+<body class="player-body"><header class="player-header"><div class="player-header-inner"><a class="player-brand" href="index.html"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></a><nav class="player-nav"><a href="home.html">Minha Home</a><a href="alunos.html">Alunos</a><a href="filiacoes.html">Filiações</a></nav><div class="account-menu-host"></div></div></header>
+<main class="player-wrap"><section class="player-panel"><div class="kicker">AURADON PREP · CONTA</div><h1>Configurações de cadastro</h1><p>Consulte as informações vinculadas à sua conta autenticada. Alterações futuras poderão ser adicionadas aqui sem afetar suas fichas.</p><div class="ficha-grid" style="margin-top:22px"><div class="field"><label>Seu Nome</label><input id="name" readonly></div><div class="field"><label>Usuário</label><input id="username" readonly></div><div class="field"><label>ID da conta</label><input id="uid" readonly></div></div><div id="error" class="ficha-error"></div></section></main>
+<script type="module">
+import {requireAuth} from './assets/auth.js'; import {db} from './firebase-init.js'; import {get,ref} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js';
+const user=await requireAuth(); const p=(await get(ref(db,`site/profiles/${user.uid}`))).val()||{}; document.getElementById('name').value=p.name||user.displayName||''; document.getElementById('username').value=p.username||''; document.getElementById('uid').value=user.uid;
+</script><script type="module" src="./assets/account-menu.js"></script></body></html>

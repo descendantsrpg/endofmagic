@@ -1,12 +1,51 @@
-/* Fundo global do Descendentes RPG */
-html,body{min-height:100% !important;}
-html{
- background-color:#020406 !important;
- background-image:linear-gradient(rgba(0,0,0,.24),rgba(0,0,0,.24)),url("./site-background.jpg") !important;
- background-position:center center !important;
- background-repeat:no-repeat !important;
- background-size:cover !important;
- background-attachment:fixed !important;
+/* Descendentes RPG — camada global restaurada.
+   Compatibilidade para páginas que ainda referenciam global-background.css.
+   O visual principal continua sendo definido por ./site.css e halloween.css. */
+:root{
+  --global-bg:#080509;
+  --global-panel:rgba(10,7,18,.72);
+  --global-line:rgba(255,255,255,.16);
+  --global-gold:#f2c46e;
 }
-body{background:transparent !important;}
-@media(max-width:700px){html{background-attachment:scroll !important;background-size:cover !important;}}
+html{
+  min-height:100%;
+  background:var(--global-bg) url('./site-background.jpg') center/cover fixed no-repeat;
+}
+body{
+  min-height:100vh;
+  background:transparent;
+  color:#fff;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,3,10,.34),rgba(5,3,10,.72));
+}
+
+/* Compatibilidade com o cabeçalho das páginas antigas. */
+.site-header-fixed,
+.home-main-nav,
+.admin-main-nav,
+.desktop-main-nav{
+  position:relative;
+  z-index:20;
+}
+
+/* Quando o tema de Halloween está ativo, deixa halloween.css assumir o fundo. */
+html.halloween-theme{
+  background-color:#050308;
+  background-image:url('./site-background.jpg');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+body.halloween-theme{background:transparent;}
+
+@media (max-width:700px){
+  html{background-attachment:scroll;}
+  html.halloween-theme{background-attachment:scroll;}
+}

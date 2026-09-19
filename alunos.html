@@ -1,81 +1,49 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Alunos — Descendentes RPG</title>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8514046603358710"
-     crossorigin="anonymous"></script>
-
-
-
-<link rel="stylesheet" href="./assets/site.css">
-<link rel="stylesheet" href="./assets/content-pages.css">
-</head>
-
-
-
-<body>
-<header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header>
-<main class="container">
-<section class="intro"><h1>Alunos</h1><p>Conheça os estudantes de Auradon Prep.</p></section>
-<div class="filters"><button class="filter active" data-filter="Todos">Todos</button><button class="filter" data-filter="Royal">Royals</button><button class="filter" data-filter="Rebel">Rebels</button></div>
-<section class="students" id="students"><div class="empty"><strong>Nenhum aluno cadastrado no Firebase.</strong><span>Quando um aluno for cadastrado pelo painel administrativo, ele aparecerá aqui automaticamente.</span></div></section>
-<a class="back" href="index.html">Voltar à página inicial</a>
-</main>
-
-<script type="module">
-import{db}from"./firebase-init.js";
-import{ref,onValue}from"https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
-import{createDbSyncLoader}from"./db-sync-loader.js";
-const container=document.getElementById("students");let allStudents=[];
-const dbLoader=createDbSyncLoader("Carregando os alunos diretamente do Firebase...");
-dbLoader.show();
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
-function render(filter="Todos"){
- const students=allStudents.filter(s=>filter==="Todos"||s.type===filter);
- if(!students.length){
-  container.innerHTML='<div class="empty"><strong>Nenhum aluno cadastrado no Firebase.</strong><span>Quando um aluno for cadastrado pelo painel administrativo, ele aparecerá aqui automaticamente.</span></div>';
-  return;
- }
- container.innerHTML=students.map(s=>`<article class="student">${s.imageUrl?`<img src="${s.imageUrl}" alt="Foto de ${esc(s.name)}">`:""}<div class="student-body"><div class="type">${esc(s.type||"")}</div><h2>${esc(s.name||"Sem nome")}</h2><div class="data"><div><b>Idade:</b> ${esc(s.age||"")}</div><div><b>Sexualidade:</b> ${esc(s.sexuality||"")}</div><div><b>Filiação:</b> ${esc(s.filiation||"")}</div><div><b>Conto de Fada:</b> ${esc(s.fairyTale||"")}</div></div></div></article>`).join("");
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alunos de Auradon • Descendentes RPG</title><link rel="stylesheet" href="./assets/site.css"><link rel="stylesheet" href="./assets/player.css">
+<script>document.documentElement.classList.add('auth-pending');</script>
+  <link rel="stylesheet" href="./assets/buttons-global.css">
+</head><body class="player-body"><header class="player-header"><div class="player-header-inner"><a class="player-brand" href="index.html"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></a><nav class="player-nav"><a href="index.html">Início</a><a href="filiacoes.html">Filiações</a><a href="login.html">LOGIN</a><a class="primary" href="cadastro.html">CADASTRO</a></nav></div></header><main class="player-wrap"><section class="player-hero"><div><div class="kicker">AURADON PREP · REGISTRO DE ALUNOS</div><h1>Alunos de Auradon</h1><p>Os personagens aprovados aparecem aqui como registros oficiais da escola. As informações vêm diretamente das fichas aprovadas.</p></div></section><div id="list" class="player-grid"></div></main><script type="module">import {db} from './firebase-init.js';import {onValue,ref} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js';import {createDbSyncLoader} from './db-sync-loader.js';const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const list=document.getElementById('list');const dbLoader=createDbSyncLoader('Carregando alunos diretamente do Firebase...');dbLoader.show();let legacyLoaded=false;let fichasLoaded=false;
+let legacyStudents={};let approvedFichas={};
+function normalize(v){return String(v??'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function mergeStudents(){
+  // A fonte principal continua sendo site/alunos, preservando integralmente os registros antigos.
+  const merged={...legacyStudents};
+  // Fichas aprovadas são uma segunda origem. Só acrescentamos uma ficha quando ela ainda
+  // não estiver representada em site/alunos; nenhum registro existente é alterado ou removido.
+  Object.entries(approvedFichas||{}).forEach(([fichaId,f])=>{
+    if(!f||f.status!=='aprovada')return;
+    const exists=Object.entries(legacyStudents||{}).some(([key,s])=>{
+      if(!s)return false;
+      return s.fichaId===fichaId || s.studentKey===fichaId ||
+        (f.studentKey && key===f.studentKey) ||
+        (f.characterName && normalize(s.name)===normalize(f.characterName) && f.ownerUid && s.ownerUid===f.ownerUid);
+    });
+    if(exists)return;
+    const id='ficha_'+fichaId;
+    merged[id]={
+      name:f.characterName||f.name||'Personagem aprovado',
+      type:f.royalRebel||f.type||'',
+      age:Number(f.characterAge||f.age)||0,
+      sexuality:f.sexuality||'',
+      affiliationStudio:f.affiliationStudio||'',
+      affiliationStory:f.affiliationStory||f.fairyTale||'',
+      filiation:f.progenitors||f.filiation||'',
+      fairyTale:f.fairyTale||f.affiliationStory||'',
+      imageUrl:f.avatarUrl||f.imageUrl||null,
+      powers:f.powers||[],
+      personality:f.personality||'',
+      history:f.history||'',
+      activityPrimary:f.activityPrimary||'',
+      fichaId,
+      ownerUid:f.ownerUid||'',
+      updatedAt:f.approvedAt||f.updatedAt||f.createdAt||0
+    };
+  });
+  return Object.values(merged);
 }
-document.querySelectorAll(".filter").forEach(btn=>btn.onclick=()=>{document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));btn.classList.add("active");render(btn.dataset.filter)});
-onValue(ref(db,"site/alunos"),snap=>{const data=snap.val()||{};allStudents=Object.values(data).sort((a,b)=>(a.name||"").localeCompare(b.name||""));render(document.querySelector(".filter.active").dataset.filter);dbLoader.hide()},err=>{console.error(err);dbLoader.hide();container.innerHTML='<div class="empty"><strong>Não foi possível carregar os alunos.</strong><span>Verifique as regras de leitura do Firebase Realtime Database.</span></div>'});
-</script>
-<script type="module" src="./maintenance.js"></script>
-
-
-<footer class="site-disclaimer-footer">
-<div class="rpg-disclaimer">
-    <p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p>
-    <p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p>
-    <p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p>
-    <p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p>
-  </div>
-</footer>
-<script src="./assets/site-shell.js"></script>
-</body>
-</html>
+function render(){
+  const arr=mergeStudents();
+  list.innerHTML=arr.length?arr.map(x=>{const powers=Array.isArray(x.powers)?x.powers:(x.powers?[x.powers]:[]);return `<article class="student-card"><img class="student-photo" src="${esc(x.imageUrl||'./assets/auradon-prep.png')}" alt="Foto de ${esc(x.name)}"><div class="student-content"><h2 class="student-name">${esc(x.name)}</h2><div class="student-origin">Descendente de ${esc(x.filiation||'origem não definida')}</div><div class="identity-grid"><div class="identity-cell"><small>Alinhamento</small><strong>${esc(x.type||'—')}</strong></div><div class="identity-cell"><small>Origem</small><strong>${esc(x.affiliationStory||'—')}</strong></div><div class="identity-cell"><small>Poderes</small><strong>${esc(powers.slice(0,2).join(' · ')||'—')}</strong></div><div class="identity-cell"><small>Atividade</small><strong>${esc(x.activityPrimary||'—')}</strong></div></div><div class="student-quote">“${esc(String(x.personality||'Registro oficial de Auradon.').split(/\n+/).filter(Boolean)[0].slice(0,180))}”</div><div class="student-footer"><span>OFFICIAL RPG CARD</span><span>VERIFIED AURADON</span></div></div></article>`}).join(''):'<div class="empty-player">Nenhum aluno cadastrado ou aprovado foi publicado ainda.</div>';
+}
+onValue(ref(db,'site/alunos'),s=>{legacyStudents=s.val()||{};legacyLoaded=true;render();if(fichasLoaded)dbLoader.hide()},e=>{console.error(e);legacyLoaded=true;render();if(fichasLoaded)dbLoader.hide()});
+onValue(ref(db,'site/fichas'),s=>{const all=s.val()||{};approvedFichas=Object.fromEntries(Object.entries(all).filter(([,f])=>f&&f.status==='aprovada'));fichasLoaded=true;render();if(legacyLoaded)dbLoader.hide()},e=>{console.error(e);fichasLoaded=true;if(legacyLoaded)dbLoader.hide()});</script><script type="module" src="./assets/account-menu.js"></script></body></html>

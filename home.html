@@ -1,0 +1,122 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Minha Home • Descendentes RPG</title><link rel="stylesheet" href="./assets/site.css"><link rel="stylesheet" href="./assets/player.css">
+<style id="home-text-buttons">
+/* HOME: ações em texto, sem contorno, mantendo a identidade do cabeçalho. */
+.player-body .player-nav a,
+.player-body .player-nav button,
+.player-body .player-button,
+.player-body .ficha-button {
+  min-height: 0 !important;
+  padding: 8px 10px !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  box-shadow: none !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em !important;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  transform: none !important;
+}
+.player-body .player-nav a:hover,
+.player-body .player-nav button:hover,
+.player-body .player-button:hover,
+.player-body .ficha-button:hover,
+.player-body .player-nav a:focus-visible,
+.player-body .player-nav button:focus-visible,
+.player-body .player-button:focus-visible,
+.player-body .ficha-button:focus-visible {
+  border: 0 !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  transform: none !important;
+  outline: none !important;
+}
+.player-body .player-nav .primary,
+.player-body .player-button:not(.secondary),
+.player-body .ficha-button:not(.secondary),
+.player-body .player-button.secondary,
+.player-body .ficha-button.secondary {
+  border: 0 !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+.player-body .player-nav .primary:hover,
+.player-body .player-button:not(.secondary):hover,
+.player-body .ficha-button:not(.secondary):hover,
+.player-body .player-button.secondary:hover,
+.player-body .ficha-button.secondary:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+.player-body .player-button.danger {
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+.player-body .player-button.danger:hover {
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #ffb3b3 !important;
+  -webkit-text-fill-color: #ffb3b3 !important;
+  box-shadow: none !important;
+}
+</style>
+<script>document.documentElement.classList.add('auth-pending');</script>
+  <link rel="stylesheet" href="./assets/buttons-global.css">
+</head>
+<body class="player-body"><header class="player-header"><div class="player-header-inner"><a class="player-brand" href="index.html"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></a><nav class="player-nav"><a href="home.html">Minha Home</a><a href="alunos.html">Alunos</a><a href="filiacoes.html">Filiações</a><a class="primary" href="ficha.html">Criar Ficha</a><div class="account-menu-host"></div></nav></div></header>
+<main class="player-wrap"><section class="player-hero"><div><div class="kicker">Auradon Prep · Área do aluno</div><h1 id="welcome">Bem-vindo.</h1><p>Seu espaço pessoal para criar personagens, continuar rascunhos e acompanhar o destino de cada ficha enviada para análise.</p></div><div class="player-actions"><a class="player-button" href="ficha.html">✦ Criar Ficha</a></div></section>
+<section class="player-grid"><div class="player-panel"><div class="panel-heading"><div><h2>Seus personagens</h2><p>Registros aprovados e fichas em análise.</p></div><span id="fichaCount" class="status-badge status-analysis">0 fichas</span></div><div id="cards" class="cards-list"></div></div>
+<div class="player-panel"><div class="panel-heading"><div><h2>Rascunhos</h2><p>Seu progresso fica salvo automaticamente.</p></div></div><div id="drafts" class="draft-list"></div></div></section></main>
+<script type="module">
+import {db} from './firebase-init.js'; import {ref,get,query,orderByChild,equalTo,onValue,remove} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js'; import {requireAuth} from './assets/auth.js';
+const $=id=>document.getElementById(id), esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const statusMap={em_analise:['Em análise','status-analysis'],aprovada:['Aprovado','status-approved'],altere_sua_ficha:['Altere sua ficha','status-change']};
+function card(x){const st=statusMap[x.status]||['Rascunho','status-draft']; const powers=(x.powers||[]).filter(Boolean).slice(0,2).join(' · ')||'Poderes registrados'; const quote=x.personality?String(x.personality).split(/\n+/).filter(Boolean)[0]:'Registro oficial de Auradon.'; const actions=`<div class="card-actions"><span class="status-badge ${st[1]}">${esc(st[0])}</span>${x.status==='altere_sua_ficha'?`<a class="player-button secondary" href="ficha.html?ficha=${encodeURIComponent(x.id)}">Editar ficha</a>`:''}${x.status==='em_analise'?`<button type="button" class="player-button danger" data-delete-ficha="${esc(x.id)}">Desistir da análise</button>`:''}</div>`; return `<article><div class="student-card"><img class="student-photo" src="${esc(x.avatarUrl||x.imageUrl||'./assets/auradon-prep.png')}" alt="Foto de ${esc(x.characterName)}"><div class="student-content"><h3 class="student-name">${esc(x.characterName||'Sem nome')}</h3><div class="student-origin">Descendente de ${esc(x.progenitor||x.progenitors||x.filiation||'origem não definida')}</div><div class="identity-grid"><div class="identity-cell"><small>Alinhamento</small><strong>${esc(x.alignment||x.royalRebel||'—')}</strong></div><div class="identity-cell"><small>Origem</small><strong>${esc(x.story||x.fairyTale||x.affiliationStory||'—')}</strong></div><div class="identity-cell"><small>Poderes</small><strong>${esc(powers)}</strong></div><div class="identity-cell"><small>Atividade</small><strong>${esc(x.activityPrimary||'—')}</strong></div></div><div class="student-quote">“${esc(quote.slice(0,180))}”</div><div class="student-footer"><span>OFFICIAL RPG CARD</span><span>${esc(st[0].toUpperCase())}</span></div></div></div>${actions}</article>`}
+
+function renderDrafts(all){$('drafts').innerHTML=all.length?all.map(d=>`<div class="draft-item"><div><strong>${esc(d.characterName||'Rascunho sem nome')}</strong><small>${esc(d.stepLabel||'Criação de personagem')}${d.reviewMessage?' · '+esc(d.reviewMessage):''} · salvo em ${new Date(d.updatedAt||Date.now()).toLocaleString('pt-BR')}</small></div><div class="draft-actions"><a class="player-button secondary" href="ficha.html?draft=${encodeURIComponent(d.id)}">Continuar</a><button type="button" class="player-button danger" data-delete-draft="${esc(d.id)}">Excluir rascunho</button></div></div>`).join(''):'<div class="empty-player">Nenhum rascunho salvo ainda.</div>'}
+
+async function deleteFicha(user,id){
+  const snap=await get(ref(db,`site/fichas/${id}`));
+  if(!snap.exists()) return;
+  const ficha=snap.val();
+  if(ficha.ownerUid!==user.uid) throw new Error('Você só pode excluir suas próprias fichas.');
+  if(ficha.status!=='em_analise') throw new Error('Somente fichas em análise podem ser excluídas por você.');
+  if(!confirm(`Excluir definitivamente a ficha “${ficha.characterName||'Sem nome'}”?\n\nEla será removida da sua Home e da área de análise administrativa. Esta ação não pode ser desfeita.`)) return;
+  await remove(ref(db,`site/fichas/${id}`));
+  await remove(ref(db,`site/fichasRascunhos/${user.uid}/${id}`));
+}
+async function deleteDraft(user,id){
+  const snap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${id}`));
+  if(!snap.exists()) return;
+  const draft=snap.val();
+  if(draft.ownerUid!==user.uid) throw new Error('Você só pode excluir seus próprios rascunhos.');
+  if(!confirm(`Excluir definitivamente o rascunho “${draft.characterName||'Sem nome'}”?\n\nOs dados e a imagem salvos nesse rascunho serão removidos. Esta ação não pode ser desfeita.`)) return;
+  await remove(ref(db,`site/fichasRascunhos/${user.uid}/${id}`));
+}
+
+async function start(){const user=await requireAuth(); const profile=(await get(ref(db,`site/profiles/${user.uid}`))).val()||{}; $('welcome').textContent=`Olá, ${profile.name||user.displayName||profile.username||'jogador'}!`;
+const fq=query(ref(db,'site/fichas'),orderByChild('ownerUid'),equalTo(user.uid)); onValue(fq,s=>{const all=Object.entries(s.val()||{}).map(([id,v])=>({id,...v})).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)); $('fichaCount').textContent=`${all.length} ${all.length===1?'ficha':'fichas'}`; $('cards').innerHTML=all.length?all.map(card).join(''):'<div class="empty-player">Você ainda não criou nenhuma ficha. Comece sua jornada em Auradon.</div>';});
+onValue(ref(db,`site/fichasRascunhos/${user.uid}`),s=>{const all=Object.entries(s.val()||{}).map(([id,v])=>({id,...v})).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));renderDrafts(all);});
+$('cards').addEventListener('click',async e=>{const b=e.target.closest('[data-delete-ficha]');if(!b)return; b.disabled=true;try{await deleteFicha(user,b.dataset.deleteFicha)}catch(err){alert(err.message||'Não foi possível excluir a ficha.')}finally{b.disabled=false}});
+$('drafts').addEventListener('click',async e=>{const b=e.target.closest('[data-delete-draft]');if(!b)return; b.disabled=true;try{await deleteDraft(user,b.dataset.deleteDraft)}catch(err){alert(err.message||'Não foi possível excluir o rascunho.')}finally{b.disabled=false}});}
+start().catch(e=>{if(e.message!=='AUTH_REQUIRED')console.error(e)});
+</script><script type="module" src="./assets/account-menu.js"></script></body></html>

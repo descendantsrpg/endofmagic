@@ -45,7 +45,7 @@ input,select,textarea{
   background:rgba(0,0,0,.38)!important;
   color:#fff!important;
   -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.28)!important;
+  border-color:rgba(255,255,255,.82)!important;
 }
 input::placeholder,textarea::placeholder{
   color:rgba(255,255,255,.72)!important;
@@ -56,14 +56,9 @@ input::placeholder,textarea::placeholder{
 button,.btn{
   color:#fff!important;
   -webkit-text-fill-color:#fff!important;
-  border-color:rgba(255,255,255,.28)!important;
+  border-color:rgba(255,255,255,.82)!important;
 }
-button:hover,.btn:hover,
-button.active,.btn.active,
-button.primary,.btn.primary{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
+
 
 /* Links */
 a,a:visited,a:hover{

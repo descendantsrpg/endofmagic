@@ -1,11 +1,24 @@
 {
   "rules": {
-    ".read": true,
+    ".read": false,
     ".write": false,
     "site": {
       "admins": {
         ".read": true,
         ".write": true
+      },
+      "usernames": {
+        "$username": {
+          ".read": true,
+          ".write": "auth != null && !data.exists() && newData.val() === auth.uid"
+        }
+      },
+      "profiles": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.hasChildren(['name','username','createdAt']) && newData.child('username').isString()"
+        }
       },
       "filiacoes": {
         ".read": true,
@@ -19,6 +32,10 @@
         ".read": true,
         ".write": true
       },
+      "eventos": {
+        ".read": true,
+        ".write": true
+      },
       "manutencao": {
         ".read": true,
         ".write": true
@@ -27,21 +44,25 @@
         ".read": true,
         ".write": true
       },
-      "eventos": {
-        ".read": true,
-        ".write": true
-      },
       "fichas": {
-        ".read": true,
-        ".write": true
-      },
-      "contas": {
-        ".read": true,
-        ".write": true
+        "$fichaId": {
+          ".read": true,
+          ".write": "auth != null && ((data.exists() && data.child('ownerUid').val() === auth.uid && data.child('status').val() === 'em_analise' && !newData.exists()) || (!data.exists() && newData.child('ownerUid').val() === auth.uid) || (data.exists() && newData.exists() && data.child('ownerUid').val() === auth.uid && newData.child('ownerUid').val() === auth.uid))",
+          ".validate": "newData.hasChildren(['ownerUid','characterName','characterAge','sexuality','affiliationKey','royalRebel','powers','personality','history','activityPrimary','shape','avatarUrl','status','createdAt','updatedAt']) && newData.child('characterName').isString() && newData.child('characterName').val() != '' && newData.child('characterAge').isNumber() && newData.child('characterAge').val() >= 14 && newData.child('characterAge').val() <= 22 && newData.child('sexuality').isString() && newData.child('affiliationKey').isString() && newData.child('affiliationKey').val() != '' && (newData.child('royalRebel').val() === 'Royal' || newData.child('royalRebel').val() === 'Rebel') && newData.child('powers').isString() && newData.child('powers').val() != '' && newData.child('personality').isString() && newData.child('personality').val() != '' && newData.child('history').isString() && newData.child('history').val() != '' && newData.child('activityPrimary').isString() && newData.child('activityPrimary').val() != '' && newData.child('shape').isString() && newData.child('shape').val() != '' && newData.child('avatarUrl').isString() && newData.child('avatarUrl').val() != '' && (newData.child('status').val() === 'em_analise' || newData.child('status').val() === 'aprovada' || newData.child('status').val() === 'altere_sua_ficha')"
+        },
+        ".indexOn": [
+          "ownerUid",
+          "status"
+        ]
       },
       "fichasRascunhos": {
-        ".read": true,
-        ".write": true
+        "$uid": {
+          "$draftId": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "newData.child('ownerUid').val() === $uid && newData.child('status').val() === 'rascunho'"
+          }
+        }
       }
     }
   }

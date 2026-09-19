@@ -7,14 +7,16 @@
   <title>Descendentes RPG — Auradon</title>
   <link rel="stylesheet" href="./assets/home.css">
   <link rel="stylesheet" href="./assets/site.css">
+<script>document.documentElement.classList.add('auth-pending');</script>
+  <link rel="stylesheet" href="./assets/buttons-global.css">
 </head>
-<body>
+<body class="index-page">
   <header class="site-header">
     <div class="shell header-inner">
       <a class="brand" href="index.html" aria-label="Descendentes RPG — Início"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></a>
       <nav class="nav" aria-label="Navegação principal">
-        <a href="explore-auradon.html">Auradon</a><a href="alunos.html">Alunos</a><a href="corpo-docente.html">Docentes</a><a href="filiacoes.html">Filiações</a><a href="sistema-de-aulas.html">Aulas</a><a href="cadastro.html" class="nav-cta">Criar ficha</a>
-      </nav>
+        <a href="explore-auradon.html">Auradon</a><a href="alunos.html">Alunos</a><a href="corpo-docente.html">Docentes</a><a href="filiacoes.html">Filiações</a><a href="sistema-de-aulas.html">Aulas</a><a href="login.html" data-auth-login>LOGIN</a><a href="cadastro.html" data-auth-register>CADASTRO</a>
+      </nav><div class="account-menu-host"></div>
     </div>
   </header>
   <main>
@@ -23,20 +25,9 @@
         <p class="eyebrow">Auradon Prep · Uma nova geração</p>
         <h1>Todo legado começa com uma <em>escolha.</em></h1>
         <p class="hero-copy">Três anos após a formatura de Ben e Mal, Auradon abre seus portões para novos heróis. Nos corredores da Prep, alianças, segredos e uma barreira enfraquecida esperam pela sua história.</p>
-        <div class="actions"><a class="button primary" href="cadastro.html">Criar personagem</a><a class="button" href="guia-para-novos-usuarios.html">Começar pelo guia</a></div>
+        <div class="actions"><a id="hero-auth-action" class="button primary" href="cadastro.html" hidden>Crie seu personagem agora</a></div>
       </div>
       <div class="hero-crest"><img src="./assets/auradon-prep.png" alt="Brasão da Auradon Prep"></div>
-    </section>
-    <section class="shell quick-links" aria-labelledby="explore-title">
-      <div class="quick-links-head"><div><p class="eyebrow">Seu próximo capítulo</p><h2 id="explore-title">Explore o reino</h2><p>Escolha por onde sua história começa.</p></div></div>
-      <div class="link-grid">
-        <a class="link-card" href="explore-auradon.html"><div><strong>Explore Auradon</strong><small>Conheça os lugares e a história</small></div><span>→</span></a>
-        <a class="link-card" href="filiacoes.html"><div><strong>Filiações</strong><small>Encontre sua origem</small></div><span>→</span></a>
-        <a class="link-card" href="alunos.html"><div><strong>Alunos</strong><small>Veja quem está em Auradon</small></div><span>→</span></a>
-        <a class="link-card" href="corpo-docente.html"><div><strong>Corpo docente</strong><small>Conheça os mentores</small></div><span>→</span></a>
-        <a class="link-card" href="sistema-de-aulas.html"><div><strong>Sistema de aulas</strong><small>Descubra como jogar</small></div><span>→</span></a>
-        <a class="link-card" href="ficha-login.html"><div><strong>Área do jogador</strong><small>Acompanhe sua ficha</small></div><span>→</span></a>
-      </div>
     </section>
     <section class="dashboard">
       <div class="shell">
@@ -50,6 +41,39 @@
   </main>
   <footer class="site-footer"><div class="shell"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"><p><strong>Descendentes — End Of Magic</strong> é um RPG fictício criado por Orochi. Descendentes é uma marca da Walt Disney Company; este projeto de fãs não possui ligação com a empresa.</p><p><a href="admin-acesso.html">Painel administrativo</a></p></div></footer>
   <script type="module" src="./maintenance.js"></script>
+  <script type="module" src="./assets/account-menu.js"></script>
+  <script type="module">
+    import { auth } from './firebase-init.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
+
+    const loginLink = document.querySelector('[data-auth-login]');
+    const registerLink = document.querySelector('[data-auth-register]');
+    const heroAction = document.getElementById('hero-auth-action');
+
+    function updateIndexAuthUI(user) {
+      const loggedIn = !!user;
+
+      if (loginLink) {
+        loginLink.hidden = loggedIn;
+        loginLink.setAttribute('aria-hidden', loggedIn ? 'true' : 'false');
+      }
+      if (registerLink) {
+        registerLink.hidden = loggedIn;
+        registerLink.setAttribute('aria-hidden', loggedIn ? 'true' : 'false');
+      }
+
+      if (heroAction) {
+        heroAction.hidden = false;
+        heroAction.textContent = loggedIn ? 'Ir para sua Home' : 'Crie seu personagem agora';
+        heroAction.href = loggedIn ? 'home.html' : 'cadastro.html';
+        heroAction.setAttribute('aria-label', loggedIn ? 'Ir para sua Home' : 'Crie seu personagem agora');
+      }
+
+      document.documentElement.classList.remove('auth-pending');
+    }
+
+    onAuthStateChanged(auth, updateIndexAuthUI);
+  </script>
   <script type="module">
     import { db } from './firebase-init.js';
     import { onValue, ref } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js';

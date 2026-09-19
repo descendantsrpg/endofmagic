@@ -18,12 +18,7 @@ body.halloween-theme .admin-main-nav a,body.halloween-theme [role=button]{
   border-color:#f57c00!important;-webkit-text-fill-color:#fff!important;
   box-shadow:0 4px 16px rgba(245,124,0,.22)!important;transition:all .2s ease!important
 }
-body.halloween-theme button:hover,body.halloween-theme input[type=button]:hover,body.halloween-theme input[type=submit]:hover,
-body.halloween-theme .btn:hover,body.halloween-theme .button:hover,body.halloween-theme .filter:hover,
-body.halloween-theme .filter.active,body.halloween-theme .period-btn:hover,body.halloween-theme .back:hover,
-body.halloween-theme .news-btn:hover,body.halloween-theme .menu a:hover,body.halloween-theme .home-main-nav a:hover,
-body.halloween-theme .home-quick-menu a:hover,body.halloween-theme .home-nav-links a:hover,body.halloween-theme .admin-main-nav a:hover,
-body.halloween-theme [role=button]:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;color:#fff!important;border-color:#ff9d2e!important;transform:translateY(-2px)}
+body.halloween-theme 
 
 /* CARDS E ÁREAS */
 body.halloween-theme .card,body.halloween-theme .panel,body.halloween-theme .side,body.halloween-theme .item,
