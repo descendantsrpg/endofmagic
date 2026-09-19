@@ -5,7 +5,7 @@ import {get,ref,push,set,remove,update} from 'https://www.gstatic.com/firebasejs
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const params=new URLSearchParams(location.search);
-let user=null,step=0,draftId=params.get('draft')||null,fichaId=params.get('ficha')||null,saveTimer=null,affiliations={},activities={},slotCounts={},loadedDraft=false;
+let user=null,step=0,draftId=params.get('draft')||null,fichaId=params.get('ficha')||null,saveTimer=null,affiliations={},activities={},slotCounts={},loadedDraft=false,editingExisting=false;
 
 const data={
   powers:['','','',''],characterName:'',characterAge:'',sexuality:'',
@@ -26,7 +26,7 @@ const steps=[
 
 function studioOptions(){return [...new Set(Object.values(affiliations).map(a=>a?.studio).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR')).map(s=>`<option value="${esc(s)}" ${data.affiliationStudio===s?'selected':''}>${esc(s)}</option>`).join('')}
 function storyOptions(){return [...new Set(Object.values(affiliations).filter(a=>a?.studio===data.affiliationStudio).map(a=>a?.story).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR')).map(s=>`<option value="${esc(s)}" ${data.affiliationStory===s?'selected':''}>${esc(s)}</option>`).join('')}
-function progenitorOptions(){return Object.entries(affiliations).filter(([,a])=>a?.studio===data.affiliationStudio&&a?.story===data.affiliationStory).sort((a,b)=>String(a[1]?.name||'').localeCompare(String(b[1]?.name||''),'pt-BR')).map(([key,a])=>{const max=Number(a.maxChildren??a.maxFilhos??3)||3;const count=Number(slotCounts[key]??a.currentChildren??0)||0;const full=count>=max;const label=`${String(count).padStart(2,'0')}/${String(max).padStart(2,'0')} — ${full?'Indisponível':'Disponível'}`;return `<option value="${esc(a.name)}" data-key="${esc(key)}" ${full?'disabled':''} ${data.progenitors===a.name&&!full?'selected':''}>${esc(a.name)} · ${label}</option>`}).join('')}
+function progenitorOptions(){return Object.entries(affiliations).filter(([,a])=>a?.studio===data.affiliationStudio&&a?.story===data.affiliationStory).sort((a,b)=>String(a[1]?.name||'').localeCompare(String(b[1]?.name||''),'pt-BR')).map(([key,a])=>{const max=Number(a.maxChildren??a.maxFilhos??3)||3;const rawCount=Number(slotCounts[key]??a.currentChildren??0)||0;const isCurrent=editingExisting&&data.affiliationKey===key;const count=Math.max(0,rawCount-(isCurrent?1:0));const full=count>=max;const label=`${String(count).padStart(2,'0')}/${String(max).padStart(2,'0')} — ${full?'Indisponível':'Disponível'}`;return `<option value="${esc(a.name)}" data-key="${esc(key)}" ${full?'disabled':''} ${data.progenitors===a.name&&!full?'selected':''}>${esc(a.name)} · ${label}</option>`}).join('')}
 function activityList(){return Object.values(activities).filter(a=>a!==false&&(a?.active!==false)).map(a=>typeof a==='string'?a:a?.name).filter(Boolean).sort((a,b)=>a.localeCompare(b,'pt-BR'))}
 function activityOptions(){return activityList().map(a=>`<option value="${esc(a)}" ${data.activityPrimary===a?'selected':''}>${esc(a)}</option>`).join('')}
 function activitySecondaryOptions(){return activityList().map(a=>`<option value="${esc(a)}" ${data.activitySecondary===a?'selected':''}>${esc(a)}</option>`).join('')}
@@ -39,7 +39,7 @@ function collect(){const val=id=>$(id)?.value?.trim()||'';if(step===0){data.char
 function lines(v){return String(v||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).length}
 function validate(){collect();const e=$('formError');clearFieldErrors();e.textContent='';let first=null;const fail=(id,msg)=>{fieldError(id,msg);if(!first)first=$(id);if(e&&!e.textContent)e.textContent=msg};
  if(step===0){if(!data.characterName)fail('characterName','Preencha o nome do personagem.');if(!data.characterAge)fail('characterAge','Preencha a idade do personagem.');else if(!Number.isInteger(Number(data.characterAge))||+data.characterAge<14||+data.characterAge>22)fail('characterAge','Idade permitida de 14 a 22 anos');if(!data.sexuality)fail('sexuality','Preencha a sexualidade.');}
- if(step===1){if(!data.affiliationStudio)fail('studio','Selecione um estúdio.');if(!data.affiliationStory)fail('story','Selecione um conto/propriedade.');if(!data.progenitors||!data.affiliationKey)fail('progenitor','Selecione um progenitor disponível.');if(!data.royalRebel){e.textContent=e.textContent||'Escolha Royal ou Rebel.';document.querySelector('.choice-row')?.classList.add('invalid-choice')}else document.querySelector('.choice-row')?.classList.remove('invalid-choice');const a=affiliations[data.affiliationKey];if(a){const max=Number(a.maxChildren??a.maxFilhos??3)||3;const count=Number(slotCounts[data.affiliationKey]??a.currentChildren??0)||0;if(count>=max)fail('progenitor',`Filiação indisponível: ${count}/${max} vagas ocupadas.`)}}
+ if(step===1){if(!data.affiliationStudio)fail('studio','Selecione um estúdio.');if(!data.affiliationStory)fail('story','Selecione um conto/propriedade.');if(!data.progenitors||!data.affiliationKey)fail('progenitor','Selecione um progenitor disponível.');if(!data.royalRebel){e.textContent=e.textContent||'Escolha Royal ou Rebel.';document.querySelector('.choice-row')?.classList.add('invalid-choice')}else document.querySelector('.choice-row')?.classList.remove('invalid-choice');const a=affiliations[data.affiliationKey];if(a){const max=Number(a.maxChildren??a.maxFilhos??3)||3;const rawCount=Number(slotCounts[data.affiliationKey]??a.currentChildren??0)||0;const count=Math.max(0,rawCount-(editingExisting?1:0));if(count>=max)fail('progenitor',`Filiação indisponível: ${count}/${max} vagas ocupadas.`)}}
  if(step===2){if(!data.powers.some(Boolean))fail('power0','Informe pelo menos um poder.');if(lines(data.personality)<5)fail('personality','A personalidade precisa ter no mínimo 5 linhas.');if(lines(data.history)<20)fail('history','A história precisa ter no mínimo 20 linhas.');}
  if(step===3){if(!data.activityPrimary)fail('activityPrimary','Escolha uma atividade principal.');if(data.activitySecondary&&data.activitySecondary===data.activityPrimary)fail('activitySecondary','A atividade secundária deve ser diferente da principal.');}
  if(step===4&&!data.shape)fail('shape','Informe o nome do Avatar/Shape.');if(step===5&&!data.avatarUrl){e.textContent=e.textContent||'Selecione uma foto do personagem.';fieldError('photo',e.textContent)}
@@ -47,20 +47,67 @@ function validate(){collect();const e=$('formError');clearFieldErrors();e.textCo
 
 function payload(status='rascunho'){const now=Date.now();return {...data,ownerUid:user.uid,playerName:user.displayName||user.email?.split('@')[0]||'Jogador',status,step,stepLabel:labels[step],powersList:data.powers.filter(Boolean),powers:data.powers.filter(Boolean).join('\n'),createdAt:data.createdAt||now,updatedAt:now}}
 async function ensureDraft(){if(!draftId)draftId=push(ref(db,`site/fichasRascunhos/${user.uid}`)).key;return draftId}
-async function saveDraft(){if(!user)return;await ensureDraft();collect();const p=payload('rascunho');await set(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`),p);const n=$('savedNote');if(n)n.textContent='Progresso salvo automaticamente.'}
+async function saveDraft(){
+  if(!user)return;
+  collect();
+  if(fichaId&&editingExisting){
+    const existingSnap=await get(ref(db,`site/fichas/${fichaId}`));
+    if(!existingSnap.exists())throw Error('A ficha original não foi encontrada. Nenhum registro foi apagado.');
+    const existing=existingSnap.val()||{};
+    if(existing.ownerUid!==user.uid)throw Error('Esta ficha não pertence ao usuário atual.');
+    if(existing.status!=='altere_sua_ficha')throw Error('Esta ficha não está disponível para revisão.');
+    const p=payload('altere_sua_ficha');
+    p.fichaId=fichaId;
+    p.rejectionReason=existing.rejectionReason||data.rejectionReason||'';
+    p.rejectionType=existing.rejectionType||data.rejectionType||'revisao';
+    p.reviewedAt=existing.reviewedAt||data.reviewedAt||0;
+    p.approvalHistory=existing.approvalHistory||data.approvalHistory||[];
+    await update(ref(db,`site/fichas/${fichaId}`),p);
+    await ensureDraft();
+    await update(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`),{...p,status:'rascunho',sourceFichaId:fichaId,reviewMessage:p.rejectionReason});
+  }else{
+    await ensureDraft();
+    const p=payload('rascunho');
+    await set(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`),p);
+  }
+  const n=$('savedNote');if(n)n.textContent='Progresso salvo automaticamente.'
+}
 function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>saveDraft().catch(()=>{}),650)}
 
 function compressImage(file){return new Promise((resolve,reject)=>{if(!file)return reject(Error('Anexe uma imagem.'));if(!file.type.startsWith('image/'))return reject(Error('Selecione uma imagem válida.'));if(file.size>8*1024*1024)return reject(Error('A imagem original deve ter no máximo 8 MB.'));const img=new Image(),reader=new FileReader();reader.onload=()=>{img.onload=()=>{const max=720,scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.naturalWidth*scale));c.height=Math.max(1,Math.round(img.naturalHeight*scale));c.getContext('2d').drawImage(img,0,0,c.width,c.height);let quality=.76,url=c.toDataURL('image/jpeg',quality);while(url.length>900000&&quality>.45){quality-=.06;url=c.toDataURL('image/jpeg',quality)}if(url.length>1100000)return reject(Error('A foto ficou grande demais para o banco. Escolha uma imagem mais simples.'));resolve(url)};img.onerror=()=>reject(Error('Não foi possível ler a imagem.'));img.src=reader.result};reader.onerror=()=>reject(Error('Não foi possível ler a imagem.'));reader.readAsDataURL(file)})}
 
 async function load(){user=await requireAuth();const [a,b,c]=await Promise.all([get(ref(db,'site/filiacoes')),get(ref(db,'site/atividades')),get(ref(db,'site/alunos'))]);affiliations=a.val()||{};activities=b.val()||{};const students=c.val()||{};slotCounts={};Object.entries(students).forEach(([,s])=>{if(!s)return;const k=s.affiliationKey;if(k)slotCounts[k]=(slotCounts[k]||0)+1});
  if(!Object.keys(activities).length){try{const r=await fetch('atividades-iniciais.json');activities=await r.json()}catch(_){activities={}}}
- if(fichaId){const draftSnap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${fichaId}`));if(draftSnap.exists()){const saved=draftSnap.val();Object.assign(data,saved);data.powers=Array.isArray(saved.powersList)?saved.powersList.slice(0,4):String(saved.powers||'').split(/\r?\n/).slice(0,4);draftId=fichaId;step=Math.min(Number(saved.step)||0,5);loadedDraft=true;return}const snap=await get(ref(db,`site/fichas/${fichaId}`));if(!snap.exists()||snap.val().ownerUid!==user.uid){location.replace('home.html');return}const saved=snap.val();if(saved.status==='aprovada'){location.replace('home.html');return}Object.assign(data,saved);data.powers=Array.isArray(saved.powersList)?saved.powersList.slice(0,4):String(saved.powers||'').split(/\r?\n/).slice(0,4);draftId=fichaId;step=Math.min(Number(saved.step)||0,5);loadedDraft=true;return}
- if(draftId){const s=await get(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));if(s.exists()){Object.assign(data,s.val());data.powers=Array.isArray(s.val().powersList)?s.val().powersList.slice(0,4):String(s.val().powers||'').split(/\r?\n/).slice(0,4);step=Math.min(Number(s.val().step)||0,5);if(s.val().sourceFichaId)fichaId=s.val().sourceFichaId;loadedDraft=true}}
- if(!draftId){const s=await get(ref(db,`site/fichasRascunhos/${user.uid}`));const all=s.val()||{};const returned=Object.entries(all).find(([,v])=>v&&v.sourceFichaId&&v.status==='rascunho');if(returned){draftId=returned[0];Object.assign(data,returned[1]);data.powers=Array.isArray(returned[1].powersList)?returned[1].powersList.slice(0,4):String(returned[1].powers||'').split(/\r?\n/).slice(0,4);step=Math.min(Number(returned[1].step)||0,5);fichaId=returned[1].sourceFichaId;loadedDraft=true}}}
+ if(fichaId){
+   const snap=await get(ref(db,`site/fichas/${fichaId}`));
+   if(snap.exists()&&snap.val().ownerUid===user.uid){
+     const saved=snap.val();
+     if(saved.status==='aprovada'){location.replace('home.html');return}
+     Object.assign(data,saved);
+     data.powers=Array.isArray(saved.powersList)?saved.powersList.slice(0,4):String(saved.powers||'').split(/\r?\n/).slice(0,4);
+     const draftSnap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${fichaId}`));
+     if(draftSnap.exists()&&draftSnap.val().sourceFichaId===fichaId&&Number(draftSnap.val().updatedAt||0)>Number(saved.updatedAt||0)){
+       const newer=draftSnap.val();Object.assign(data,newer);data.powers=Array.isArray(newer.powersList)?newer.powersList.slice(0,4):String(newer.powers||'').split(/\r?\n/).slice(0,4);draftId=fichaId;
+     }else{draftId=fichaId;}
+     editingExisting=saved.status==='altere_sua_ficha';
+     step=Math.min(Number(data.step)||0,5);loadedDraft=true;return;
+   }
+   const draftSnap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${fichaId}`));
+   if(draftSnap.exists()){const saved=draftSnap.val();Object.assign(data,saved);data.powers=Array.isArray(saved.powersList)?saved.powersList.slice(0,4):String(saved.powers||'').split(/\r?\n/).slice(0,4);draftId=fichaId;if(saved.sourceFichaId)fichaId=saved.sourceFichaId;editingExisting=!!fichaId;step=Math.min(Number(data.step)||0,5);loadedDraft=true;return}
+   location.replace('home.html');return;
+ }
+ if(draftId){
+   const s=await get(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));
+   if(s.exists()){
+     const saved=s.val();Object.assign(data,saved);data.powers=Array.isArray(saved.powersList)?saved.powersList.slice(0,4):String(saved.powers||'').split(/\r?\n/).slice(0,4);
+     if(saved.sourceFichaId){fichaId=saved.sourceFichaId;editingExisting=true;const original=await get(ref(db,`site/fichas/${fichaId}`));if(original.exists()&&original.val().ownerUid===user.uid&&original.val().status==='altere_sua_ficha'){const canonical=original.val();if(Number(canonical.updatedAt||0)>=Number(saved.updatedAt||0)){Object.assign(data,canonical);data.powers=Array.isArray(canonical.powersList)?canonical.powersList.slice(0,4):String(canonical.powers||'').split(/\r?\n/).slice(0,4);}}}
+     step=Math.min(Number(data.step)||0,5);loadedDraft=true;
+   }
+ }
+ if(!draftId){const s=await get(ref(db,`site/fichasRascunhos/${user.uid}`));const all=s.val()||{};const returned=Object.entries(all).find(([,v])=>v&&v.sourceFichaId&&v.status==='rascunho');if(returned){draftId=returned[0];const saved=returned[1];fichaId=saved.sourceFichaId;editingExisting=true;const original=await get(ref(db,`site/fichas/${fichaId}`));const source=original.exists()&&original.val().ownerUid===user.uid?original.val():saved;Object.assign(data,source);data.powers=Array.isArray(source.powersList)?source.powersList.slice(0,4):String(source.powers||'').split(/\r?\n/).slice(0,4);step=Math.min(Number(source.step)||0,5);loadedDraft=true}}}
 
 $('startBtn').onclick=()=>{$('intro').hidden=true;$('formWrap').hidden=false;render()};
-$('formWrap').addEventListener('click',async e=>{if(e.target.id==='backBtn'){collect();if(step===0){await saveDraft().catch(()=>{});$('formWrap').hidden=true;$('intro').hidden=false}else{step--;render();scheduleSave()}}if(e.target.id==='nextBtn'){if(!validate())return;if(step<5){await saveDraft();step++;render();}else{try{for(const target of [0,1,2,3,4,5]){step=target;render();if(!validate())throw Error('Revise os campos obrigatórios antes de enviar a ficha.')}step=5;render();await saveDraft();const id=fichaId||push(ref(db,'site/fichas')).key;const final=payload('em_analise');final.fichaId=id;final.submittedAt=Date.now();final.step=5;final.stepLabel='Foto';if(fichaId){const existing=(await get(ref(db,`site/fichas/${fichaId}`))).val()||{};final.createdAt=existing.createdAt||data.createdAt||Date.now();final.studentKey=existing.studentKey||data.studentKey||'';final.approvalHistory=existing.approvalHistory||[];}
- await set(ref(db,`site/fichas/${id}`),final);await remove(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));location.replace('home.html')}catch(err){$('formError').textContent=err.message||'Não foi possível enviar a ficha.'}}}});
+$('formWrap').addEventListener('click',async e=>{if(e.target.id==='backBtn'){collect();if(step===0){await saveDraft().catch(()=>{});$('formWrap').hidden=true;$('intro').hidden=false}else{step--;render();scheduleSave()}}if(e.target.id==='nextBtn'){if(!validate())return;if(step<5){await saveDraft();step++;render();}else{try{for(const target of [0,1,2,3,4,5]){step=target;render();if(!validate())throw Error('Revise os campos obrigatórios antes de enviar a ficha.')}step=5;render();await saveDraft();const id=fichaId||push(ref(db,'site/fichas')).key;const final=payload('em_analise');final.fichaId=id;final.submittedAt=Date.now();final.step=5;final.stepLabel='Foto';if(fichaId){const existingSnap=await get(ref(db,`site/fichas/${fichaId}`));if(!existingSnap.exists())throw Error('A ficha original não foi encontrada. Nenhum registro foi substituído.');const existing=existingSnap.val()||{};if(existing.ownerUid!==user.uid)throw Error('Esta ficha não pertence ao usuário atual.');final.createdAt=existing.createdAt||data.createdAt||Date.now();final.studentKey=existing.studentKey||data.studentKey||'';final.approvalHistory=existing.approvalHistory||[];final.rejectionReason='';final.rejectionType='';final.reviewedAt=existing.reviewedAt||data.reviewedAt||0;await update(ref(db,`site/fichas/${id}`),final)}else{await set(ref(db,`site/fichas/${id}`),final)}if(draftId)await remove(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));location.replace('home.html')}catch(err){$('formError').textContent=err.message||'Não foi possível enviar a ficha.'}}}});
 $('formWrap').addEventListener('input',e=>{if(e.target.id==='studio'){data.affiliationStudio=e.target.value;data.affiliationStory='';data.progenitors='';data.affiliationKey='';render()}else if(e.target.id==='story'){data.affiliationStory=e.target.value;data.progenitors='';data.affiliationKey='';render()}else {if(e.target.id==='characterAge'){const n=Number(e.target.value);if(Number.isInteger(n)&&n>=14&&n<=22)fieldError('characterAge','');else if(e.target.value)fieldError('characterAge','Idade permitida de 14 a 22 anos')}scheduleSave()}});
 $('formWrap').addEventListener('change',async e=>{if(e.target.id==='photo'){try{data.avatarUrl=await compressImage(e.target.files[0]);render()}catch(err){$('formError').textContent=err.message}}else scheduleSave()});
 window.addEventListener('pagehide',()=>{if(user)saveDraft().catch(()=>{})});
