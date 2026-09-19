@@ -18,7 +18,7 @@ const labels=['RGA','Progenitores','Características','Atividades','Shape','Foto
 const steps=[
  {title:'Vamos Criar o Registro Geral de Auradon (RGA)',subtitle:'O RGA serve como identificação do seu personagem dentro de Auradon.',body:()=>`<div class="ficha-grid"><div class="field full"><label>*Nome do Personagem</label><input id="characterName" maxlength="80" value="${esc(data.characterName)}"></div><div class="field"><label>*Idade</label><input id="characterAge" type="number" min="14" max="22" value="${esc(data.characterAge)}"></div><div class="field"><label>*Sexualidade</label><input id="sexuality" maxlength="80" value="${esc(data.sexuality)}"></div></div><div class="help">A idade permitida para personagens é de 14 a 22 anos.</div>`},
  {title:'Progenitores',subtitle:'Aqui vamos escolher os progenitores do seu personagem.',body:()=>`<div class="ficha-grid"><div class="field"><label>*Estúdio</label><select id="studio"><option value="">Selecione o estúdio</option>${studioOptions()}</select></div><div class="field"><label>*Conto de Fadas / Propriedade</label><select id="story" ${data.affiliationStudio?'':'disabled'}><option value="">${data.affiliationStudio?'Selecione o conto':'Selecione primeiro o estúdio'}</option>${storyOptions()}</select></div><div class="field full"><label>*Progenitor</label><select id="progenitor" ${data.affiliationStory?'':'disabled'}><option value="">${data.affiliationStory?'Selecione o progenitor':'Selecione primeiro o conto'}</option>${progenitorOptions()}</select><div class="help">A lista é carregada do Firebase e segue Estúdio → Conto → Progenitor.</div></div></div><div class="notice" style="margin-top:14px"><strong>Royal ou Rebel?</strong><div class="choice-row" style="margin-top:10px"><div class="choice"><input id="royal" name="alignment" type="radio" value="Royal" ${data.royalRebel==='Royal'?'checked':''}><label for="royal">👑 <strong>Royal</strong><br><small>Descendentes de heróis.</small></label></div><div class="choice"><input id="rebel" name="alignment" type="radio" value="Rebel" ${data.royalRebel==='Rebel'?'checked':''}><label for="rebel">🖤 <strong>Rebel</strong><br><small>Descendentes de vilões.</small></label></div></div></div><div class="player-actions" style="margin-top:14px"><a class="player-button secondary" href="filiacoes.html">Ver catálogo de Filiações</a></div>`},
- {title:'Suas Características',subtitle:'Quem é você? É hora da gente descobrir.',body:()=>`<div class="field"><label>*Poderes</label><div class="power-grid">${data.powers.map((p,i)=>`<input id="power${i}" maxlength="100" placeholder="Poder ${i+1}" value="${esc(p)}">`).join('')}</div><div class="help">Cadastre até quatro poderes individualmente.</div></div><div class="field"><label>*Personalidade</label><textarea id="personality" rows="8" placeholder="Conte como seu personagem pensa, age e se relaciona...">${esc(data.personality)}</textarea><div class="help">Mínimo de 5 linhas.</div></div><div class="field"><label>*História</label><textarea id="history" class="big" rows="20" placeholder="Conte a história e o passado do personagem...">${esc(data.history)}</textarea><div class="help">Mínimo de 20 linhas.</div></div>`},
+ {title:'Suas Características',subtitle:'Quem é você? É hora da gente descobrir.',body:()=>`<div class="field"><label>*Poderes</label><div class="power-grid">${Array.from({length:4},(_,i)=>`<div class="power-slot"><label for="power${i}">Poder ${i+1}</label><input id="power${i}" maxlength="100" placeholder="Digite o poder ${i+1}" value="${esc(data.powers[i]||'')}"></div>`).join('')}</div><div class="help">Quatro campos independentes. Cada poder é salvo individualmente e recuperado ao continuar a ficha.</div></div><div class="field"><label>*Personalidade</label><textarea id="personality" rows="8" placeholder="Conte como seu personagem pensa, age e se relaciona...">${esc(data.personality)}</textarea><div class="help">Mínimo de 5 linhas.</div></div><div class="field"><label>*História</label><textarea id="history" class="big" rows="20" placeholder="Conte a história e o passado do personagem...">${esc(data.history)}</textarea><div class="help">Mínimo de 20 linhas.</div></div>`},
  {title:'Atividades Escolares',subtitle:'Escolha como seu personagem participa da vida de Auradon Prep.',body:()=>`<div class="ficha-grid"><div class="field"><label>*Atividade principal</label><select id="activityPrimary"><option value="">Selecione uma atividade</option>${activityOptions()}</select></div><div class="field"><label>Atividade secundária</label><select id="activitySecondary"><option value="">Nenhuma</option>${activitySecondaryOptions()}</select></div></div><div class="notice">As atividades são carregadas do Firebase. Administradores podem atualizar essa lista sem alterar o formulário.</div>`},
  {title:'Quem é seu Shape?',subtitle:'Coloque o nome do seu Avatar/Shape.',body:()=>`<div class="field"><label>*Nome do Avatar / Shape</label><input id="shape" maxlength="120" value="${esc(data.shape)}" placeholder="Ator, atriz, modelo ou pessoa usada como shape"></div>`},
  {title:'Hora da Foto',subtitle:'Selecione uma foto bonita para seu personagem, lembrando que ele vai aparecer na página alunos e no seu card de identificação então capriche.',body:()=>`<div class="field"><label>*Foto do personagem</label><input id="photo" type="file" accept="image/jpeg,image/png,image/webp"><div class="help">A foto será comprimida no navegador e armazenada diretamente no Realtime Database, vinculada à ficha. Nenhum Firebase Storage é usado.</div><div id="preview" class="preview-box" style="margin-top:14px">${data.avatarUrl?`<img src="${esc(data.avatarUrl)}" alt="Prévia">`:''}</div></div><div class="notice">Antes de criar a ficha, confira todas as etapas. Depois do envio, ela ficará <strong>Em análise</strong> até a avaliação administrativa.</div>`}
@@ -91,11 +91,22 @@ function refreshStep2Validation(){
   else e.textContent='A história precisa ter no mínimo 20 linhas.';
 }
 
-function payload(status='rascunho'){const now=Date.now();return {...data,ownerUid:user.uid,playerName:user.displayName||user.email?.split('@')[0]||'Jogador',status,step,stepLabel:labels[step],powersList:data.powers.filter(Boolean),powers:data.powers.filter(Boolean).join('\n'),createdAt:data.createdAt||now,updatedAt:now}}
-async function ensureDraft(){if(!draftId)draftId=push(ref(db,`site/fichasRascunhos/${user.uid}`)).key;return draftId}
-async function saveDraft(){
+function payload(status='rascunho'){const now=Date.now();const stableId=fichaId||draftId||'';return {...data,fichaId:stableId,ownerUid:user.uid,playerName:user.displayName||user.email?.split('@')[0]||'Jogador',status,step,stepLabel:labels[step],powersList:Array.from({length:4},(_,i)=>String(data.powers?.[i]||'')),powers:Array.from({length:4},(_,i)=>String(data.powers?.[i]||'')).filter(Boolean).join('\n'),createdAt:data.createdAt||now,updatedAt:now}}
+async function ensureDraft(){
+  if(!draftId){
+    draftId=fichaId||push(ref(db,`site/fichasRascunhos/${user.uid}`)).key;
+  }
+  if(!draftId)throw Error('Não foi possível gerar o ID permanente da ficha.');
+  return draftId;
+}
+
+async function saveDraft(shouldCollect=true){
   if(!user)return;
-  collect();
+  if(shouldCollect)collect();
+  await ensureDraft();
+
+  // Para uma ficha devolvida para revisão, o registro canônico em site/fichas
+  // é sempre a fonte principal. Nunca apagar/recriar esse registro.
   if(fichaId&&editingExisting){
     const existingSnap=await get(ref(db,`site/fichas/${fichaId}`));
     if(!existingSnap.exists())throw Error('A ficha original não foi encontrada. Nenhum registro foi apagado.');
@@ -104,21 +115,25 @@ async function saveDraft(){
     if(existing.status!=='altere_sua_ficha')throw Error('Esta ficha não está disponível para revisão.');
     const p=payload('altere_sua_ficha');
     p.fichaId=fichaId;
+    p.createdAt=existing.createdAt||data.createdAt||Date.now();
     p.rejectionReason=existing.rejectionReason||data.rejectionReason||'';
     p.rejectionType=existing.rejectionType||data.rejectionType||'revisao';
     p.reviewedAt=existing.reviewedAt||data.reviewedAt||0;
     p.approvalHistory=existing.approvalHistory||data.approvalHistory||[];
+    p.studentKey=existing.studentKey||data.studentKey||'';
     await update(ref(db,`site/fichas/${fichaId}`),p);
-    await ensureDraft();
     await update(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`),{...p,status:'rascunho',sourceFichaId:fichaId,reviewMessage:p.rejectionReason});
   }else{
-    await ensureDraft();
     const p=payload('rascunho');
+    p.fichaId=draftId;
     await set(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`),p);
   }
-  const n=$('savedNote');if(n)n.textContent='Progresso salvo automaticamente.'
+  const n=$('savedNote');if(n)n.textContent='Progresso salvo automaticamente.';
 }
-function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>saveDraft().catch(()=>{}),650)}
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>saveDraft().catch(()=>{}),650);
+}
 
 function compressImage(file){return new Promise((resolve,reject)=>{if(!file)return reject(Error('Anexe uma imagem.'));if(!file.type.startsWith('image/'))return reject(Error('Selecione uma imagem válida.'));if(file.size>8*1024*1024)return reject(Error('A imagem original deve ter no máximo 8 MB.'));const img=new Image(),reader=new FileReader();reader.onload=()=>{img.onload=()=>{const max=720,scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.naturalWidth*scale));c.height=Math.max(1,Math.round(img.naturalHeight*scale));c.getContext('2d').drawImage(img,0,0,c.width,c.height);let quality=.76,url=c.toDataURL('image/jpeg',quality);while(url.length>900000&&quality>.45){quality-=.06;url=c.toDataURL('image/jpeg',quality)}if(url.length>1100000)return reject(Error('A foto ficou grande demais para o banco. Escolha uma imagem mais simples.'));resolve(url)};img.onerror=()=>reject(Error('Não foi possível ler a imagem.'));img.src=reader.result};reader.onerror=()=>reject(Error('Não foi possível ler a imagem.'));reader.readAsDataURL(file)})}
 
@@ -130,31 +145,31 @@ async function load(){user=await requireAuth();const [a,b,c]=await Promise.all([
      const saved=snap.val();
      if(saved.status==='aprovada'){location.replace('home.html');return}
      Object.assign(data,saved);
-     data.powers=Array.isArray(saved.powersList)?saved.powersList.slice(0,4):String(saved.powers||'').split(/\r?\n/).slice(0,4);
+     data.powers=Array.from({length:4},(_,i)=>Array.isArray(saved.powersList)?String(saved.powersList[i]||''):String(saved.powers||'').split(/\r?\n/)[i]||'');
      const draftSnap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${fichaId}`));
      if(draftSnap.exists()&&draftSnap.val().sourceFichaId===fichaId&&Number(draftSnap.val().updatedAt||0)>Number(saved.updatedAt||0)){
-       const newer=draftSnap.val();Object.assign(data,newer);data.powers=Array.isArray(newer.powersList)?newer.powersList.slice(0,4):String(newer.powers||'').split(/\r?\n/).slice(0,4);draftId=fichaId;
+       const newer=draftSnap.val();Object.assign(data,newer);data.powers=Array.from({length:4},(_,i)=>Array.isArray(newer.powersList)?String(newer.powersList[i]||''):String(newer.powers||'').split(/\r?\n/)[i]||'');draftId=fichaId;
      }else{draftId=fichaId;}
      editingExisting=saved.status==='altere_sua_ficha';
      step=Math.min(Number(data.step)||0,5);loadedDraft=true;return;
    }
    const draftSnap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${fichaId}`));
-   if(draftSnap.exists()){const saved=draftSnap.val();Object.assign(data,saved);data.powers=Array.isArray(saved.powersList)?saved.powersList.slice(0,4):String(saved.powers||'').split(/\r?\n/).slice(0,4);draftId=fichaId;if(saved.sourceFichaId)fichaId=saved.sourceFichaId;editingExisting=!!fichaId;step=Math.min(Number(data.step)||0,5);loadedDraft=true;return}
+   if(draftSnap.exists()){const saved=draftSnap.val();Object.assign(data,saved);data.powers=Array.from({length:4},(_,i)=>Array.isArray(saved.powersList)?String(saved.powersList[i]||''):String(saved.powers||'').split(/\r?\n/)[i]||'');draftId=fichaId;if(saved.sourceFichaId)fichaId=saved.sourceFichaId;editingExisting=!!fichaId;step=Math.min(Number(data.step)||0,5);loadedDraft=true;return}
    location.replace('home.html');return;
  }
  if(draftId){
    const s=await get(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));
    if(s.exists()){
-     const saved=s.val();Object.assign(data,saved);data.powers=Array.isArray(saved.powersList)?saved.powersList.slice(0,4):String(saved.powers||'').split(/\r?\n/).slice(0,4);
-     if(saved.sourceFichaId){fichaId=saved.sourceFichaId;editingExisting=true;const original=await get(ref(db,`site/fichas/${fichaId}`));if(original.exists()&&original.val().ownerUid===user.uid&&original.val().status==='altere_sua_ficha'){const canonical=original.val();if(Number(canonical.updatedAt||0)>=Number(saved.updatedAt||0)){Object.assign(data,canonical);data.powers=Array.isArray(canonical.powersList)?canonical.powersList.slice(0,4):String(canonical.powers||'').split(/\r?\n/).slice(0,4);}}}
+     const saved=s.val();Object.assign(data,saved);data.powers=Array.from({length:4},(_,i)=>Array.isArray(saved.powersList)?String(saved.powersList[i]||''):String(saved.powers||'').split(/\r?\n/)[i]||'');
+     if(saved.sourceFichaId){fichaId=saved.sourceFichaId;editingExisting=true;const original=await get(ref(db,`site/fichas/${fichaId}`));if(original.exists()&&original.val().ownerUid===user.uid&&original.val().status==='altere_sua_ficha'){const canonical=original.val();if(Number(canonical.updatedAt||0)>=Number(saved.updatedAt||0)){Object.assign(data,canonical);data.powers=Array.from({length:4},(_,i)=>Array.isArray(canonical.powersList)?String(canonical.powersList[i]||''):String(canonical.powers||'').split(/\r?\n/)[i]||'');}}}
      step=Math.min(Number(data.step)||0,5);loadedDraft=true;
    }
  }
- if(!draftId){const s=await get(ref(db,`site/fichasRascunhos/${user.uid}`));const all=s.val()||{};const returned=Object.entries(all).find(([,v])=>v&&v.sourceFichaId&&v.status==='rascunho');if(returned){draftId=returned[0];const saved=returned[1];fichaId=saved.sourceFichaId;editingExisting=true;const original=await get(ref(db,`site/fichas/${fichaId}`));const source=original.exists()&&original.val().ownerUid===user.uid?original.val():saved;Object.assign(data,source);data.powers=Array.isArray(source.powersList)?source.powersList.slice(0,4):String(source.powers||'').split(/\r?\n/).slice(0,4);step=Math.min(Number(source.step)||0,5);loadedDraft=true}}}
+ if(!draftId){const s=await get(ref(db,`site/fichasRascunhos/${user.uid}`));const all=s.val()||{};const returned=Object.entries(all).find(([,v])=>v&&v.sourceFichaId&&v.status==='rascunho');if(returned){draftId=returned[0];const saved=returned[1];fichaId=saved.sourceFichaId;editingExisting=true;const original=await get(ref(db,`site/fichas/${fichaId}`));const source=original.exists()&&original.val().ownerUid===user.uid?original.val():saved;Object.assign(data,source);data.powers=Array.from({length:4},(_,i)=>Array.isArray(source.powersList)?String(source.powersList[i]||''):String(source.powers||'').split(/\r?\n/)[i]||'');step=Math.min(Number(source.step)||0,5);loadedDraft=true}}}
 
 $('startBtn').onclick=()=>{$('intro').hidden=true;$('formWrap').hidden=false;render()};
-$('formWrap').addEventListener('click',async e=>{if(e.target.id==='backBtn'){collect();if(step===0){await saveDraft().catch(()=>{});$('formWrap').hidden=true;$('intro').hidden=false}else{step--;render();scheduleSave()}}if(e.target.id==='nextBtn'){if(!validate())return;if(step<5){await saveDraft();step++;render();}else{try{for(const target of [0,1,2,3,4,5]){step=target;render();if(!validate())throw Error('Revise os campos obrigatórios antes de enviar a ficha.')}step=5;render();await saveDraft();const id=fichaId||push(ref(db,'site/fichas')).key;const final=payload('em_analise');final.fichaId=id;final.submittedAt=Date.now();final.step=5;final.stepLabel='Foto';if(fichaId){const existingSnap=await get(ref(db,`site/fichas/${fichaId}`));if(!existingSnap.exists())throw Error('A ficha original não foi encontrada. Nenhum registro foi substituído.');const existing=existingSnap.val()||{};if(existing.ownerUid!==user.uid)throw Error('Esta ficha não pertence ao usuário atual.');final.createdAt=existing.createdAt||data.createdAt||Date.now();final.studentKey=existing.studentKey||data.studentKey||'';final.approvalHistory=existing.approvalHistory||[];final.rejectionReason='';final.rejectionType='';final.reviewedAt=existing.reviewedAt||data.reviewedAt||0;await update(ref(db,`site/fichas/${id}`),final)}else{await set(ref(db,`site/fichas/${id}`),final)}if(draftId)await remove(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));location.replace('home.html')}catch(err){$('formError').textContent=err.message||'Não foi possível enviar a ficha.'}}}});
+$('formWrap').addEventListener('click',async e=>{if(e.target.id==='backBtn'){collect();if(step===0){await saveDraft(false).catch(()=>{});$('formWrap').hidden=true;$('intro').hidden=false}else{step--;await saveDraft(false).catch(()=>{});render()}}if(e.target.id==='nextBtn'){if(!validate())return;if(step<5){const nextStep=step+1;await saveDraft(true);step=nextStep;await saveDraft(false);render();}else{try{for(const target of [0,1,2,3,4,5]){step=target;render();if(!validate())throw Error('Revise os campos obrigatórios antes de enviar a ficha.')}step=5;render();await saveDraft();const id=fichaId||draftId||push(ref(db,'site/fichas')).key;const final=payload('em_analise');final.fichaId=id;final.submittedAt=Date.now();final.step=5;final.stepLabel='Foto';if(fichaId){const existingSnap=await get(ref(db,`site/fichas/${fichaId}`));if(!existingSnap.exists())throw Error('A ficha original não foi encontrada. Nenhum registro foi substituído.');const existing=existingSnap.val()||{};if(existing.ownerUid!==user.uid)throw Error('Esta ficha não pertence ao usuário atual.');final.createdAt=existing.createdAt||data.createdAt||Date.now();final.studentKey=existing.studentKey||data.studentKey||'';final.approvalHistory=existing.approvalHistory||[];final.rejectionReason='';final.rejectionType='';final.reviewedAt=existing.reviewedAt||data.reviewedAt||0;await update(ref(db,`site/fichas/${id}`),final)}else{await set(ref(db,`site/fichas/${id}`),final)}if(draftId)await remove(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));location.replace('home.html')}catch(err){$('formError').textContent=err.message||'Não foi possível enviar a ficha.'}}}});
 $('formWrap').addEventListener('input',e=>{if(e.target.id==='studio'){data.affiliationStudio=e.target.value;data.affiliationStory='';data.progenitors='';data.affiliationKey='';render()}else if(e.target.id==='story'){data.affiliationStory=e.target.value;data.progenitors='';data.affiliationKey='';render()}else {if(e.target.id==='characterAge'){const n=Number(e.target.value);if(Number.isInteger(n)&&n>=14&&n<=22)fieldError('characterAge','');else if(e.target.value)fieldError('characterAge','Idade permitida de 14 a 22 anos')}scheduleSave()}});
 $('formWrap').addEventListener('change',async e=>{if(e.target.id==='photo'){try{data.avatarUrl=await compressImage(e.target.files[0]);render()}catch(err){$('formError').textContent=err.message}}else scheduleSave()});
-window.addEventListener('pagehide',()=>{if(user)saveDraft().catch(()=>{})});
+const autosaveInterval=setInterval(()=>{if(user&&document.visibilityState!=='hidden')saveDraft().catch(()=>{})},10000);window.addEventListener('pagehide',()=>{clearInterval(autosaveInterval);if(user)saveDraft().catch(()=>{})});
 load().catch(e=>{if(e.message!=='AUTH_REQUIRED'){$('intro').innerHTML='<div class="ficha-error">Não foi possível carregar a criação da ficha. Verifique a conexão com o Firebase.</div>'}});
