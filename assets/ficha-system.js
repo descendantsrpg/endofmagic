@@ -5,7 +5,7 @@ import {get,ref,push,set,remove,update} from 'https://www.gstatic.com/firebasejs
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const params=new URLSearchParams(location.search);
-let user=null,step=0,draftId=params.get('draft')||null,fichaId=params.get('ficha')||null,saveTimer=null,affiliations={},activities={},slotCounts={},loadedDraft=false,editingExisting=false;
+let user=null,step=0,draftId=params.get('draft')||null,fichaId=params.get('ficha')||null,saveTimer=null,affiliations={},activities={},slotCounts={},loadedDraft=false,editingExisting=false,loadingFicha=true;
 
 const data={
   powers:['','','',''],characterName:'',characterAge:'',sexuality:'',
@@ -91,7 +91,7 @@ function refreshStep2Validation(){
   else e.textContent='A história precisa ter no mínimo 20 linhas.';
 }
 
-function payload(status='rascunho'){const now=Date.now();const stableId=fichaId||draftId||'';return {...data,fichaId:stableId,ownerUid:user.uid,playerName:user.displayName||user.email?.split('@')[0]||'Jogador',status,step,stepLabel:labels[step],powersList:Array.from({length:4},(_,i)=>String(data.powers?.[i]||'')),powers:Array.from({length:4},(_,i)=>String(data.powers?.[i]||'')).filter(Boolean).join('\n'),createdAt:data.createdAt||now,updatedAt:now}}
+function payload(status='rascunho'){const now=Date.now();const stableId=fichaId||draftId||'';const currentStep=step+1;return {...data,fichaId:stableId,ownerUid:user.uid,playerName:user.displayName||user.email?.split('@')[0]||'Jogador',status,currentStep,step,stepLabel:labels[step],powersList:Array.from({length:4},(_,i)=>String(data.powers?.[i]||'')),powers:Array.from({length:4},(_,i)=>String(data.powers?.[i]||'')).filter(Boolean).join('\n'),createdAt:data.createdAt||now,updatedAt:now}}
 async function ensureDraft(){
   if(!draftId){
     draftId=fichaId||push(ref(db,`site/fichasRascunhos/${user.uid}`)).key;
@@ -137,38 +137,131 @@ function scheduleSave(){
 
 function compressImage(file){return new Promise((resolve,reject)=>{if(!file)return reject(Error('Anexe uma imagem.'));if(!file.type.startsWith('image/'))return reject(Error('Selecione uma imagem válida.'));if(file.size>8*1024*1024)return reject(Error('A imagem original deve ter no máximo 8 MB.'));const img=new Image(),reader=new FileReader();reader.onload=()=>{img.onload=()=>{const max=720,scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.naturalWidth*scale));c.height=Math.max(1,Math.round(img.naturalHeight*scale));c.getContext('2d').drawImage(img,0,0,c.width,c.height);let quality=.76,url=c.toDataURL('image/jpeg',quality);while(url.length>900000&&quality>.45){quality-=.06;url=c.toDataURL('image/jpeg',quality)}if(url.length>1100000)return reject(Error('A foto ficou grande demais para o banco. Escolha uma imagem mais simples.'));resolve(url)};img.onerror=()=>reject(Error('Não foi possível ler a imagem.'));img.src=reader.result};reader.onerror=()=>reject(Error('Não foi possível ler a imagem.'));reader.readAsDataURL(file)})}
 
-async function load(){user=await requireAuth();const [a,b,c]=await Promise.all([get(ref(db,'site/filiacoes')),get(ref(db,'site/atividades')),get(ref(db,'site/alunos'))]);affiliations=a.val()||{};activities=b.val()||{};const students=c.val()||{};slotCounts={};Object.entries(students).forEach(([,s])=>{if(!s)return;const k=s.affiliationKey;if(k)slotCounts[k]=(slotCounts[k]||0)+1});
- if(!Object.keys(activities).length){try{const r=await fetch('atividades-iniciais.json');activities=await r.json()}catch(_){activities={}}}
- if(fichaId){
-   const snap=await get(ref(db,`site/fichas/${fichaId}`));
-   if(snap.exists()&&snap.val().ownerUid===user.uid){
-     const saved=snap.val();
-     if(saved.status==='aprovada'){location.replace('home.html');return}
-     Object.assign(data,saved);
-     data.powers=Array.from({length:4},(_,i)=>Array.isArray(saved.powersList)?String(saved.powersList[i]||''):String(saved.powers||'').split(/\r?\n/)[i]||'');
-     const draftSnap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${fichaId}`));
-     if(draftSnap.exists()&&draftSnap.val().sourceFichaId===fichaId&&Number(draftSnap.val().updatedAt||0)>Number(saved.updatedAt||0)){
-       const newer=draftSnap.val();Object.assign(data,newer);data.powers=Array.from({length:4},(_,i)=>Array.isArray(newer.powersList)?String(newer.powersList[i]||''):String(newer.powers||'').split(/\r?\n/)[i]||'');draftId=fichaId;
-     }else{draftId=fichaId;}
-     editingExisting=saved.status==='altere_sua_ficha';
-     step=Math.min(Number(data.step)||0,5);loadedDraft=true;return;
-   }
-   const draftSnap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${fichaId}`));
-   if(draftSnap.exists()){const saved=draftSnap.val();Object.assign(data,saved);data.powers=Array.from({length:4},(_,i)=>Array.isArray(saved.powersList)?String(saved.powersList[i]||''):String(saved.powers||'').split(/\r?\n/)[i]||'');draftId=fichaId;if(saved.sourceFichaId)fichaId=saved.sourceFichaId;editingExisting=!!fichaId;step=Math.min(Number(data.step)||0,5);loadedDraft=true;return}
-   location.replace('home.html');return;
- }
- if(draftId){
-   const s=await get(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));
-   if(s.exists()){
-     const saved=s.val();Object.assign(data,saved);data.powers=Array.from({length:4},(_,i)=>Array.isArray(saved.powersList)?String(saved.powersList[i]||''):String(saved.powers||'').split(/\r?\n/)[i]||'');
-     if(saved.sourceFichaId){fichaId=saved.sourceFichaId;editingExisting=true;const original=await get(ref(db,`site/fichas/${fichaId}`));if(original.exists()&&original.val().ownerUid===user.uid&&original.val().status==='altere_sua_ficha'){const canonical=original.val();if(Number(canonical.updatedAt||0)>=Number(saved.updatedAt||0)){Object.assign(data,canonical);data.powers=Array.from({length:4},(_,i)=>Array.isArray(canonical.powersList)?String(canonical.powersList[i]||''):String(canonical.powers||'').split(/\r?\n/)[i]||'');}}}
-     step=Math.min(Number(data.step)||0,5);loadedDraft=true;
-   }
- }
- if(!draftId){const s=await get(ref(db,`site/fichasRascunhos/${user.uid}`));const all=s.val()||{};const returned=Object.entries(all).find(([,v])=>v&&v.sourceFichaId&&v.status==='rascunho');if(returned){draftId=returned[0];const saved=returned[1];fichaId=saved.sourceFichaId;editingExisting=true;const original=await get(ref(db,`site/fichas/${fichaId}`));const source=original.exists()&&original.val().ownerUid===user.uid?original.val():saved;Object.assign(data,source);data.powers=Array.from({length:4},(_,i)=>Array.isArray(source.powersList)?String(source.powersList[i]||''):String(source.powers||'').split(/\r?\n/)[i]||'');step=Math.min(Number(source.step)||0,5);loadedDraft=true}}}
+function stepFromSaved(saved){
+  const current=Number(saved?.currentStep);
+  if(Number.isInteger(current)&&current>=1&&current<=steps.length)return current-1;
+  const legacy=Number(saved?.step);
+  if(Number.isInteger(legacy)&&legacy>=0&&legacy<steps.length)return legacy;
+  // Compatibilidade com fichas antigas: não apaga dados; tenta localizar a última etapa com conteúdo.
+  const has=v=>String(v??'').trim().length>0;
+  if(has(saved?.avatarUrl)||has(saved?.shape))return 5;
+  if(has(saved?.activityPrimary)||has(saved?.activitySecondary))return 3;
+  if((Array.isArray(saved?.powersList)&&saved.powersList.some(has))||has(saved?.powers)||has(saved?.personality)||has(saved?.history))return 2;
+  if(has(saved?.progenitors)||has(saved?.affiliationStory)||has(saved?.affiliationStudio)||has(saved?.royalRebel))return 1;
+  if(has(saved?.characterName)||has(saved?.characterAge)||has(saved?.sexuality))return 0;
+  return 0;
+}
+function restoreSaved(saved){
+  Object.assign(data,saved||{});
+  data.powers=Array.from({length:4},(_,i)=>Array.isArray(saved?.powersList)?String(saved.powersList[i]||''):String(saved?.powers||'').split(/\r?\n/)[i]||'');
+  step=stepFromSaved(saved);
+  data.currentStep=step+1;
+}
+function showLoadedForm(){
+  loadingFicha=false;
+  $('intro').hidden=true;
+  $('formWrap').hidden=false;
+  render();
+}
+function showNewForm(){
+  loadingFicha=false;
+  $('intro').hidden=true;
+  $('formWrap').hidden=false;
+  render();
+}
 
-$('startBtn').onclick=()=>{$('intro').hidden=true;$('formWrap').hidden=false;render()};
-$('formWrap').addEventListener('click',async e=>{if(e.target.id==='backBtn'){collect();if(step===0){await saveDraft(false).catch(()=>{});$('formWrap').hidden=true;$('intro').hidden=false}else{step--;await saveDraft(false).catch(()=>{});render()}}if(e.target.id==='nextBtn'){if(!validate())return;if(step<5){const nextStep=step+1;await saveDraft(true);step=nextStep;await saveDraft(false);render();}else{try{for(const target of [0,1,2,3,4,5]){step=target;render();if(!validate())throw Error('Revise os campos obrigatórios antes de enviar a ficha.')}step=5;render();await saveDraft();const id=fichaId||draftId||push(ref(db,'site/fichas')).key;const final=payload('em_analise');final.fichaId=id;final.submittedAt=Date.now();final.step=5;final.stepLabel='Foto';if(fichaId){const existingSnap=await get(ref(db,`site/fichas/${fichaId}`));if(!existingSnap.exists())throw Error('A ficha original não foi encontrada. Nenhum registro foi substituído.');const existing=existingSnap.val()||{};if(existing.ownerUid!==user.uid)throw Error('Esta ficha não pertence ao usuário atual.');final.createdAt=existing.createdAt||data.createdAt||Date.now();final.studentKey=existing.studentKey||data.studentKey||'';final.approvalHistory=existing.approvalHistory||[];final.rejectionReason='';final.rejectionType='';final.reviewedAt=existing.reviewedAt||data.reviewedAt||0;await update(ref(db,`site/fichas/${id}`),final)}else{await set(ref(db,`site/fichas/${id}`),final)}if(draftId)await remove(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));location.replace('home.html')}catch(err){$('formError').textContent=err.message||'Não foi possível enviar a ficha.'}}}});
+async function load(){
+  user=await requireAuth();
+  const [a,b,c]=await Promise.all([get(ref(db,'site/filiacoes')),get(ref(db,'site/atividades')),get(ref(db,'site/alunos'))]);
+  affiliations=a.val()||{};activities=b.val()||{};const students=c.val()||{};
+  slotCounts={};Object.entries(students).forEach(([,s])=>{if(!s)return;const k=s.affiliationKey;if(k)slotCounts[k]=(slotCounts[k]||0)+1});
+  if(!Object.keys(activities).length){try{const r=await fetch('atividades-iniciais.json');activities=await r.json()}catch(_){activities={}}}
+
+  // O carregamento da ficha sempre acontece antes de renderizar qualquer etapa.
+  if(fichaId){
+    const snap=await get(ref(db,`site/fichas/${fichaId}`));
+    if(snap.exists()&&snap.val().ownerUid===user.uid){
+      const saved=snap.val();
+      if(saved.status==='aprovada'){location.replace('home.html');return}
+      restoreSaved(saved);
+      const draftSnap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${fichaId}`));
+      if(draftSnap.exists()&&draftSnap.val().sourceFichaId===fichaId&&Number(draftSnap.val().updatedAt||0)>Number(saved.updatedAt||0)){
+        restoreSaved(draftSnap.val());
+        draftId=fichaId;
+      }else draftId=fichaId;
+      editingExisting=saved.status==='altere_sua_ficha';
+      loadedDraft=true;
+      showLoadedForm();
+      return;
+    }
+    const draftSnap=await get(ref(db,`site/fichasRascunhos/${user.uid}/${fichaId}`));
+    if(draftSnap.exists()){
+      const saved=draftSnap.val();
+      restoreSaved(saved);
+      draftId=fichaId;
+      if(saved.sourceFichaId){
+        fichaId=saved.sourceFichaId;
+        editingExisting=true;
+      }
+      loadedDraft=true;
+      showLoadedForm();
+      return;
+    }
+    location.replace('home.html');return;
+  }
+
+  if(draftId){
+    const s=await get(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));
+    if(s.exists()){
+      const saved=s.val();
+      restoreSaved(saved);
+      if(saved.sourceFichaId){
+        fichaId=saved.sourceFichaId;editingExisting=true;
+        const original=await get(ref(db,`site/fichas/${fichaId}`));
+        if(original.exists()&&original.val().ownerUid===user.uid&&original.val().status==='altere_sua_ficha'){
+          const canonical=original.val();
+          if(Number(canonical.updatedAt||0)>=Number(saved.updatedAt||0))restoreSaved(canonical);
+        }
+      }
+      loadedDraft=true;
+      showLoadedForm();
+      return;
+    }
+  }
+
+  // Compatibilidade: se a Home ainda não enviou ID, localizar o rascunho do usuário.
+  if(!draftId){
+    const s=await get(ref(db,`site/fichasRascunhos/${user.uid}`));
+    const all=s.val()||{};
+    const returned=Object.entries(all).find(([,v])=>v&&v.sourceFichaId&&v.status==='rascunho');
+    if(returned){
+      draftId=returned[0];
+      const saved=returned[1];
+      fichaId=saved.sourceFichaId;
+      editingExisting=true;
+      const original=await get(ref(db,`site/fichas/${fichaId}`));
+      const source=original.exists()&&original.val().ownerUid===user.uid?original.val():saved;
+      restoreSaved(source);
+      loadedDraft=true;
+      showLoadedForm();
+      return;
+    }
+  }
+
+  loadingFicha=false;
+  // Ficha nova: somente aqui o fluxo começa na Etapa 01.
+  step=0;data.currentStep=1;
+  const start=$('startBtn');
+  if(start){start.disabled=false;start.textContent='Começar a criação ✦';}
+}
+
+$('startBtn').onclick=()=>showNewForm();
+$('formWrap').addEventListener('click',async e=>{if(e.target.id==='backBtn'){collect();if(step===0){await saveDraft(false).catch(()=>{});$('formWrap').hidden=true;$('intro').hidden=false}else{step--;await saveDraft(false).catch(()=>{});render()}}if(e.target.id==='nextBtn'){if(!validate())return;if(step<5){const nextStep=step+1;await saveDraft(true);step=nextStep;data.currentStep=step+1;await saveDraft(false);render();}else{try{for(const target of [0,1,2,3,4,5]){step=target;render();if(!validate())throw Error('Revise os campos obrigatórios antes de enviar a ficha.')}step=5;render();await saveDraft();const id=fichaId||draftId||push(ref(db,'site/fichas')).key;const final=payload('em_analise');final.fichaId=id;final.submittedAt=Date.now();final.currentStep=6;final.step=5;final.stepLabel='Foto';if(fichaId){const existingSnap=await get(ref(db,`site/fichas/${fichaId}`));if(!existingSnap.exists())throw Error('A ficha original não foi encontrada. Nenhum registro foi substituído.');const existing=existingSnap.val()||{};if(existing.ownerUid!==user.uid)throw Error('Esta ficha não pertence ao usuário atual.');final.createdAt=existing.createdAt||data.createdAt||Date.now();final.studentKey=existing.studentKey||data.studentKey||'';final.approvalHistory=existing.approvalHistory||[];final.rejectionReason='';final.rejectionType='';final.reviewedAt=existing.reviewedAt||data.reviewedAt||0;await update(ref(db,`site/fichas/${id}`),final)}else{await set(ref(db,`site/fichas/${id}`),final)}if(draftId)await remove(ref(db,`site/fichasRascunhos/${user.uid}/${draftId}`));
+const done=document.createElement('div');
+done.className='ficha-completion-overlay';
+done.innerHTML=`<div class="ficha-completion-card" role="dialog" aria-modal="true" aria-labelledby="fichaCompletionTitle"><div class="ficha-completion-icon">✓</div><div class="kicker">FICHA ENVIADA</div><h2 id="fichaCompletionTitle">Sua ficha foi concluída!</h2><p>Sua ficha será encaminhada para análise da administração.</p><p class="ficha-completion-reminder"><strong>Não se esqueça:</strong> avise no <strong>grupo de recepção no WhatsApp</strong> que sua ficha foi terminada, para que a equipe possa verificar que ela está pronta para análise.</p><div class="ficha-completion-actions"><a class="ficha-button" href="home.html">Ir para minha Home</a><a class="ficha-button" href="index.html">Ir para a tela inicial</a></div></div>`;
+document.body.appendChild(done);
+}catch(err){$('formError').textContent=err.message||'Não foi possível enviar a ficha.'}}}});
 $('formWrap').addEventListener('input',e=>{if(e.target.id==='studio'){data.affiliationStudio=e.target.value;data.affiliationStory='';data.progenitors='';data.affiliationKey='';render()}else if(e.target.id==='story'){data.affiliationStory=e.target.value;data.progenitors='';data.affiliationKey='';render()}else {if(e.target.id==='characterAge'){const n=Number(e.target.value);if(Number.isInteger(n)&&n>=14&&n<=22)fieldError('characterAge','');else if(e.target.value)fieldError('characterAge','Idade permitida de 14 a 22 anos')}scheduleSave()}});
 $('formWrap').addEventListener('change',async e=>{if(e.target.id==='photo'){try{data.avatarUrl=await compressImage(e.target.files[0]);render()}catch(err){$('formError').textContent=err.message}}else scheduleSave()});
 const autosaveInterval=setInterval(()=>{if(user&&document.visibilityState!=='hidden')saveDraft().catch(()=>{})},10000);window.addEventListener('pagehide',()=>{clearInterval(autosaveInterval);if(user)saveDraft().catch(()=>{})});
