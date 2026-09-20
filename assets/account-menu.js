@@ -17,22 +17,19 @@ function normalizeAccountHost(header){
 }
 
 function renderAccount(header, user, profile){
-  header.querySelectorAll('a[href$="login.html"], a[href$="cadastro.html"], [data-auth-login], [data-auth-register]').forEach(link => {
-    link.hidden = !!user;
-    link.setAttribute('aria-hidden', user ? 'true' : 'false');
-    link.classList.toggle('auth-hidden', !!user);
-  });
   document.querySelectorAll('[data-auth-login], [data-auth-register]').forEach(link => {
     link.hidden = !!user;
     link.setAttribute('aria-hidden', user ? 'true' : 'false');
-    link.classList.toggle('auth-hidden', !!user);
+    link.style.removeProperty('display');
   });
   const heroAction = document.getElementById('hero-auth-action');
   if(heroAction){
     heroAction.hidden = false;
     heroAction.textContent = user ? 'Ir para sua Home' : 'Crie seu personagem agora';
     heroAction.href = user ? 'home.html' : 'cadastro.html';
+    heroAction.setAttribute('aria-label', user ? 'Ir para sua Home' : 'Criar seu personagem agora');
   }
+  document.dispatchEvent(new CustomEvent('descendentes-auth-ready',{detail:{user: user || null}}));
   const host = normalizeAccountHost(header);
   if(!host) return;
   if(!user){ host.innerHTML=''; header.classList.remove('has-account'); return; }

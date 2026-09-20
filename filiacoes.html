@@ -76,16 +76,16 @@ function render(){
    const pn=String(p.filiation??"").trim().toLowerCase(),ps=String(p.affiliationStudio??p.studio??"").trim().toLowerCase(),pt=String(p.affiliationStory??p.story??"").trim().toLowerCase();
    return pn===name.toLowerCase()&&(!ps||ps===studio.toLowerCase())&&(!pt||pt===story.toLowerCase());
   }).length;
-  groups[studio][story].push({...a,name,current,maxChildren:Number(a.maxChildren??a.maxFilhos??3)});
+  groups[studio][story].push({...a,name,current,maxChildren:Number(a.maxChildren??a.maxFilhos??3),manualUnavailable:a.manualUnavailable===true});
  });
  box.innerHTML=Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([studio,stories])=>
  `<article class="group"><h2>${esc(studio)}</h2>${Object.entries(stories).sort((a,b)=>a[0].localeCompare(b[0],"pt-BR",{sensitivity:"base"})).map(([story,items])=>
  `<div class="story"><h3>${esc(story)}</h3><div class="affs">${items.sort((a,b)=>a.name.localeCompare(b.name,"pt-BR",{sensitivity:"base"})).map(a=>
- `<div class="aff ${a.current >= a.maxChildren ? "filiacao-lotada" : ""}">
+ `<div class="aff ${(a.manualUnavailable || a.current >= a.maxChildren) ? "filiacao-lotada" : ""}">
   ${a.imageUrl?`<div class="filiacao-photo-wrap"><img class="filiacao-photo" src="${esc(a.imageUrl)}" alt="Foto de ${esc(a.name)}"></div>`:""}
   <div class="name">${esc(a.name)}</div>
-  <div class="count ${a.current >= a.maxChildren ? "full filiacao-vagas" : ""}">
-  ${a.current >= a.maxChildren ? '<strong class="filiacao-indisponivel">Indisponivel</strong>' : `(${String(a.current).padStart(2,"0")}/${String(a.maxChildren).padStart(2,"0")})`}
+  <div class="count ${(a.manualUnavailable || a.current >= a.maxChildren) ? "full filiacao-vagas" : ""}">
+  ${(a.manualUnavailable || a.current >= a.maxChildren) ? '<strong class="filiacao-indisponivel">INDISPONÍVEL</strong>' : `(${String(a.current).padStart(2,"0")}/${String(a.maxChildren).padStart(2,"0")})`}
 </div>
 </div>`).join("")}</div></div>`).join("")}</article>`).join("");
 }

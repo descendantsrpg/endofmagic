@@ -45,40 +45,7 @@
   </main>
   <footer class="site-footer"><div class="shell"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"><p><strong>Descendentes — End Of Magic</strong> é um RPG fictício criado por Orochi. Descendentes é uma marca da Walt Disney Company; este projeto de fãs não possui ligação com a empresa.</p><p><a href="admin-acesso.html">Painel administrativo</a></p></div></footer>
   <script type="module" src="./assets/account-menu.js"></script>
-  <script type="module">
-    import { auth } from './firebase-init.js';
-    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
 
-    const loginLink = document.querySelector('[data-auth-login]');
-    const registerLink = document.querySelector('[data-auth-register]');
-    const heroAction = document.getElementById('hero-auth-action');
-
-    function updateIndexAuthUI(user) {
-      const loggedIn = !!user;
-
-      if (loginLink) {
-        loginLink.hidden = loggedIn;
-        loginLink.classList.toggle('auth-hidden', loggedIn);
-        loginLink.setAttribute('aria-hidden', loggedIn ? 'true' : 'false');
-      }
-      if (registerLink) {
-        registerLink.hidden = loggedIn;
-        registerLink.classList.toggle('auth-hidden', loggedIn);
-        registerLink.setAttribute('aria-hidden', loggedIn ? 'true' : 'false');
-      }
-
-      if (heroAction) {
-        heroAction.hidden = false;
-        heroAction.textContent = loggedIn ? 'Ir para sua Home' : 'Crie seu personagem agora';
-        heroAction.href = loggedIn ? 'home.html' : 'cadastro.html';
-        heroAction.setAttribute('aria-label', loggedIn ? 'Ir para sua Home' : 'Crie seu personagem agora');
-      }
-
-      document.documentElement.classList.remove('auth-pending');
-    }
-
-    onAuthStateChanged(auth, updateIndexAuthUI);
-  </script>
   <script type="module">
     import { db } from './firebase-init.js';
     import { onValue, ref } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js';

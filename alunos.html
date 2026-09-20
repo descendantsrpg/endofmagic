@@ -48,37 +48,16 @@ function mergeStudents(){
 }
 
 const rgaErrors=new Map();
-const RGA_TIMEOUT=12000;
 let rgaRetryTimer=null;
 
-const withTimeout=(promise,ms=RGA_TIMEOUT)=>Promise.race([
-  promise,
-  new Promise((_,reject)=>setTimeout(()=>reject(new Error('Tempo esgotado ao sincronizar o RGA.')),ms))
-]);
-
-function isValidRga(value){
-  const rga=readRga({rga:value});
-  return /^RGA-[A-Z0-9]{6}-\d{3}$/.test(rga);
-}
-
-async function claimRga(ownerKey,candidate){
-  const slot=ref(db,'site/rgaIndex/'+candidate);
-  const tx=await withTimeout(runTransaction(slot,current=>current===null?ownerKey:current));
-  return tx.committed && tx.snapshot.val()===ownerKey;
-}
-
-async function reserveGeneratedRga(ownerKey,blocked=new Set()){
+async function reserveGeneratedRga(ownerKey,blocked){
+  let index={};
+  try{index=(await get(ref(db,'site/rgaIndex'))).val()||{};}catch(_){index={};}
   for(let attempt=0;attempt<80;attempt++){
     const candidate='RGA-'+Math.random().toString(36).slice(2,8).toUpperCase()+'-'+Math.floor(100+Math.random()*900);
-    if(blocked.has(candidate))continue;
-    try{
-      if(await claimRga(ownerKey,candidate)){
-        blocked.add(candidate);
-        return candidate;
-      }
-    }catch(err){
-      if(attempt>=2)throw err;
-    }
+    if(blocked.has(candidate)||index[candidate])continue;
+    const tx=await runTransaction(ref(db,'site/rgaIndex/'+candidate),current=>current===null?ownerKey:current);
+    if(tx.committed&&tx.snapshot.val()===ownerKey){blocked.add(candidate);return candidate;}
   }
   throw new Error('Não foi possível reservar um RGA único.');
 }
@@ -86,82 +65,50 @@ async function reserveGeneratedRga(ownerKey,blocked=new Set()){
 async function persistRga(path,rga){
   let lastError=null;
   for(let attempt=0;attempt<3;attempt++){
-    try{
-      await withTimeout(update(ref(db,path),{rga,updatedAt:Date.now()}));
-      return;
-    }catch(err){
-      lastError=err;
-      await new Promise(resolve=>setTimeout(resolve,350*(attempt+1)));
-    }
+    try{await update(ref(db,path),{rga,updatedAt:Date.now()});return;}
+    catch(err){lastError=err;await new Promise(resolve=>setTimeout(resolve,350*(attempt+1)));}
   }
   throw lastError||new Error('Não foi possível salvar o RGA.');
-}
-
-async function releaseRga(rga,ownerKey){
-  if(!rga)return;
-  try{
-    const slot=ref(db,'site/rgaIndex/'+rga);
-    const tx=await withTimeout(runTransaction(slot,current=>current===ownerKey?null:current));
-    return tx;
-  }catch(_){/* reservation cleanup is best effort */}
-}
-
-async function ensureExistingRga(ownerKey,current,blocked){
-  const rga=readRga({rga:current});
-  if(!isValidRga(rga))return null;
-  try{
-    const claimed=await claimRga(ownerKey,rga);
-    if(claimed){blocked.add(rga);return rga;}
-    return null;
-  }catch(err){
-    throw err;
-  }
 }
 
 function markRgaError(key,err){
   rgaErrors.set(key,String(err?.message||err||'Erro ao gerar RGA'));
 }
+
 function clearRgaError(key){rgaErrors.delete(key);}
+
 function scheduleRgaRetry(){
   if(rgaRetryTimer)return;
-  rgaRetryTimer=setTimeout(()=>{rgaRetryTimer=null;synchronizeRgas()},5000);
+  rgaRetryTimer=setTimeout(()=>{rgaRetryTimer=null;synchronizeRgas()},3000);
 }
 
 async function synchronizeRgas(){
   if(syncRunning||!legacyLoaded||!fichasLoaded)return;
   syncRunning=true;
   let retryNeeded=false;
-  const blocked=new Set();
-  const usedOwners=new Map();
   try{
-    // Primeiro preservamos RGAs já existentes e válidos. Também registramos a reserva no índice.
+    const blocked=new Set();
+    const usedOwners=new Map();
+
+    // 1) Registros em site/alunos. Nunca substituímos um RGA válido único.
     for(const [key,value] of Object.entries(legacyStudents||{})){
       if(!value)continue;
       try{
         let rga=readRga(value);
         const duplicate=rga&&usedOwners.has(rga)&&usedOwners.get(rga)!==key;
-        if(rga&&isValidRga(rga)&&!duplicate){
-          // Se o RGA já estiver reservado por outro aluno, este registro é o duplicado e receberá um novo.
-          let claimed=false;
-          try{claimed=await claimRga('aluno:'+key,rga);}catch(err){throw err;}
-          if(claimed){
-            blocked.add(rga);usedOwners.set(rga,key);clearRgaError(key);
-            if(!value.rga||value.rga!==rga){
-              await persistRga('site/alunos/'+key,rga);
-              legacyStudents[key]={...value,rga};
-            }
-            continue;
+        if(rga&&!duplicate){
+          usedOwners.set(rga,key);blocked.add(rga);clearRgaError(key);
+          // Compatibilidade: registros antigos que usam RGA continuam funcionando sem duplicar o aluno.
+          if(!value.rga&&value.RGA){
+            await persistRga('site/alunos/'+key,rga);
+            legacyStudents[key]={...value,rga};
           }
+          continue;
         }
-        const newRga=await reserveGeneratedRga('aluno:'+key,blocked);
-        try{
-          await persistRga('site/alunos/'+key,newRga);
-        }catch(err){
-          await releaseRga(newRga,'aluno:'+key);
-          throw err;
-        }
-        legacyStudents[key]={...value,rga:newRga,updatedAt:Date.now()};
-        usedOwners.set(newRga,key);blocked.add(newRga);clearRgaError(key);
+        rga=await reserveGeneratedRga('aluno:'+key,blocked);
+        await persistRga('site/alunos/'+key,rga);
+        legacyStudents[key]={...value,rga,updatedAt:Date.now()};
+        usedOwners.set(rga,key);clearRgaError(key);
         render();
       }catch(err){
         retryNeeded=true;markRgaError(key,err);
@@ -169,38 +116,27 @@ async function synchronizeRgas(){
       }
     }
 
-    // Depois sincronizamos fichas aprovadas. Se houver aluno vinculado, o registro do aluno é a referência principal.
+    // 2) Fichas aprovadas. Se houver aluno vinculado, o RGA do aluno é a referência principal.
     for(const [fichaId,ficha] of Object.entries(approvedFichas||{})){
       if(!ficha||ficha.status!=='aprovada')continue;
       const linked=findLinkedStudent(fichaId,ficha);
-      const fichaOwner='ficha:'+fichaId;
+      const ownerKey='ficha:'+fichaId;
       try{
         let desired=linked?readRga(linked[1]):'';
         const fichaRga=readRga(ficha);
-        if(linked&&desired&&isValidRga(desired)){
-          const studentOwner='aluno:'+linked[0];
-          if(!usedOwners.has(desired)){
-            const claimed=await claimRga(studentOwner,desired);
-            if(claimed){
-              usedOwners.set(desired,linked[0]);
-              blocked.add(desired);
-            }else{
-              desired='';
-            }
-          }else if(usedOwners.get(desired)!==linked[0]){
-            desired='';
-          }
-        }else if(fichaRga&&isValidRga(fichaRga)&&!usedOwners.has(fichaRga)){
-          desired=fichaRga;
-          if(!await claimRga(fichaOwner,desired))desired='';
-          if(desired){usedOwners.set(desired,fichaOwner);blocked.add(desired);}
+        if(desired){
+          usedOwners.set(desired,linked[0]);blocked.add(desired);
+        }else if(fichaRga && (!usedOwners.has(fichaRga)||usedOwners.get(fichaRga)===ownerKey)){
+          desired=fichaRga;usedOwners.set(desired,ownerKey);blocked.add(desired);
+        }else{
+          desired=await reserveGeneratedRga(ownerKey,blocked);
+          usedOwners.set(desired,ownerKey);
         }
-        if(!desired)desired=await reserveGeneratedRga(linked?'aluno:'+linked[0]:fichaOwner,blocked);
 
         if(linked){
           const [studentKey,student]=linked;
           if(readRga(student)!==desired){
-            try{await persistRga('site/alunos/'+studentKey,desired);}catch(err){await releaseRga(desired,fichaOwner);throw err;}
+            await persistRga('site/alunos/'+studentKey,desired);
             legacyStudents[studentKey]={...student,rga:desired,updatedAt:Date.now()};
           }
           clearRgaError(studentKey);
@@ -232,7 +168,7 @@ function render(){
     const alignment=isRoyal?'👑 Royal':(isRebel?'💀 Rebel':'—');
     const rga=readRga(x);
     const rgaError=rgaErrors.get(x.key);
-    const rgaLabel=rga || (rgaError?'Sincronizando…':'Gerando…');
+    const rgaLabel=rga|| (rgaError?'Indisponível':'Gerando…');
     return `<article class="official-student-card">
       <div class="official-student-photo-wrap"><img class="official-student-photo" src="${esc(x.imageUrl||'./assets/auradon-prep.png')}" alt="Foto de ${esc(x.name||'Personagem')}"></div>
       <div class="official-student-body">
