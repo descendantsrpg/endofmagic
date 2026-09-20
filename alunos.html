@@ -1,49 +1,192 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alunos de Auradon • Descendentes RPG</title><link rel="stylesheet" href="./assets/site.css"><link rel="stylesheet" href="./assets/player.css">
+<!doctype html><html lang="pt-BR"><head>
+<script>document.documentElement.classList.add("maintenance-check-pending");</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alunos de Auradon • Descendentes RPG</title><link rel="stylesheet" href="./assets/site.css"><link rel="stylesheet" href="./assets/player.css">
 <script>document.documentElement.classList.add('auth-pending');</script>
   <link rel="stylesheet" href="./assets/buttons-global.css">
-</head><body class="player-body"><header class="player-header"><div class="player-header-inner"><a class="player-brand" href="index.html"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></a><nav class="player-nav"><a href="index.html">Início</a><a href="filiacoes.html">Filiações</a><a href="login.html">LOGIN</a><a class="primary" href="cadastro.html">CADASTRO</a></nav></div></header><main class="player-wrap"><section class="player-hero"><div><div class="kicker">AURADON PREP · REGISTRO DE ALUNOS</div><h1>Alunos de Auradon</h1><p>Os personagens aprovados aparecem aqui como registros oficiais da escola. As informações vêm diretamente das fichas aprovadas.</p></div></section><div id="list" class="player-grid"></div></main><script type="module">import {db} from './firebase-init.js';import {onValue,ref} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js';import {createDbSyncLoader} from './db-sync-loader.js';const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-const list=document.getElementById('list');const dbLoader=createDbSyncLoader('Carregando alunos diretamente do Firebase...');dbLoader.show();let legacyLoaded=false;let fichasLoaded=false;
-let legacyStudents={};let approvedFichas={};
-function normalize(v){return String(v??'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./global-background.css">
+<script type="module" src="./maintenance.js"></script>
+</head><body class="player-body students-page"><header class="player-header"><div class="player-header-inner"><a class="player-brand" href="index.html"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></a><nav class="player-nav"><a href="index.html">Início</a><a href="filiacoes.html">Filiações</a><a href="login.html">LOGIN</a><a class="primary" href="cadastro.html">CADASTRO</a></nav></div></header><main class="player-wrap"><section class="player-hero"><div><div class="kicker">AURADON PREP · REGISTRO DE ALUNOS</div><h1>Alunos de Auradon</h1><p>Os personagens aprovados aparecem aqui como registros oficiais da escola. As informações vêm diretamente das fichas aprovadas.</p></div></section><div id="list" class="player-grid"></div></main><script type="module">
+import {db} from './firebase-init.js';
+import {onValue,ref,update,runTransaction,get} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js';
+import {createDbSyncLoader} from './db-sync-loader.js';
+
+const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const normalize=v=>String(v??'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const normalizeRga=v=>String(v??'').trim().toUpperCase();
+const readRga=v=>normalizeRga(v?.rga||v?.RGA||v?.rgaId||'');
+const list=document.getElementById('list');
+const dbLoader=createDbSyncLoader('Carregamento do banco de dados');
+dbLoader.show();
+let legacyLoaded=false,fichasLoaded=false,syncRunning=false;
+let legacyStudents={},approvedFichas={};
+
+function findLinkedStudent(fichaId,ficha){
+  if(ficha?.studentKey && legacyStudents[ficha.studentKey]) return [ficha.studentKey,legacyStudents[ficha.studentKey]];
+  const match=Object.entries(legacyStudents||{}).find(([key,s])=>s && (
+    s.fichaId===fichaId || s.studentKey===fichaId ||
+    (ficha?.characterName && normalize(s.name)===normalize(ficha.characterName) && ficha.ownerUid && s.ownerUid===ficha.ownerUid)
+  ));
+  return match||null;
+}
+
 function mergeStudents(){
-  // A fonte principal continua sendo site/alunos, preservando integralmente os registros antigos.
   const merged={...legacyStudents};
-  // Fichas aprovadas são uma segunda origem. Só acrescentamos uma ficha quando ela ainda
-  // não estiver representada em site/alunos; nenhum registro existente é alterado ou removido.
   Object.entries(approvedFichas||{}).forEach(([fichaId,f])=>{
     if(!f||f.status!=='aprovada')return;
-    const exists=Object.entries(legacyStudents||{}).some(([key,s])=>{
-      if(!s)return false;
-      return s.fichaId===fichaId || s.studentKey===fichaId ||
-        (f.studentKey && key===f.studentKey) ||
-        (f.characterName && normalize(s.name)===normalize(f.characterName) && f.ownerUid && s.ownerUid===f.ownerUid);
-    });
-    if(exists)return;
+    const linked=findLinkedStudent(fichaId,f);
+    if(linked)return;
     const id='ficha_'+fichaId;
     merged[id]={
-      name:f.characterName||f.name||'Personagem aprovado',
-      type:f.royalRebel||f.type||'',
-      age:Number(f.characterAge||f.age)||0,
-      sexuality:f.sexuality||'',
-      affiliationStudio:f.affiliationStudio||'',
-      affiliationStory:f.affiliationStory||f.fairyTale||'',
-      filiation:f.progenitors||f.filiation||'',
-      fairyTale:f.fairyTale||f.affiliationStory||'',
-      imageUrl:f.avatarUrl||f.imageUrl||null,
-      powers:f.powers||[],
-      personality:f.personality||'',
-      history:f.history||'',
-      activityPrimary:f.activityPrimary||'',
-      fichaId,
-      ownerUid:f.ownerUid||'',
-      updatedAt:f.approvedAt||f.updatedAt||f.createdAt||0
+      name:f.characterName||f.name||'Personagem aprovado',type:f.royalRebel||f.type||'',age:Number(f.characterAge||f.age)||0,
+      sexuality:f.sexuality||'',affiliationStudio:f.affiliationStudio||'',affiliationStory:f.affiliationStory||f.fairyTale||'',
+      filiation:f.progenitors||f.filiation||'',fairyTale:f.fairyTale||f.affiliationStory||'',imageUrl:f.avatarUrl||f.imageUrl||null,
+      powers:f.powers||[],personality:f.personality||'',history:f.history||'',activityPrimary:f.activityPrimary||'',fichaId,
+      rga:readRga(f),ownerUid:f.ownerUid||'',updatedAt:f.approvedAt||f.updatedAt||f.createdAt||0
     };
   });
-  return Object.values(merged);
+  return Object.entries(merged).map(([key,value])=>({key,...value}));
 }
+
+const rgaErrors=new Map();
+let rgaRetryTimer=null;
+
+async function reserveGeneratedRga(ownerKey,blocked){
+  let index={};
+  try{index=(await get(ref(db,'site/rgaIndex'))).val()||{};}catch(_){index={};}
+  for(let attempt=0;attempt<80;attempt++){
+    const candidate='RGA-'+Math.random().toString(36).slice(2,8).toUpperCase()+'-'+Math.floor(100+Math.random()*900);
+    if(blocked.has(candidate)||index[candidate])continue;
+    const tx=await runTransaction(ref(db,'site/rgaIndex/'+candidate),current=>current===null?ownerKey:current);
+    if(tx.committed&&tx.snapshot.val()===ownerKey){blocked.add(candidate);return candidate;}
+  }
+  throw new Error('Não foi possível reservar um RGA único.');
+}
+
+async function persistRga(path,rga){
+  let lastError=null;
+  for(let attempt=0;attempt<3;attempt++){
+    try{await update(ref(db,path),{rga,updatedAt:Date.now()});return;}
+    catch(err){lastError=err;await new Promise(resolve=>setTimeout(resolve,350*(attempt+1)));}
+  }
+  throw lastError||new Error('Não foi possível salvar o RGA.');
+}
+
+function markRgaError(key,err){
+  rgaErrors.set(key,String(err?.message||err||'Erro ao gerar RGA'));
+}
+
+function clearRgaError(key){rgaErrors.delete(key);}
+
+function scheduleRgaRetry(){
+  if(rgaRetryTimer)return;
+  rgaRetryTimer=setTimeout(()=>{rgaRetryTimer=null;synchronizeRgas()},3000);
+}
+
+async function synchronizeRgas(){
+  if(syncRunning||!legacyLoaded||!fichasLoaded)return;
+  syncRunning=true;
+  let retryNeeded=false;
+  try{
+    const blocked=new Set();
+    const usedOwners=new Map();
+
+    // 1) Registros em site/alunos. Nunca substituímos um RGA válido único.
+    for(const [key,value] of Object.entries(legacyStudents||{})){
+      if(!value)continue;
+      try{
+        let rga=readRga(value);
+        const duplicate=rga&&usedOwners.has(rga)&&usedOwners.get(rga)!==key;
+        if(rga&&!duplicate){
+          usedOwners.set(rga,key);blocked.add(rga);clearRgaError(key);
+          // Compatibilidade: registros antigos que usam RGA continuam funcionando sem duplicar o aluno.
+          if(!value.rga&&value.RGA){
+            await persistRga('site/alunos/'+key,rga);
+            legacyStudents[key]={...value,rga};
+          }
+          continue;
+        }
+        rga=await reserveGeneratedRga('aluno:'+key,blocked);
+        await persistRga('site/alunos/'+key,rga);
+        legacyStudents[key]={...value,rga,updatedAt:Date.now()};
+        usedOwners.set(rga,key);clearRgaError(key);
+        render();
+      }catch(err){
+        retryNeeded=true;markRgaError(key,err);
+        console.warn('RGA não atribuído ao aluno '+key,err);
+      }
+    }
+
+    // 2) Fichas aprovadas. Se houver aluno vinculado, o RGA do aluno é a referência principal.
+    for(const [fichaId,ficha] of Object.entries(approvedFichas||{})){
+      if(!ficha||ficha.status!=='aprovada')continue;
+      const linked=findLinkedStudent(fichaId,ficha);
+      const ownerKey='ficha:'+fichaId;
+      try{
+        let desired=linked?readRga(linked[1]):'';
+        const fichaRga=readRga(ficha);
+        if(desired){
+          usedOwners.set(desired,linked[0]);blocked.add(desired);
+        }else if(fichaRga && (!usedOwners.has(fichaRga)||usedOwners.get(fichaRga)===ownerKey)){
+          desired=fichaRga;usedOwners.set(desired,ownerKey);blocked.add(desired);
+        }else{
+          desired=await reserveGeneratedRga(ownerKey,blocked);
+          usedOwners.set(desired,ownerKey);
+        }
+
+        if(linked){
+          const [studentKey,student]=linked;
+          if(readRga(student)!==desired){
+            await persistRga('site/alunos/'+studentKey,desired);
+            legacyStudents[studentKey]={...student,rga:desired,updatedAt:Date.now()};
+          }
+          clearRgaError(studentKey);
+        }
+        if(fichaRga!==desired){
+          await persistRga('site/fichas/'+fichaId,desired);
+          approvedFichas[fichaId]={...ficha,rga:desired,updatedAt:Date.now()};
+        }
+        clearRgaError('ficha_'+fichaId);
+        render();
+      }catch(err){
+        retryNeeded=true;markRgaError(linked?linked[0]:'ficha_'+fichaId,err);
+        console.warn('RGA não atribuído à ficha aprovada '+fichaId,err);
+      }
+    }
+  }finally{
+    syncRunning=false;
+    render();
+    if(retryNeeded)scheduleRgaRetry();
+  }
+}
+
 function render(){
   const arr=mergeStudents();
-  list.innerHTML=arr.length?arr.map(x=>{const powers=Array.isArray(x.powers)?x.powers:(x.powers?[x.powers]:[]);return `<article class="student-card"><img class="student-photo" src="${esc(x.imageUrl||'./assets/auradon-prep.png')}" alt="Foto de ${esc(x.name)}"><div class="student-content"><h2 class="student-name">${esc(x.name)}</h2><div class="student-origin">Descendente de ${esc(x.filiation||'origem não definida')}</div><div class="identity-grid"><div class="identity-cell"><small>Alinhamento</small><strong>${esc(x.type||'—')}</strong></div><div class="identity-cell"><small>Origem</small><strong>${esc(x.affiliationStory||'—')}</strong></div><div class="identity-cell"><small>Poderes</small><strong>${esc(powers.slice(0,2).join(' · ')||'—')}</strong></div><div class="identity-cell"><small>Atividade</small><strong>${esc(x.activityPrimary||'—')}</strong></div></div><div class="student-quote">“${esc(String(x.personality||'Registro oficial de Auradon.').split(/\n+/).filter(Boolean)[0].slice(0,180))}”</div><div class="student-footer"><span>OFFICIAL RPG CARD</span><span>VERIFIED AURADON</span></div></div></article>`}).join(''):'<div class="empty-player">Nenhum aluno cadastrado ou aprovado foi publicado ainda.</div>';
+  list.innerHTML=arr.length?arr.map(x=>{
+    const type=String(x.type||x.royalRebel||'').trim();
+    const isRoyal=type.toLowerCase()==='royal';
+    const isRebel=type.toLowerCase()==='rebel';
+    const alignment=isRoyal?'👑 Royal':(isRebel?'💀 Rebel':'—');
+    const rga=readRga(x);
+    const rgaError=rgaErrors.get(x.key);
+    const rgaLabel=rga|| (rgaError?'Indisponível':'Gerando…');
+    return `<article class="official-student-card">
+      <div class="official-student-photo-wrap"><img class="official-student-photo" src="${esc(x.imageUrl||'./assets/auradon-prep.png')}" alt="Foto de ${esc(x.name||'Personagem')}"></div>
+      <div class="official-student-body">
+        <div class="official-student-kicker">AURADON PREP · IDENTIFICAÇÃO ESTUDANTIL</div>
+        <h2 class="official-student-name" title="${esc(x.name||'Sem nome')}">${esc(x.name||'Sem nome')}</h2>
+        <div class="official-rga"><span>RGA</span><strong>${esc(rgaLabel)}</strong></div>
+        <div class="official-student-grid">
+          <div><small>Idade</small><strong>${esc(x.age||'—')}</strong></div>
+          <div><small>Progenitores</small><strong title="${esc(x.filiation||x.progenitors||'—')}">${esc(x.filiation||x.progenitors||'—')}</strong></div>
+          <div class="official-wide"><small>Conto de Fadas</small><strong title="${esc(x.fairyTale||x.affiliationStory||'—')}">${esc(x.fairyTale||x.affiliationStory||'—')}</strong></div>
+        </div>
+        <div class="official-alignment ${isRoyal?'royal':(isRebel?'rebel':'unknown')}"><span>${alignment}</span></div>
+        <div class="official-student-footer"><span>REGISTRO OFICIAL</span><span>AURADON PREP</span></div>
+      </div>
+    </article>`;
+  }).join(''):'<div class="empty-player">Nenhum aluno cadastrado ou aprovado foi publicado ainda.</div>';
 }
-onValue(ref(db,'site/alunos'),s=>{legacyStudents=s.val()||{};legacyLoaded=true;render();if(fichasLoaded)dbLoader.hide()},e=>{console.error(e);legacyLoaded=true;render();if(fichasLoaded)dbLoader.hide()});
-onValue(ref(db,'site/fichas'),s=>{const all=s.val()||{};approvedFichas=Object.fromEntries(Object.entries(all).filter(([,f])=>f&&f.status==='aprovada'));fichasLoaded=true;render();if(legacyLoaded)dbLoader.hide()},e=>{console.error(e);fichasLoaded=true;if(legacyLoaded)dbLoader.hide()});</script><script type="module" src="./assets/account-menu.js"></script></body></html>
+
+onValue(ref(db,'site/alunos'),s=>{legacyStudents=s.val()||{};legacyLoaded=true;render();synchronizeRgas();},e=>{console.error(e);legacyLoaded=true;render();if(fichasLoaded)dbLoader.hide()});
+onValue(ref(db,'site/fichas'),s=>{const all=s.val()||{};approvedFichas=Object.fromEntries(Object.entries(all).filter(([,f])=>f&&f.status==='aprovada'));fichasLoaded=true;render();synchronizeRgas();if(legacyLoaded)dbLoader.hide()},e=>{console.error(e);fichasLoaded=true;if(legacyLoaded)dbLoader.hide()});
+</script><script type="module" src="./assets/account-menu.js"></script></body></html>

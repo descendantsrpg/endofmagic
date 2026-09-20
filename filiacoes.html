@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+<script>document.documentElement.classList.add("maintenance-check-pending");</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Filiações — Descendentes RPG</title>
@@ -39,6 +40,9 @@
 <link rel="stylesheet" href="./assets/content-pages.css">
 <script>document.documentElement.classList.add('auth-pending');</script>
   <link rel="stylesheet" href="./assets/buttons-global.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./global-background.css">
+<script type="module" src="./maintenance.js"></script>
 </head>
 
 
@@ -47,7 +51,7 @@
 <header><div class="container brand"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></div></header>
 <main class="container">
 <section class="hero"><h1>Filiações</h1><p>As filiações representam as opções de origem e pertencimento que cada personagem pode escolher dentro do RPG. Escolha livremente a filiação que mais combina com a história e a personalidade do seu personagem e fique à vontade para seguir o caminho que deseja para sua aventura.</p></section>
-<section class="groups" id="groups"><div class="empty">Carregando filiações...</div></section>
+<section class="groups" id="groups"><div class="empty">Carregamento do banco de dados</div></section>
 <a class="back" href="index.html">Voltar à página inicial</a>
 </main>
 
@@ -56,7 +60,7 @@ import{db}from"./firebase-init.js";
 import{ref,onValue}from"https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 import{createDbSyncLoader}from"./db-sync-loader.js";
 const box=document.getElementById("groups");
-const dbLoader=createDbSyncLoader("Carregando filiações e alunos diretamente do Firebase...");
+const dbLoader=createDbSyncLoader("Carregamento do banco de dados");
 dbLoader.show();
 let affiliations={},students={},affLoaded=false,studentsLoaded=false;
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
@@ -85,7 +89,7 @@ function render(){
 </div>
 </div>`).join("")}</div></div>`).join("")}</article>`).join("");
 }
-box.innerHTML='<div class="empty">Carregando filiações...</div>';
+box.innerHTML='<div class="empty">Carregamento do banco de dados</div>';
 onValue(ref(db,"site/filiacoes"),snap=>{
  affiliations=snap.val()||{};
  affLoaded=true;
@@ -106,8 +110,6 @@ onValue(ref(db,"site/alunos"),snap=>{
  dbLoader.hide();
  if(affLoaded)render();
 });
-</script>
-<script type="module" src="./maintenance.js">
 </script>
 
 

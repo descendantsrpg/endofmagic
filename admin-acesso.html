@@ -3,76 +3,22 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Acesso Restrito • Painel Administrativo</title>
-<link rel="stylesheet" href="./global-background.css?v=20260909-audit">
-<link rel="stylesheet" href="./halloween.css?v=20260909-audit">
-<style>
-*{box-sizing:border-box}html{min-height:100%;background:#050308}body{margin:0;min-height:100vh;padding:28px 16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:Comfortaa,Arial,sans-serif;color:#fff;overflow-x:hidden}.page-wrap{width:min(700px,100%);margin:auto 0 28px}.access-card{width:100%;padding:34px 30px;background:rgba(8,5,12,.88);border:1px solid rgba(245,124,0,.32);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.75),0 0 25px rgba(245,124,0,.08);text-align:center}.logo{display:block;width:min(330px,72vw);max-width:330px;height:auto;margin:0 auto 22px}.access-card h1{font-family:"Comfortaa",Arial,sans-serif;font-size:clamp(24px,4vw,34px);line-height:1.2;margin:0 0 18px;text-shadow:0 3px 16px #000}.notice{padding:16px 18px;margin:0 0 22px;border-left:4px solid #f57c00;border-radius:10px;background:rgba(245,124,0,.10);text-align:left}.notice p{margin:0!important;font-size:14px;line-height:1.65}.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.btn{min-height:50px;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;background:#f57c00!important;color:#fff!important;border:1px solid #f57c00!important}.btn:hover{background:#ff9d2e!important;border-color:#ff9d2e!important;transform:translateY(-2px)}.site-disclaimer-footer{width:min(1100px,100%);margin-top:auto!important;text-align:center;font-size:10px!important;line-height:1.55!important}.site-disclaimer-footer *{font-size:10px!important;line-height:1.55!important}@media(max-width:560px){body{padding:18px 12px}.page-wrap{margin:20px 0}.access-card{padding:28px 18px}.actions{grid-template-columns:1fr}.logo{width:min(240px,76vw)}}
-</style>
 
-<style id="typography-comfortaa-final">
-/* Tipografia oficial do site */
-html, body { font-family: "Comfortaa", Arial, sans-serif !important; }
-h1, h2, h3, h4, h5, h6,
-.title, .section-title, .page-title, .card-title, .brand-title, .section-kicker {
-  font-family: "Comfortaa", Arial, sans-serif !important;
-  font-weight: 700 !important;
-}
-p, .paragraph, .description, .subtitle, .help, .intro, .text, .content-text {
-  font-family: "Comfortaa", Arial, sans-serif !important;
-  font-weight: 300 !important;
-}
-</style>
 
-<style id="comfortaa-global-final">
-/* TIPOGRAFIA GLOBAL FINAL: Comfortaa */
-html, body, button, input, textarea, select, a { font-family: "Comfortaa", Arial, sans-serif !important; }
-body { font-weight: 300 !important; }
-h1, h2, h3, h4, h5, h6, .title, .brand, .section-title, .page-title, .card-title { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 700 !important; }
-p, .subtitle, .description, .help, .meta, .notice, .content, li, td, th { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 300 !important; }
-button, input[type="submit"], input[type="button"], .btn, .button, a.btn, [role="button"] { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 700 !important; }
-label, .menu button, nav a { font-family: "Comfortaa", Arial, sans-serif !important; }
-</style>
 
-<style id="site-halloween-final">
-/* Tema Halloween final: fundo preto em todo o site */
-html, body { background:#000 !important; background-image:none !important; }
-body { color:#fff !important; }
-/* Menu mobile sem comportamento retrátil */
-@media (max-width:650px){
-  .mobile-menu-toggle,.mobile-menu-close,.mobile-nav-launcher,.mobile-nav-close{display:none !important;}
-  .home-main-nav{display:block !important; position:static !important; height:auto !important; padding:10px 12px !important; margin:0 !important; background:transparent !important; border:0 !important; box-shadow:none !important;}
-  .home-nav-links{position:static !important; inset:auto !important; transform:none !important; visibility:visible !important; opacity:1 !important; width:100% !important; height:auto !important; max-height:none !important; overflow:visible !important; display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:9px !important; padding:0 !important; background:transparent !important; border:0 !important; box-shadow:none !important;}
-  .home-nav-links a,.desktop-main-nav a{box-sizing:border-box !important; border:2px solid #f57c00 !important; border-radius:12px !important; background:#000 !important; color:#fff !important; box-shadow:none !important; text-decoration:none !important; padding:12px 9px !important; min-height:46px !important; display:flex !important; align-items:center !important; justify-content:center !important; text-align:center !important; font-family:Comfortaa,Arial,sans-serif !important; font-weight:700 !important;}
-  .home-nav-links a:hover,.home-nav-links a:focus{background:#f57c00 !important; border-color:#ff9d2e !important; color:#fff !important;}
-  .desktop-main-nav{display:none !important;}
-  /* O menu de navegação da home continua visível no mobile */
-  .home-quick-menu{margin-top:8px !important; background:#000 !important; border-color:rgba(245,124,0,.35) !important;}
-  .home-quick-menu-grid a{border:2px solid #f57c00 !important; background:#000 !important; color:#fff !important; box-shadow:none !important;}
-  .home-quick-menu-grid a:hover{background:#f57c00 !important; border-color:#ff9d2e !important;}
-}
-/* Remover definitivamente o efeito de gaveta do menu em páginas que ainda possuem o markup */
-.home-nav-links.open{transform:none !important; visibility:visible !important; opacity:1 !important;}
-body.halloween-theme .home-nav-links a{border-color:#f57c00 !important;}
-/* Abóboras de Halloween */
-body.halloween-theme::before, body.halloween-theme::after{
-  position:fixed !important; display:block !important; pointer-events:none !important; z-index:1 !important;
-  font-family:Arial,sans-serif !important; line-height:1 !important;
-  filter:drop-shadow(0 0 8px rgba(245,124,0,.35));
-}
-body.halloween-theme::before{content:"🎃" !important; left:14px !important; bottom:14px !important; font-size:38px !important;}
-body.halloween-theme::after{content:"🎃" !important; right:14px !important; top:120px !important; font-size:32px !important;}
-@media(max-width:650px){
- body.halloween-theme::before{font-size:30px !important;left:7px !important;bottom:8px !important;}
- body.halloween-theme::after{font-size:26px !important;right:7px !important;top:100px !important;}
-}
-</style>
+
+
+
+
 
 <link rel="stylesheet" href="./assets/site.css">
+<link rel="stylesheet" href="./assets/admin-modern.css">
 <script>document.documentElement.classList.add('auth-pending');</script>
   <link rel="stylesheet" href="./assets/buttons-global.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./global-background.css">
 </head>
-<body class="halloween-theme">
-<div class="halloween-decor" aria-hidden="true"><span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span><span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span><span class="h-skull s1">💀</span><span class="h-skull s2">💀</span><span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span></div>
+<body class="admin-body">
 <div class="page-wrap"><main class="access-card"><img class="logo" src="./assets/logo-descendentes.png" alt="Descendentes RPG"><h1>Área Restrita</h1><div class="notice"><p><strong>Você está entrando em uma página restrita.</strong><br>O Painel Administrativo é destinado exclusivamente aos administradores autorizados do Descendentes RPG.</p></div><div class="actions"><a class="btn" href="admin.html">Sou Administrador</a><a class="btn" href="index.html">Sou Jogador</a></div></main></div>
 <footer class="site-disclaimer-footer"><div class="rpg-disclaimer"><p><strong>Descendentes - End Of Magic</strong> é um RPG fictício criado por Orochi 🐍</p><p><strong>Descendentes</strong> é uma marca da Walt Disney Company e todos os direitos da marca e personagens pertencem exclusivamente a eles.</p><p>O enredo, site e afins são de criação exclusiva de Orochi 🐍 e seus associados. Qualquer uso não autorizado do enredo ou site será sujeito a processo legal baseado na <strong>Lei nº 9.610/98</strong>.</p><p>Esse RPG é uma obra criada por fãs e não tem ligação com a Walt Disney Company.</p></div></footer>
 </body></html>

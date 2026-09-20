@@ -1,86 +1,11 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Minha Home • Descendentes RPG</title><link rel="stylesheet" href="./assets/site.css"><link rel="stylesheet" href="./assets/player.css">
-<style id="home-text-buttons">
-/* HOME: ações em texto, sem contorno, mantendo a identidade do cabeçalho. */
-.player-body .player-nav a,
-.player-body .player-nav button,
-.player-body .player-button,
-.player-body .ficha-button {
-  min-height: 0 !important;
-  padding: 8px 10px !important;
-  border: 0 !important;
-  border-color: transparent !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-  box-shadow: none !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  letter-spacing: .04em !important;
-  text-decoration: none !important;
-  text-transform: uppercase;
-  transform: none !important;
-}
-.player-body .player-nav a:hover,
-.player-body .player-nav button:hover,
-.player-body .player-button:hover,
-.player-body .ficha-button:hover,
-.player-body .player-nav a:focus-visible,
-.player-body .player-nav button:focus-visible,
-.player-body .player-button:focus-visible,
-.player-body .ficha-button:focus-visible {
-  border: 0 !important;
-  border-color: transparent !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-  box-shadow: none !important;
-  text-decoration: none !important;
-  transform: none !important;
-  outline: none !important;
-}
-.player-body .player-nav .primary,
-.player-body .player-button:not(.secondary),
-.player-body .ficha-button:not(.secondary),
-.player-body .player-button.secondary,
-.player-body .ficha-button.secondary {
-  border: 0 !important;
-  border-color: transparent !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-}
-.player-body .player-nav .primary:hover,
-.player-body .player-button:not(.secondary):hover,
-.player-body .ficha-button:not(.secondary):hover,
-.player-body .player-button.secondary:hover,
-.player-body .ficha-button.secondary:hover {
-  background: transparent !important;
-  background-color: transparent !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-}
-.player-body .player-button.danger {
-  border: 0 !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-}
-.player-body .player-button.danger:hover {
-  border: 0 !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  color: #ffb3b3 !important;
-  -webkit-text-fill-color: #ffb3b3 !important;
-  box-shadow: none !important;
-}
-</style>
+<!doctype html><html lang="pt-BR"><head>
+<script>document.documentElement.classList.add("maintenance-check-pending");</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Minha Home • Descendentes RPG</title><link rel="stylesheet" href="./assets/site.css"><link rel="stylesheet" href="./assets/player.css">
+
 <script>document.documentElement.classList.add('auth-pending');</script>
   <link rel="stylesheet" href="./assets/buttons-global.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./global-background.css">
+<script type="module" src="./maintenance.js"></script>
 </head>
 <body class="player-body"><header class="player-header"><div class="player-header-inner"><a class="player-brand" href="index.html"><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></a><nav class="player-nav"><a href="home.html">Minha Home</a><a href="alunos.html">Alunos</a><a href="filiacoes.html">Filiações</a><a class="primary" href="ficha.html">Criar Ficha</a><div class="account-menu-host"></div></nav></div></header>
 <main class="player-wrap"><section class="player-hero"><div><div class="kicker">Auradon Prep · Área do aluno</div><h1 id="welcome">Bem-vindo.</h1><p>Seu espaço pessoal para criar personagens, continuar rascunhos e acompanhar o destino de cada ficha enviada para análise.</p></div><div class="player-actions"><a class="player-button" href="ficha.html">✦ Criar Ficha</a></div></section>
@@ -90,7 +15,7 @@
 import {db} from './firebase-init.js'; import {ref,get,query,orderByChild,equalTo,onValue,remove} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js'; import {requireAuth} from './assets/auth.js';
 const $=id=>document.getElementById(id), esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const statusMap={em_analise:['Em análise','status-analysis'],aprovada:['Aprovado','status-approved'],altere_sua_ficha:['Altere sua ficha','status-change']};
-function card(x){const st=statusMap[x.status]||['Rascunho','status-draft']; const powersList=Array.isArray(x.powers)?x.powers:(Array.isArray(x.powersList)?x.powersList:String(x.powers||'').split(/\r?\n/)); const powers=powersList.map(v=>String(v||'').trim()).filter(Boolean).slice(0,2).join(' · ')||'Poderes registrados'; const quote=x.personality?String(x.personality).split(/\n+/).filter(Boolean)[0]:'Registro oficial de Auradon.'; const actions=`<div class="card-actions"><span class="status-badge ${st[1]}">${esc(st[0])}</span>${x.status==='altere_sua_ficha'?`<a class="player-button secondary" href="ficha.html?ficha=${encodeURIComponent(x.id)}">Editar ficha</a>`:''}${x.status==='em_analise'?`<button type="button" class="player-button danger" data-delete-ficha="${esc(x.id)}">Desistir da análise</button>`:''}</div>`; return `<article><div class="student-card"><img class="student-photo" src="${esc(x.avatarUrl||x.imageUrl||'./assets/auradon-prep.png')}" alt="Foto de ${esc(x.characterName)}"><div class="student-content"><h3 class="student-name">${esc(x.characterName||'Sem nome')}</h3><div class="student-origin">Descendente de ${esc(x.progenitor||x.progenitors||x.filiation||'origem não definida')}</div><div class="identity-grid"><div class="identity-cell"><small>Alinhamento</small><strong>${esc(x.alignment||x.royalRebel||'—')}</strong></div><div class="identity-cell"><small>Origem</small><strong>${esc(x.story||x.fairyTale||x.affiliationStory||'—')}</strong></div><div class="identity-cell"><small>Poderes</small><strong>${esc(powers)}</strong></div><div class="identity-cell"><small>Atividade</small><strong>${esc(x.activityPrimary||'—')}</strong></div></div><div class="student-quote">“${esc(quote.slice(0,180))}”</div><div class="student-footer"><span>OFFICIAL RPG CARD</span><span>${esc(st[0].toUpperCase())}</span></div></div></div>${actions}</article>`}
+function card(x){const st=statusMap[x.status]||['Rascunho','status-draft']; const powersList=Array.isArray(x.powers)?x.powers:(Array.isArray(x.powersList)?x.powersList:String(x.powers||'').split(/\r?\n/)); const powers=powersList.map(v=>String(v||'').trim()).filter(Boolean).slice(0,2).join(' · ')||'Poderes registrados'; const quote=x.personality?String(x.personality).split(/\n+/).filter(Boolean)[0]:'Registro oficial de Auradon.'; const actions=`<div class="card-actions"><span class="status-badge ${st[1]}">${esc(st[0])}</span>${x.status==='altere_sua_ficha'?`<a class="player-button secondary" href="ficha.html?ficha=${encodeURIComponent(x.id)}">Editar ficha</a>`:''}${x.status==='em_analise'?`<button type="button" class="player-button danger" data-delete-ficha="${esc(x.id)}">Desistir da análise</button>`:''}</div>`; return `<article><div class="ficha-student-card"><img class="ficha-student-photo" src="${esc(x.avatarUrl||x.imageUrl||'./assets/auradon-prep.png')}" alt="Foto de ${esc(x.characterName)}"><div class="ficha-student-content"><h3 class="ficha-student-name">${esc(x.characterName||'Sem nome')}</h3><div class="ficha-student-origin">Descendente de ${esc(x.progenitor||x.progenitors||x.filiation||'origem não definida')}</div><div class="identity-grid"><div class="identity-cell"><small>Alinhamento</small><strong>${esc(x.alignment||x.royalRebel||'—')}</strong></div><div class="identity-cell"><small>Origem</small><strong>${esc(x.story||x.fairyTale||x.affiliationStory||'—')}</strong></div><div class="identity-cell"><small>Poderes</small><strong>${esc(powers)}</strong></div><div class="identity-cell"><small>Atividade</small><strong>${esc(x.activityPrimary||'—')}</strong></div></div><div class="student-quote">“${esc(quote.slice(0,180))}”</div><div class="student-footer"><span>OFFICIAL RPG CARD</span><span>${esc(st[0].toUpperCase())}</span></div></div></div>${actions}</article>`}
 
 function renderDrafts(all){$('drafts').innerHTML=all.length?all.map(d=>`<div class="draft-item"><div><strong>${esc(d.characterName||'Rascunho sem nome')}</strong><small>${esc(d.stepLabel||'Criação de personagem')}${d.reviewMessage?' · '+esc(d.reviewMessage):''} · salvo em ${new Date(d.updatedAt||Date.now()).toLocaleString('pt-BR')}</small></div><div class="draft-actions"><a class="player-button secondary" href="${d.sourceFichaId?`ficha.html?ficha=${encodeURIComponent(d.sourceFichaId)}&step=${encodeURIComponent(d.currentStep||1)}`:`ficha.html?draft=${encodeURIComponent(d.id)}&step=${encodeURIComponent(d.currentStep||1)}`}">Continuar</a><button type="button" class="player-button danger" data-delete-draft="${esc(d.id)}">Excluir rascunho</button></div></div>`).join(''):'<div class="empty-player">Nenhum rascunho salvo ainda.</div>'}
 

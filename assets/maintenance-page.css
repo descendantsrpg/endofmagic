@@ -1,0 +1,19 @@
+/* Auradon maintenance page — HTML/CSS only, no generated artwork. */
+.maintenance-page{min-height:100svh;display:grid;place-items:center;padding:24px;overflow-x:hidden}
+.maintenance-page .maintenance-shell{width:min(720px,100%);margin:auto}
+.maintenance-card{position:relative;overflow:hidden;padding:clamp(28px,6vw,54px);text-align:center;border:1px solid rgba(168,255,18,.3);border-radius:24px;background:linear-gradient(145deg,rgba(9,31,49,.96),rgba(2,10,20,.98));box-shadow:inset 0 1px rgba(255,255,255,.1),0 30px 80px rgba(0,0,0,.42),0 0 42px rgba(168,255,18,.06)}
+.maintenance-card::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.06),transparent 28%,transparent 72%,rgba(168,255,18,.035))}
+.maintenance-kicker{position:relative;color:var(--neon);font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}
+.maintenance-visual{position:relative;width:min(260px,68vw);height:150px;margin:22px auto 28px;display:grid;place-items:end center}
+.maintenance-helmet{position:absolute;top:7px;left:50%;width:72px;height:55px;transform:translateX(-50%);border:2px solid #d9e5e9;border-radius:42px 42px 18px 18px;background:linear-gradient(145deg,#667984,#182b38);box-shadow:inset 0 3px rgba(255,255,255,.2),0 10px 24px rgba(0,0,0,.35)}
+.maintenance-helmet::after{content:"";position:absolute;left:12px;right:12px;bottom:9px;height:10px;border:1px solid var(--neon);border-radius:999px;background:rgba(168,255,18,.1);box-shadow:0 0 12px rgba(168,255,18,.22)}
+.maintenance-cone{position:absolute;bottom:5px;left:26px;width:44px;height:62px;clip-path:polygon(50% 0,100% 100%,0 100%);background:linear-gradient(90deg,#8da0a8,#293c47 48%,#cbd7db);filter:drop-shadow(0 9px 12px rgba(0,0,0,.3))}
+.maintenance-cone::after{content:"";position:absolute;left:7px;right:7px;top:33px;height:8px;background:var(--neon);box-shadow:0 0 12px rgba(168,255,18,.3)}
+.maintenance-beam{position:absolute;right:19px;bottom:22px;width:112px;height:13px;transform:rotate(-23deg);border:1px solid #9aaab1;border-radius:7px;background:linear-gradient(180deg,#d9e3e6,#40545f 48%,#101e28);box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.maintenance-spark{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--neon);box-shadow:0 0 15px rgba(168,255,18,.55)}
+.maintenance-spark.s1{top:22px;right:47px}.maintenance-spark.s2{top:60px;left:52px;width:4px;height:4px}.maintenance-spark.s3{top:44px;right:18px;width:5px;height:5px}
+.maintenance-card h1{position:relative;margin:0;color:#fff;font-size:clamp(30px,6vw,48px);line-height:1.05;letter-spacing:-.035em}
+.maintenance-card p{position:relative;max-width:560px;margin:16px auto 0;color:var(--muted);font-size:14px;line-height:1.8}
+.maintenance-status{position:relative;display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:8px 13px;border:1px solid rgba(168,255,18,.25);border-radius:999px;background:rgba(168,255,18,.045);color:var(--neon-soft);font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.maintenance-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--neon);box-shadow:0 0 12px rgba(168,255,18,.65)}
+@media(max-width:480px){.maintenance-page{padding:16px}.maintenance-card{padding:28px 20px}.maintenance-card p{font-size:13px}.maintenance-visual{height:135px;margin-top:18px;margin-bottom:22px}}

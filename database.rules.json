@@ -28,6 +28,10 @@
         ".read": true,
         ".write": true
       },
+      "rgaIndex": {
+        ".read": true,
+        ".write": true
+      },
       "docentes": {
         ".read": true,
         ".write": true

@@ -1,4 +1,5 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Corpo Docente — Descendentes RPG</title>
+<!doctype html><html lang="pt-BR"><head>
+<script>document.documentElement.classList.add("maintenance-check-pending");</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Corpo Docente — Descendentes RPG</title>
 
 
 
@@ -30,18 +31,21 @@
 <link rel="stylesheet" href="./assets/content-pages.css">
 <script>document.documentElement.classList.add('auth-pending');</script>
   <link rel="stylesheet" href="./assets/buttons-global.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./global-background.css">
+<script type="module" src="./maintenance.js"></script>
 </head>
 
 
 <body>
-<header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header><main class="container"><section class="intro"><h1>Corpo Docente</h1><p>Conheça os professores e inspetores da Auradon Prep.</p></section><section class="faculty" id="faculty"><div class="empty"><strong>Nenhum docente cadastrado no Firebase.</strong><span>Quando um docente for cadastrado pelo painel administrativo, ele aparecerá aqui automaticamente.</span></div></section><a class="back" href="index.html">Voltar à página inicial</a></main>
+<header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header><main class="container"><section class="intro"><h1>Corpo Docente</h1><p>Conheça os professores e inspetores da Auradon Prep.</p></section><section class="faculty" id="faculty"><div class="empty"><strong>Carregamento do banco de dados</strong><span>Quando um docente for cadastrado pelo painel administrativo, ele aparecerá aqui automaticamente.</span></div></section><a class="back" href="index.html">Voltar à página inicial</a></main>
 <script type="module">
 import{db}from"./firebase-init.js";
 import{ref,onValue}from"https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 import{createDbSyncLoader}from"./db-sync-loader.js";
 
 const box=document.getElementById("faculty");
-const dbLoader=createDbSyncLoader("Carregando o corpo docente diretamente do Firebase...");
+const dbLoader=createDbSyncLoader("Carregamento do banco de dados");
 dbLoader.show();
 
 const categories=[
@@ -114,10 +118,6 @@ onValue(
   }
 );
 </script>
-
-
-
-<script type="module" src="./maintenance.js"></script>
 
 
 <footer class="site-disclaimer-footer">

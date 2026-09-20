@@ -1,51 +1,29 @@
-/* Descendentes RPG — camada global restaurada.
-   Compatibilidade para páginas que ainda referenciam global-background.css.
-   O visual principal continua sendo definido por ./site.css e halloween.css. */
-:root{
-  --global-bg:#080509;
-  --global-panel:rgba(10,7,18,.72);
-  --global-line:rgba(255,255,255,.16);
-  --global-gold:#f2c46e;
-}
+/* GLOBAL AURADON BACKGROUND — uses the exact image supplied for this project. */
 html{
-  min-height:100%;
-  background:var(--global-bg) url('./site-background.jpg') center/cover fixed no-repeat;
+  min-width:320px;
+  background:#020711;
 }
+
 body{
-  min-height:100vh;
-  background:transparent;
-  color:#fff;
-  overflow-x:hidden;
-}
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-  background:linear-gradient(180deg,rgba(5,3,10,.34),rgba(5,3,10,.72));
+  background-color:#020711 !important;
+  background-image:linear-gradient(180deg,rgba(1,6,18,.34),rgba(1,6,18,.58)),url("./assets/site-background.jpg") !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+  background-origin:border-box;
+  background-clip:border-box;
 }
 
-/* Compatibilidade com o cabeçalho das páginas antigas. */
-.site-header-fixed,
-.home-main-nav,
-.admin-main-nav,
-.desktop-main-nav{
-  position:relative;
-  z-index:20;
+/* Decorative layers stay above the supplied image but never intercept interaction. */
+body::before,
+body::after{
+  pointer-events:none !important;
 }
 
-/* Quando o tema de Halloween está ativo, deixa halloween.css assumir o fundo. */
-html.halloween-theme{
-  background-color:#050308;
-  background-image:url('./site-background.jpg');
-  background-size:cover;
-  background-position:center;
-  background-attachment:fixed;
-}
-body.halloween-theme{background:transparent;}
-
-@media (max-width:700px){
-  html{background-attachment:scroll;}
-  html.halloween-theme{background-attachment:scroll;}
+@media (max-width:760px){
+  body{
+    background-attachment:scroll !important;
+    background-position:center center !important;
+  }
 }

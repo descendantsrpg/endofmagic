@@ -1,232 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>document.documentElement.classList.add("maintenance-check-pending");</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guia para Novos Usuários • Descendentes RPG</title>
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
-:root{--red:#b30000;--red-dark:#7f0000;--panel:rgba(12,10,22,.82);--line:rgba(255,255,255,.15)}
-*{box-sizing:border-box}
-html{min-height:100%;background:#0b0a18 url("./assets/site-background.jpg") center/cover fixed no-repeat}
-body{margin:0;min-height:100%;font-family:"Comfortaa",sans-serif;font-weight:300;color:#fff;background:transparent}
-body,button,input,textarea,select,a{font-family:"Comfortaa",sans-serif}
-header{position:static!important;width:100%;height:auto;margin:0;padding:28px 18px 18px;text-align:center;background:transparent;border:0;box-shadow:none;backdrop-filter:none;transform:none;animation:none}
-header img{display:block!important;position:static!important;width:min(360px,82vw);max-width:100%;height:auto;max-height:none;margin:0 auto;object-fit:contain;transform:none!important;animation:none!important}
-main{width:min(1180px,calc(100% - 28px));margin:0 auto;padding:20px 0 55px}
-.hero{text-align:center;margin-bottom:24px}
-.hero h1{font-size:clamp(1.8rem,4vw,3rem);margin:8px 0 12px}
-.hero p{max-width:850px;margin:0 auto;line-height:1.7;color:#f4f4f4}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 12px 30px rgba(0,0,0,.28);backdrop-filter:blur(6px)}
-.card.full{grid-column:1/-1}
-.card h2{font-size:1.25rem;margin:0 0 14px;color:#fff}
-.card h3{font-size:1rem;margin:16px 0 8px;color:#fff}
-.card p,.card li{line-height:1.65;color:#f4f4f4}
-.card ul,.card ol{padding-left:22px;margin:8px 0}
-.card li{margin:5px 0}
-.badges{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
-.badge{border:1px solid rgba(255,255,255,.13);background:rgba(0,0,0,.22);border-radius:12px;padding:12px}
-.badge strong{display:block;margin-bottom:4px}
-.warning{border-left:4px solid var(--red);padding:12px 14px;background:rgba(179,0,0,.14);border-radius:10px;margin-top:12px}
-.steps{counter-reset:step;display:grid;gap:10px}
-.step{counter-increment:step;display:flex;gap:12px;align-items:flex-start}
-.step::before{content:counter(step);flex:0 0 30px;height:30px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-weight:bold}
-footer{text-align:center;padding:25px 16px 40px;color:#eee}
-@media(max-width:650px){
-  header{padding:22px 14px 12px!important}
-  header img{width:min(300px,78vw)!important;margin:0 auto!important}
-  main{width:min(100% - 20px,760px);padding:18px 0 45px}
-  .grid{grid-template-columns:1fr}
-  .card.full{grid-column:auto}
-  .badges{grid-template-columns:1fr}
-}
-</style>
-
-<style id="dark-background-focus">
-html{
-  background-color:#020608 !important;
-  background-image:
-    linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
-    url("./assets/site-background.jpg") !important;
-  background-position:center center !important;
-  background-size:cover !important;
-  background-repeat:no-repeat !important;
-  background-attachment:fixed !important;
-}
-body{
-  background:transparent !important;
-}
-</style>
-
-<link rel="stylesheet" href="./global-background.css?v=20260909-headerfix">
-
-<style id="rpg-logo-standard-global">
-/* ===== LOGO RPG PADRONIZADO EM TODAS AS PÁGINAS ===== */
-html body img[alt="Descendentes RPG"]{
-  width:min(330px,72vw)!important;
-  height:auto!important;
-  max-width:330px!important;
-  max-height:none!important;
-  object-fit:contain!important;
-  display:block!important;
-}
-.site-header-fixed{
-  min-height:165px!important;
-  padding:0 12px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-.site-header-fixed img[alt="Descendentes RPG"]{
-  width:min(330px,72vw)!important;
-  max-width:330px!important;
-}
-@media(max-width:650px){
-  html body img[alt="Descendentes RPG"]{
-    width:min(240px,76vw)!important;
-    max-width:240px!important;
-  }
-  .site-header-fixed{min-height:120px!important;padding:6px 10px!important;}
-  .site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important;}
-}
-</style>
-<style>.site-disclaimer-footer,.site-disclaimer-footer *{font-size:10px!important;line-height:1.55}</style><link rel="stylesheet" href="./halloween.css?v=20260909-halloween-v2">
-
-<style id="visual-audit-final">
-/* VISUAL AUDIT — PADRÃO FINAL DO SITE */
-html,body{min-height:100%;}
-body.halloween-theme{min-height:100vh!important;display:flex!important;flex-direction:column!important;overflow-x:hidden!important;}
-body.halloween-theme main{flex:0 0 auto;}
-body.halloween-theme footer.site-disclaimer-footer,body.halloween-theme footer.footer{margin-top:auto!important;position:relative!important;float:none!important;clear:both!important;width:min(1100px,calc(100% - 28px))!important;align-self:center!important;box-sizing:border-box!important;font-size:10px!important;line-height:1.55!important;text-align:center!important;}
-body.halloween-theme footer.site-disclaimer-footer *{font-size:10px!important;line-height:1.55!important;}
-body.halloween-theme h1,body.halloween-theme h2,body.halloween-theme h3,body.halloween-theme h4,body.halloween-theme .section-title{font-family:"Comfortaa",Arial,sans-serif!important;color:#fff!important;text-shadow:0 3px 16px #000!important;overflow-wrap:anywhere;}
-body.halloween-theme h1{font-size:clamp(24px,4vw,34px)!important;line-height:1.2!important;}
-body.halloween-theme h2{font-size:clamp(20px,3vw,27px)!important;line-height:1.25!important;}
-body.halloween-theme h3{font-size:clamp(17px,2.4vw,21px)!important;line-height:1.3!important;}
-body.halloween-theme h4{font-size:16px!important;line-height:1.35!important;}
-body.halloween-theme button,body.halloween-theme input[type=submit],body.halloween-theme input[type=button],body.halloween-theme .btn,body.halloween-theme .button,body.halloween-theme a.btn,body.halloween-theme .home-quick-menu a,body.halloween-theme .home-nav-links a,body.halloween-theme .home-main-nav a,body.halloween-theme .admin-main-nav a,body.halloween-theme [role=button]{font-family:Comfortaa,Arial,sans-serif!important;background:#f57c00!important;background-color:#f57c00!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border:1px solid #f57c00!important;box-shadow:0 4px 16px rgba(245,124,0,.22)!important;}
-body.halloween-theme button:hover,body.halloween-theme .btn:hover,body.halloween-theme a.btn:hover,body.halloween-theme .home-quick-menu a:hover,body.halloween-theme .home-nav-links a:hover{background:#ff9d2e!important;background-color:#ff9d2e!important;border-color:#ff9d2e!important;color:#fff!important;}
-body.halloween-theme .site-header-fixed{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:100%!important;flex:0 0 auto!important;}
-body.halloween-theme .site-header-fixed img[alt="Descendentes RPG"]{width:min(330px,72vw)!important;max-width:330px!important;height:auto!important;margin:0 auto!important;}
-body.halloween-theme .rpg-disclaimer{width:100%!important;box-sizing:border-box!important;}
-body.halloween-theme .rpg-disclaimer p{margin:5px 0!important;}
-@media(max-width:650px){body.halloween-theme h1{font-size:24px!important}body.halloween-theme h2{font-size:20px!important}.site-disclaimer-footer{width:calc(100% - 20px)!important}.site-header-fixed img[alt="Descendentes RPG"]{width:min(240px,76vw)!important;max-width:240px!important}}
-</style>
 
 
-<style id="typography-comfortaa-final">
-/* Tipografia oficial do site */
-html, body { font-family: "Comfortaa", Arial, sans-serif !important; }
-h1, h2, h3, h4, h5, h6,
-.title, .section-title, .page-title, .card-title, .brand-title, .section-kicker {
-  font-family: "Comfortaa", Arial, sans-serif !important;
-  font-weight: 700 !important;
-}
-p, .paragraph, .description, .subtitle, .help, .intro, .text, .content-text {
-  font-family: "Comfortaa", Arial, sans-serif !important;
-  font-weight: 300 !important;
-}
-</style>
 
-<style id="comfortaa-global-final">
-/* TIPOGRAFIA GLOBAL FINAL: Comfortaa */
-html, body, button, input, textarea, select, a { font-family: "Comfortaa", Arial, sans-serif !important; }
-body { font-weight: 300 !important; }
-h1, h2, h3, h4, h5, h6, .title, .brand, .section-title, .page-title, .card-title { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 700 !important; }
-p, .subtitle, .description, .help, .meta, .notice, .content, li, td, th { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 300 !important; }
-button, input[type="submit"], input[type="button"], .btn, .button, a.btn, [role="button"] { font-family: "Comfortaa", Arial, sans-serif !important; font-weight: 700 !important; }
-label, .menu button, nav a { font-family: "Comfortaa", Arial, sans-serif !important; }
-</style>
+
+
+
+
 
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8514046603358710"
      crossorigin="anonymous"></script>
 
-<style id="site-halloween-final">
-/* Tema Halloween final: fundo preto em todo o site */
-html, body { background:#000 !important; background-image:none !important; }
-body { color:#fff !important; }
-/* Menu mobile sem comportamento retrátil */
-@media (max-width:650px){
-  .mobile-menu-toggle,.mobile-menu-close,.mobile-nav-launcher,.mobile-nav-close{display:none !important;}
-  .home-main-nav{display:block !important; position:static !important; height:auto !important; padding:10px 12px !important; margin:0 !important; background:transparent !important; border:0 !important; box-shadow:none !important;}
-  .home-nav-links{position:static !important; inset:auto !important; transform:none !important; visibility:visible !important; opacity:1 !important; width:100% !important; height:auto !important; max-height:none !important; overflow:visible !important; display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:9px !important; padding:0 !important; background:transparent !important; border:0 !important; box-shadow:none !important;}
-  .home-nav-links a,.desktop-main-nav a{box-sizing:border-box !important; border:2px solid #f57c00 !important; border-radius:12px !important; background:#000 !important; color:#fff !important; box-shadow:none !important; text-decoration:none !important; padding:12px 9px !important; min-height:46px !important; display:flex !important; align-items:center !important; justify-content:center !important; text-align:center !important; font-family:Comfortaa,Arial,sans-serif !important; font-weight:700 !important;}
-  .home-nav-links a:hover,.home-nav-links a:focus{background:#f57c00 !important; border-color:#ff9d2e !important; color:#fff !important;}
-  .desktop-main-nav{display:none !important;}
-  /* O menu de navegação da home continua visível no mobile */
-  .home-quick-menu{margin-top:8px !important; background:#000 !important; border-color:rgba(245,124,0,.35) !important;}
-  .home-quick-menu-grid a{border:2px solid #f57c00 !important; background:#000 !important; color:#fff !important; box-shadow:none !important;}
-  .home-quick-menu-grid a:hover{background:#f57c00 !important; border-color:#ff9d2e !important;}
-}
-/* Remover definitivamente o efeito de gaveta do menu em páginas que ainda possuem o markup */
-.home-nav-links.open{transform:none !important; visibility:visible !important; opacity:1 !important;}
-body.halloween-theme .home-nav-links a{border-color:#f57c00 !important;}
-/* Abóboras de Halloween */
-body.halloween-theme::before, body.halloween-theme::after{
-  position:fixed !important; display:block !important; pointer-events:none !important; z-index:1 !important;
-  font-family:Arial,sans-serif !important; line-height:1 !important;
-  filter:drop-shadow(0 0 8px rgba(245,124,0,.35));
-}
-body.halloween-theme::before{content:"🎃" !important; left:14px !important; bottom:14px !important; font-size:38px !important;}
-body.halloween-theme::after{content:"🎃" !important; right:14px !important; top:120px !important; font-size:32px !important;}
-@media(max-width:650px){
- body.halloween-theme::before{font-size:30px !important;left:7px !important;bottom:8px !important;}
- body.halloween-theme::after{font-size:26px !important;right:7px !important;top:100px !important;}
-}
-</style>
+
 
 <link rel="stylesheet" href="./assets/site.css">
+<link rel="stylesheet" href="./assets/modern-pages.css">
 <script>document.documentElement.classList.add('auth-pending');</script>
   <link rel="stylesheet" href="./assets/buttons-global.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./global-background.css">
+<script type="module" src="./maintenance.js"></script>
 </head>
-<body class="halloween-theme">
-<div class="halloween-decor" aria-hidden="true">
-  <span class="h-web w1">🕸️</span><span class="h-web w2">🕸️</span><span class="h-web w3">🕸️</span><span class="h-web w4">🕸️</span>
-  <span class="h-bat b1">🦇</span><span class="h-bat b2">🦇</span><span class="h-bat b3">🦇</span><span class="h-bat b4">🦇</span>
-  <span class="h-skull s1">💀</span><span class="h-skull s2">💀</span>
-  <span class="h-spider p1">🕷️</span><span class="h-spider p2">🕷️</span>
-</div>
-
+<body class="modern-page">
 <header><img src="./assets/logo-descendentes.png" alt="Descendentes RPG"></header>
 
 <main>
-<section class="hero">
+<section class="modern-hero">
   <h1>🏰 Guia para Novos Usuários</h1>
   <p>Um guia de entrada para entender o universo, criar seu personagem, participar das histórias e conviver dentro do Descendentes RPG.</p>
 </section>
 
-<div class="grid">
-  <article class="card">
+<div class="modern-grid">
+  <article class="modern-card">
     <h2>🌎 O que é o Descendentes RPG?</h2>
     <p>O Descendentes RPG se passa no universo de Auradon, onde descendentes de heróis e vilões vivem no mesmo mundo.</p>
     <p>A história acompanha uma nova geração de personagens com suas próprias famílias, personalidades, poderes, amizades e conflitos.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>👑 Royals e Rebels</h2>
-    <div class="badges">
-      <div class="badge"><strong>👑 Royals</strong><span>Descendentes das antigas famílias nobres e dos heróis de Auradon.</span></div>
-      <div class="badge"><strong>🖤 Rebels</strong><span>Descendentes dos antigos vilões. Ser Rebel não significa ser uma pessoa má.</span></div>
+    <div class="modern-chip-row">
+      <div class="modern-chip"><strong>👑 Royals</strong><span>Descendentes das antigas famílias nobres e dos heróis de Auradon.</span></div>
+      <div class="modern-chip"><strong>🖤 Rebels</strong><span>Descendentes dos antigos vilões. Ser Rebel não significa ser uma pessoa má.</span></div>
     </div>
     <p>A classificação representa principalmente a origem familiar e a posição social do personagem.</p>
   </article>
 
-  <article class="card full">
+  <article class="modern-card full">
     <h2>🏫 Auradon Prep</h2>
     <p>Royals e Rebels estudam juntos na principal escola do RPG.</p>
-    <div class="badges">
-      <div class="badge">🪄 <strong>Magia</strong></div>
-      <div class="badge">⚔️ <strong>Esgrima</strong></div>
-      <div class="badge">🧪 <strong>Alquimia e Poções</strong></div>
-      <div class="badge">👑 <strong>Etiqueta</strong></div>
-      <div class="badge">📖 <strong>História da Magia — Contos de Fadas</strong></div>
-      <div class="badge">😈 <strong>Vilões e Vilania</strong></div>
+    <div class="modern-chip-row">
+      <div class="modern-chip">🪄 <strong>Magia</strong></div>
+      <div class="modern-chip">⚔️ <strong>Esgrima</strong></div>
+      <div class="modern-chip">🧪 <strong>Alquimia e Poções</strong></div>
+      <div class="modern-chip">👑 <strong>Etiqueta</strong></div>
+      <div class="modern-chip">📖 <strong>História da Magia — Contos de Fadas</strong></div>
+      <div class="modern-chip">😈 <strong>Vilões e Vilania</strong></div>
     </div>
     <p>As aulas podem possuir atividades teóricas e práticas.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🏫 Saída da Auradon Prep</h2>
     <h3>📅 Finais de semana</h3>
     <ul>
@@ -236,45 +75,45 @@ body.halloween-theme::after{content:"🎃" !important; right:14px !important; to
     <p>A saída para a Vila de Auradon durante os finais de semana não necessita de autorização da direção.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>📚 Durante a semana</h2>
     <p>Durante os dias de aula, o personagem deve permanecer na Auradon Prep.</p>
     <p>Caso seja necessário sair durante o período letivo, será necessária autorização da direção quando a situação exigir.</p>
-    <div class="warning"><strong>Regra:</strong> não é permitido simplesmente narrar que o personagem saiu para uma aventura, missão ou atividade pessoal sem a devida autorização.</div>
+    <div class="modern-warning"><strong>Regra:</strong> não é permitido simplesmente narrar que o personagem saiu para uma aventura, missão ou atividade pessoal sem a devida autorização.</div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🧬 Crie seu personagem</h2>
-    <div class="badges">
-      <div class="badge">👤 <strong>Nome</strong><span>Nome do personagem.</span></div>
-      <div class="badge">🧬 <strong>Família</strong><span>Personagem ou família da qual ele é descendente.</span></div>
-      <div class="badge">👑 <strong>Filiação</strong><span>Royal ou Rebel.</span></div>
-      <div class="badge">✨ <strong>Poderes e habilidades</strong><span>De acordo com sua origem.</span></div>
-      <div class="badge">🧠 <strong>Personalidade</strong><span>Como pensa e age.</span></div>
-      <div class="badge">📖 <strong>História</strong><span>Como foi sua vida até chegar ao RPG.</span></div>
+    <div class="modern-chip-row">
+      <div class="modern-chip">👤 <strong>Nome</strong><span>Nome do personagem.</span></div>
+      <div class="modern-chip">🧬 <strong>Família</strong><span>Personagem ou família da qual ele é descendente.</span></div>
+      <div class="modern-chip">👑 <strong>Filiação</strong><span>Royal ou Rebel.</span></div>
+      <div class="modern-chip">✨ <strong>Poderes e habilidades</strong><span>De acordo com sua origem.</span></div>
+      <div class="modern-chip">🧠 <strong>Personalidade</strong><span>Como pensa e age.</span></div>
+      <div class="modern-chip">📖 <strong>História</strong><span>Como foi sua vida até chegar ao RPG.</span></div>
     </div>
     <p>O personagem deve possuir personalidade, objetivos, qualidades e defeitos, limites, relações e uma história coerente com sua origem.</p>
-    <div class="warning"><strong>Desenvolvimento vem antes de protagonismo.</strong></div>
+    <div class="modern-warning"><strong>Desenvolvimento vem antes de protagonismo.</strong></div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>📋 Filiação e linhagem</h2>
     <p>Escolha uma filiação disponível e crie seu personagem a partir dela. A lista inclui personagens de diferentes universos:</p>
     <p>🏰 Disney • 🐲 DreamWorks • 🧛 Sony • 🌳 Universal Studios • 🐰 Warner • 🧽 Nickelodeon • 🎀 Mattel</p>
     <h3>🧬 Progenitores</h3>
     <p>Não é permitido criar combinações aleatórias de personagens como progenitores sem autorização da Administração.</p>
     <p>A escolha dos pais deve respeitar a história, a cronologia, as relações e a lógica do universo.</p>
-    <div class="warning"><strong>Exemplo:</strong> “Meu personagem é filho de Hércules e Elsa.” Sem justificativa dentro da história e sem autorização da Administração, essa linhagem não será aceita.</div>
+    <div class="modern-warning"><strong>Exemplo:</strong> “Meu personagem é filho de Hércules e Elsa.” Sem justificativa dentro da história e sem autorização da Administração, essa linhagem não será aceita.</div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🎭 Interprete seu personagem</h2>
     <p>Seu personagem pode fazer amizades, criar rivalidades, estudar, conversar, participar da vida escolar, desenvolver relacionamentos, enfrentar conflitos e tomar suas próprias decisões.</p>
     <p>Ele não precisa ser perfeito nem chegar sabendo fazer tudo. As habilidades devem se desenvolver ao longo da experiência.</p>
     <p>Errar, perder e aprender também fazem parte da história.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>✍️ Você narra apenas seu personagem</h2>
     <p>Você controla apenas seu personagem. Não controle personagens de outros jogadores sem autorização.</p>
     <ul>
@@ -287,63 +126,63 @@ body.halloween-theme::after{content:"🎃" !important; right:14px !important; to
     <p>Crie a situação e deixe espaço para o outro personagem responder. RPG é interação, não fanfic solo.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🧠 Mantenha a coerência</h2>
     <p>Um personagem recém-chegado não deve ser especialista absoluto em magia, mestre em combate, maior investigador do reino, conhecedor de todos os segredos ou praticamente invencível.</p>
     <p>As habilidades podem evoluir ao longo da experiência.</p>
   </article>
 
-  <article class="card full">
+  <article class="modern-card full">
     <h2>📖 Respeite o que já aconteceu</h2>
     <p>O RPG possui uma história principal, subtramas e acontecimentos independentes. Antes de entrar em uma trama, procure saber o que já aconteceu.</p>
     <p>Não altere acontecimentos já narrados para beneficiar seu personagem. Isso inclui mortes, decisões tomadas em missões, acontecimentos da Auradon Prep, situação dos Royals e Rebels, Seita, Ilha dos Perdidos, personagens oficiais e consequências de acontecimentos anteriores.</p>
-    <div class="warning"><strong>Se aconteceu, aconteceu.</strong></div>
+    <div class="modern-warning"><strong>Se aconteceu, aconteceu.</strong></div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>👑 Respeite as autoridades</h2>
     <p>Auradon possui autoridades, professores, direção e personagens oficiais.</p>
     <p>Se quiser envolver uma autoridade, converse com quem interpreta o personagem ou com a Direção Geral.</p>
-    <div class="warning">Não crie uma fala de uma autoridade apenas para justificar uma decisão que favoreça seu personagem.</div>
+    <div class="modern-warning">Não crie uma fala de uma autoridade apenas para justificar uma decisão que favoreça seu personagem.</div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🏫 Personagem novo precisa ser desenvolvido</h2>
     <p>Primeiro, o personagem precisa ser desenvolvido dentro da rotina de Auradon.</p>
     <ul><li>Aulas;</li><li>Atividades escolares;</li><li>Interações sociais;</li><li>Amizades e rivalidades;</li><li>Eventos;</li><li>Pequenas situações.</li></ul>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>⭐ Participação antes de protagonismo</h2>
     <p>O personagem novo precisa primeiro participar da rotina do RPG e de uma missão principal.</p>
     <p>Depois disso, caso o jogador queira criar ou narrar uma subtrama ou missão independente, deverá apresentar a proposta à Direção e aguardar aprovação.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🎬 Respeite o ritmo do RPG</h2>
     <p>Nem toda cena precisa virar uma missão. Nem todo personagem precisa estar envolvido em tudo.</p>
     <p>Estudar, participar de uma aula, treinar, fazer amizades, conversar, competir ou visitar a Vila de Auradon no fim de semana também faz parte do desenvolvimento.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>📝 Escreva de forma clara</h2>
     <p>Não é necessário escrever um livro a cada resposta. O importante é deixar claro:</p>
-    <div class="badges">
-      <div class="badge"><strong>Ação</strong><span>O que seu personagem faz.</span></div>
-      <div class="badge"><strong>Fala</strong><span>O que ele diz.</span></div>
-      <div class="badge"><strong>Reação</strong><span>Aquilo que pertence ao seu próprio personagem.</span></div>
+    <div class="modern-chip-row">
+      <div class="modern-chip"><strong>Ação</strong><span>O que seu personagem faz.</span></div>
+      <div class="modern-chip"><strong>Fala</strong><span>O que ele diz.</span></div>
+      <div class="modern-chip"><strong>Reação</strong><span>Aquilo que pertence ao seu próprio personagem.</span></div>
     </div>
     <p>Dê espaço para os outros jogadores responderem e participarem da cena.</p>
   </article>
 
-  <article class="card full">
+  <article class="modern-card full">
     <h2>🧩 Converse antes de fazer algo importante</h2>
     <p>Antes de realizar algo que possa afetar outros personagens ou a história, converse com os envolvidos.</p>
     <p>Principalmente se pretende envolver outro jogador, utilizar personagem oficial, criar missão, criar conflito importante, mexer com uma organização, alterar uma situação importante ou realizar algo que tenha consequências para outro personagem.</p>
-    <div class="warning">Uma simples conversa evita muitos problemas.</div>
+    <div class="modern-warning">Uma simples conversa evita muitos problemas.</div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🎯 Não crie um personagem “apelão”</h2>
     <ul>
       <li>Nunca perde;</li><li>Sabe tudo;</li><li>Possui habilidades sem limites;</li>
@@ -353,40 +192,40 @@ body.halloween-theme::after{content:"🎃" !important; right:14px !important; to
     <p><strong>Seu personagem não precisa ser o mais poderoso. Ele precisa ser interessante.</strong></p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>📚 Estrutura das tramas</h2>
-    <div class="badges">
-      <div class="badge"><strong>🔴 Missão Principal</strong><span>Relacionada diretamente à campanha principal.</span></div>
-      <div class="badge"><strong>🟣 Subtrama</strong><span>Conflitos e acontecimentos paralelos que podem se conectar à história maior.</span></div>
-      <div class="badge"><strong>🟢 Missão Independente</strong><span>Possui sua própria história e não precisa estar diretamente ligada à campanha.</span></div>
+    <div class="modern-chip-row">
+      <div class="modern-chip"><strong>🔴 Missão Principal</strong><span>Relacionada diretamente à campanha principal.</span></div>
+      <div class="modern-chip"><strong>🟣 Subtrama</strong><span>Conflitos e acontecimentos paralelos que podem se conectar à história maior.</span></div>
+      <div class="modern-chip"><strong>🟢 Missão Independente</strong><span>Possui sua própria história e não precisa estar diretamente ligada à campanha.</span></div>
     </div>
   </article>
 
-  <article class="card full">
+  <article class="modern-card full">
     <h2>🚫 Não crie tramas que alterem a campanha</h2>
     <p>Sem aprovação da Direção, não crie uma ameaça maior que a principal, organização que substitua a Seita, vilão que resolva a história antes dos jogadores, artefatos que superem elementos centrais, acontecimentos que alterem o roteiro oficial ou personagens que saibam segredos ainda não revelados.</p>
-    <div class="warning"><strong>Seu personagem pode ter uma história própria. Ele não pode reescrever a história do RPG sozinho.</strong></div>
+    <div class="modern-warning"><strong>Seu personagem pode ter uma história própria. Ele não pode reescrever a história do RPG sozinho.</strong></div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🧠 Player ≠ personagem</h2>
     <p>O fato de o jogador conhecer o roteiro não significa que o personagem conhece.</p>
     <p>Isso é especialmente importante para mistérios, vilões, Seita, artefatos e acontecimentos futuros.</p>
-    <div class="warning"><strong>Conhecimento do player ≠ conhecimento do personagem.</strong></div>
+    <div class="modern-warning"><strong>Conhecimento do player ≠ conhecimento do personagem.</strong></div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>⚖️ Respeite as consequências</h2>
     <p>Seu personagem pode errar, perder, ser enganado e sofrer consequências.</p>
     <p>O RPG é construído pelas escolhas dos jogadores e pelos resultados dessas escolhas.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🛑 Narrações irregulares</h2>
     <p>Narrações que passem por cima da história oficial, utilizem autoridade sem autorização, alterem acontecimentos estabelecidos, controlem personagens de outros jogadores, criem consequências sem consentimento, ignorem a estrutura da campanha ou sejam criadas sem a aprovação necessária poderão ser desconsideradas ou canceladas pela Direção Geral.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>👑 A Direção Geral tem a palavra final</h2>
     <ul>
       <li>Aprovar ou recusar tramas;</li><li>Solicitar alterações;</li><li>Corrigir inconsistências;</li>
@@ -396,25 +235,25 @@ body.halloween-theme::after{content:"🎃" !important; right:14px !important; to
     <p>Isso existe para garantir que a criatividade de um jogador não prejudique a história dos demais.</p>
   </article>
 
-  <article class="card full">
+  <article class="modern-card full">
     <h2>🤝 Regras de convivência</h2>
     <p>O Descendentes RPG deve ser um espaço divertido, seguro e confortável para todos. Todos os jogadores devem ser tratados com respeito.</p>
-    <div class="badges">
-      <div class="badge"><strong>❤️ Respeito acima de tudo</strong><span>Não são tolerados insultos pessoais, perseguição, humilhação, ameaças, preconceito, provocações constantes ou exposição de outros jogadores.</span></div>
-      <div class="badge"><strong>🎭 Player e personagem são coisas diferentes</strong><span>Rivalidade entre personagens não autoriza ataques entre jogadores.</span></div>
-      <div class="badge"><strong>🔒 Privacidade</strong><span>Não exponha prints, áudios, fotos, informações pessoais, contatos ou redes sociais de outros jogadores sem autorização.</span></div>
-      <div class="badge"><strong>🤝 Não force intimidade</strong><span>Um “não” é suficiente. Não pressione outro jogador por contato, fotos, chamadas ou informações pessoais.</span></div>
+    <div class="modern-chip-row">
+      <div class="modern-chip"><strong>❤️ Respeito acima de tudo</strong><span>Não são tolerados insultos pessoais, perseguição, humilhação, ameaças, preconceito, provocações constantes ou exposição de outros jogadores.</span></div>
+      <div class="modern-chip"><strong>🎭 Player e personagem são coisas diferentes</strong><span>Rivalidade entre personagens não autoriza ataques entre jogadores.</span></div>
+      <div class="modern-chip"><strong>🔒 Privacidade</strong><span>Não exponha prints, áudios, fotos, informações pessoais, contatos ou redes sociais de outros jogadores sem autorização.</span></div>
+      <div class="modern-chip"><strong>🤝 Não force intimidade</strong><span>Um “não” é suficiente. Não pressione outro jogador por contato, fotos, chamadas ou informações pessoais.</span></div>
     </div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🔞 Conteúdo adulto</h2>
     <p>O Grupo On, grupo principal onde acontecem as cenas do RPG, não permite publicação de conteúdo sexual explícito. O material destinado ao espaço +18 deve permanecer separado.</p>
     <p>O guia informa que a entrada e permanência no Grupo +18 são permitidas exclusivamente para jogadores maiores de 16 anos; também determina que jogadores menores de 18 anos não poderão participar desse espaço, independentemente da idade dos personagens.</p>
-    <div class="warning"><strong>Conteúdo sexual envolvendo personagens menores de idade é terminantemente proibido.</strong></div>
+    <div class="modern-warning"><strong>Conteúdo sexual envolvendo personagens menores de idade é terminantemente proibido.</strong></div>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🚫 Conteúdo e links proibidos</h2>
     <ul>
       <li>Links externos sem autorização;</li><li>Propaganda ou recrutamento de outros grupos/RPGs;</li>
@@ -424,37 +263,37 @@ body.halloween-theme::after{content:"🎃" !important; right:14px !important; to
     <p>Também não é permitido spam com mensagens, figurinhas, emojis, links, imagens ou marcações desnecessárias.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>⚔️ Não use o RPG para brigas pessoais</h2>
     <p>Problemas pessoais não devem ser transformados em acontecimentos dentro da narrativa.</p>
     <p>Não utilize personagens, missões ou tramas para atacar indiretamente outro jogador. Se existir um problema entre jogadores, resolvam como jogadores ou procurem a Direção.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🛡️ Respeite a moderação</h2>
     <p>Quando a Direção ou moderação solicitar que determinado assunto seja encerrado, que uma mensagem seja removida ou que uma situação seja interrompida, a orientação deve ser respeitada.</p>
     <p>Se discordar, converse em particular com a equipe responsável.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>⚖️ Todos estão sujeitos às mesmas regras</h2>
     <p>As regras valem para jogadores antigos e novos, independentemente da importância do personagem ou do tempo de participação no RPG.</p>
   </article>
 
-  <article class="card">
+  <article class="modern-card">
     <h2>🚨 Descumprimento das regras</h2>
     <p>Dependendo da situação, a Direção poderá aplicar:</p>
-    <div class="badges">
-      <div class="badge">⚠️ <strong>Advertência</strong></div>
-      <div class="badge">🛑 <strong>Remoção de conteúdo</strong></div>
-      <div class="badge">🔇 <strong>Restrição temporária</strong></div>
-      <div class="badge">🚫 <strong>Suspensão</strong></div>
-      <div class="badge">❌ <strong>Remoção definitiva do RPG</strong></div>
+    <div class="modern-chip-row">
+      <div class="modern-chip">⚠️ <strong>Advertência</strong></div>
+      <div class="modern-chip">🛑 <strong>Remoção de conteúdo</strong></div>
+      <div class="modern-chip">🔇 <strong>Restrição temporária</strong></div>
+      <div class="modern-chip">🚫 <strong>Suspensão</strong></div>
+      <div class="modern-chip">❌ <strong>Remoção definitiva do RPG</strong></div>
     </div>
-    <div class="warning">Casos graves poderão resultar em remoção imediata.</div>
+    <div class="modern-warning">Casos graves poderão resultar em remoção imediata.</div>
   </article>
 
-  <article class="card full">
+  <article class="modern-card full">
     <h2>⭐ Para começar</h2>
     <div class="steps">
       <div class="step">Consulte as filiações disponíveis e escolha uma família.</div>
@@ -470,7 +309,7 @@ body.halloween-theme::after{content:"🎃" !important; right:14px !important; to
     </div>
   </article>
 
-  <article class="card full">
+  <article class="modern-card full">
     <h2>🏰 Bem-vindo a Auradon!</h2>
     <p>Você está entrando em um mundo onde descendentes de heróis e vilões vivem juntos.</p>
     <p><strong>Sua família define sua origem.</strong><br>
@@ -480,10 +319,6 @@ body.halloween-theme::after{content:"🎃" !important; right:14px !important; to
   </article>
 </div>
 </main>
-
-
-
-<script type="module" src="./maintenance.js"></script>
 
 
 <footer class="site-disclaimer-footer">

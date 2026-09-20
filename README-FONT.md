@@ -1,6 +1,8 @@
 # Tipografia do site
 
-- Títulos: Comfortaa Bold (700).
-- Parágrafos e textos corridos: Comfortaa Light (300).
-- Botões e ações: Comfortaa Bold (700).
-- Trajan Pro não é mais utilizado pela interface.
+A tipografia global da interface é **Roboto**.
+
+- Títulos: Roboto 700/800.
+- Textos corridos: Roboto 300/400.
+- Botões e ações: Roboto 700/800.
+- Menus, formulários, cards e tabelas: Roboto.
