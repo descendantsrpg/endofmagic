@@ -33,6 +33,9 @@
 }
 *{box-sizing:border-box}
 html{min-width:320px;background:var(--navy-990);scroll-behavior:smooth}
+/* Authentication-aware visibility: hidden elements must remain hidden even when component CSS defines display. */
+[hidden]{display:none!important}
+html.auth-pending [data-auth-login],html.auth-pending [data-auth-register]{display:none!important}
 body{margin:0;min-width:320px;min-height:100vh;color:var(--text);font-family:Roboto,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.6;background:
  linear-gradient(180deg,rgba(2,7,17,.78),rgba(2,7,17,.97)),
  radial-gradient(circle at 78% 12%,rgba(168,255,18,.08),transparent 28%),

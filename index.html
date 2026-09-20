@@ -58,10 +58,12 @@
 
       if (loginLink) {
         loginLink.hidden = loggedIn;
+        loginLink.classList.toggle('auth-hidden', loggedIn);
         loginLink.setAttribute('aria-hidden', loggedIn ? 'true' : 'false');
       }
       if (registerLink) {
         registerLink.hidden = loggedIn;
+        registerLink.classList.toggle('auth-hidden', loggedIn);
         registerLink.setAttribute('aria-hidden', loggedIn ? 'true' : 'false');
       }
 
